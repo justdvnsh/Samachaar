@@ -14,11 +14,15 @@ import androidx.core.view.MenuItemCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import divyansh.tech.kotnewreader.R
+import divyansh.tech.kotnewreader.network.api.NewsApi
 import kotlinx.android.synthetic.main.activity_news.*
+import javax.inject.Inject
 
 class NewsActivity : AppCompatActivity() {
 
     private lateinit var searchView: SearchView
+    @Inject
+    lateinit var newsApi: NewsApi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +37,7 @@ class NewsActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main_menu, menu)
 
         // getting the search button & search view
-        var searchViewItem: MenuItem? = menu?.findItem(R.id.search)
+        val searchViewItem: MenuItem? = menu?.findItem(R.id.search)
         searchView = MenuItemCompat.getActionView(searchViewItem) as SearchView
 
         // setting on close listener
