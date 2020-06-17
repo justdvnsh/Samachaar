@@ -2,7 +2,6 @@ package divyansh.tech.kotnewreader.ui
 
 import android.app.SearchManager
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -12,8 +11,6 @@ import android.widget.EditText
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuItemCompat
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import divyansh.tech.kotnewreader.R
@@ -40,11 +37,7 @@ class NewsActivity : AppCompatActivity() {
         searchView = MenuItemCompat.getActionView(searchViewItem) as SearchView
 
         // setting on close listener
-        searchView.setOnCloseListener(object : SearchView.OnCloseListener {
-            override fun onClose(): Boolean {
-                return true
-            }
-        })
+        searchView.setOnCloseListener { true }
 
         // setting the search plate to enter the query
         val searchPlate = searchView.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
@@ -57,22 +50,23 @@ class NewsActivity : AppCompatActivity() {
                 android.R.color.transparent
             )
         )
+        searchView.run {
+            // get the edit text to max width
+            maxWidth = Int.MAX_VALUE
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    // do your logic here
+    //                 Toast.makeText(applicationContext, query, Toast.LENGTH_SHORT).show()
+                    clearFocus()
+                    newsNavHostFragment.findNavController().navigate(R.id.searchFragment)
+                    return false
+                }
 
-        // get the edit text to max width
-        searchView.maxWidth = Int.MAX_VALUE
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                // do your logic here
-//                 Toast.makeText(applicationContext, query, Toast.LENGTH_SHORT).show()
-                searchView.clearFocus()
-                newsNavHostFragment.findNavController().navigate(R.id.searchFragment)
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-        })
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    return false
+                }
+            })
+        }
 
         val searchManager =
             getSystemService(Context.SEARCH_SERVICE) as SearchManager

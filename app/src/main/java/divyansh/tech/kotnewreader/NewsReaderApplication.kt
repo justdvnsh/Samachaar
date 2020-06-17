@@ -7,8 +7,12 @@ import divyansh.tech.kotnewreader.dagger.DaggerAppComponent
 
 class NewsReaderApplication: Application() {
 
-    lateinit var newsReaderComponent: AppComponent
+    private val newsReaderComponent: AppComponent by lazy {
+        DaggerAppComponent.builder().appModule(AppModule(this)).build()
+    }
 
-    private fun initDagger(app: NewsReaderApplication): AppComponent =
-        DaggerAppComponent.builder().appModule(AppModule(app)).build()
+    override fun onCreate() {
+        super.onCreate()
+        newsReaderComponent.inject(this)
+    }
 }
