@@ -1,5 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/news_nav_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/news_nav_graph"
+    app:startDestination="@id/breakingNewsFragment">
 
+    <fragment
+        android:id="@+id/breakingNewsFragment"
+        android:name="divyansh.tech.kotnewreader.ui.fragments.BreakingNewsFragment"
+        android:label="BreakingNewsFragment" >
+        <action
+            android:id="@+id/action_breakingNewsFragment_to_articleFragment"
+            app:destination="@id/articleFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/favouritesFragment"
+        android:name="divyansh.tech.kotnewreader.ui.fragments.FavouritesFragment"
+        android:label="FavouritesFragment" >
+        <action
+            android:id="@+id/action_favouritesFragment_to_articleFragment"
+            app:destination="@id/articleFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="divyansh.tech.kotnewreader.ui.fragments.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_articleFragment"
+            app:destination="@id/articleFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/articleFragment"
+        android:name="divyansh.tech.kotnewreader.ui.fragments.ArticleFragment"
+        android:label="ArticleFragment" />
 </navigation>
