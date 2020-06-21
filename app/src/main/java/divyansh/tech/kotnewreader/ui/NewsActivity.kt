@@ -14,25 +14,28 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.MenuItemCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import divyansh.tech.kotnewreader.NewsReaderApplication
+import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
-import divyansh.tech.kotnewreader.dagger.AppComponent
-import divyansh.tech.kotnewreader.dagger.NewsComponent
 import divyansh.tech.kotnewreader.database.ArticleDao
 import divyansh.tech.kotnewreader.network.api.NewsApi
 import kotlinx.android.synthetic.main.activity_news.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class NewsActivity : AppCompatActivity() {
 
     private lateinit var searchView: SearchView
-    private lateinit var component: AppComponent
+    @Inject
+    lateinit var articleDao: ArticleDao
+    @Inject
+    lateinit var newsApi: NewsApi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
 
         bottomNavigationView.setupWithNavController(newsNavHostFragment.findNavController())
+        Log.d("Injection", articleDao.hashCode().toString() + " api ->" + newsApi.hashCode().toString())
     }
 
     // set options -> Menu
