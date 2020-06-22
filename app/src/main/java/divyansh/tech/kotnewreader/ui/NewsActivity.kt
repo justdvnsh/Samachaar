@@ -27,7 +27,7 @@ import javax.inject.Inject
 class NewsActivity : AppCompatActivity() {
 
     private lateinit var searchView: SearchView
-    private val viewModel: newsViewModel by viewModels()
+    val viewModel: newsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
