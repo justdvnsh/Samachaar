@@ -2,6 +2,7 @@ package divyansh.tech.kotnewreader.dagger
 
 import android.content.Context
 import androidx.room.Room
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -42,4 +43,5 @@ object AppModule {
     @Singleton
     @Provides
     fun provideNewsApi(retrofit: Retrofit) = retrofit.create(NewsApi::class.java)
+
 }

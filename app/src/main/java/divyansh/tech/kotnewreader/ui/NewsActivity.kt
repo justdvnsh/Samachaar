@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
+import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuItemCompat
@@ -18,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.database.ArticleDao
 import divyansh.tech.kotnewreader.network.api.NewsApi
+import divyansh.tech.kotnewreader.ui.viewModels.newsViewModel
 import kotlinx.android.synthetic.main.activity_news.*
 import javax.inject.Inject
 
@@ -25,17 +27,14 @@ import javax.inject.Inject
 class NewsActivity : AppCompatActivity() {
 
     private lateinit var searchView: SearchView
-    @Inject
-    lateinit var articleDao: ArticleDao
-    @Inject
-    lateinit var newsApi: NewsApi
+    private val viewModel: newsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
 
         bottomNavigationView.setupWithNavController(newsNavHostFragment.findNavController())
-        Log.d("Injection", articleDao.hashCode().toString() + " api ->" + newsApi.hashCode().toString())
+        viewModel.newRepository.testIfInjected()
     }
 
     // set options -> Menu
