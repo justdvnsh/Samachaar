@@ -9,6 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import divyansh.tech.kotnewreader.adapters.NewsAdapter
 import divyansh.tech.kotnewreader.database.ArticleDatabase
 import divyansh.tech.kotnewreader.network.api.NewsApi
 import divyansh.tech.kotnewreader.utils.Constants.Companion.ARTICLE_DATABASE

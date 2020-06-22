@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="divyansh.tech.kotnewreader">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".NewsReaderApplication"
         android:allowBackup="true"

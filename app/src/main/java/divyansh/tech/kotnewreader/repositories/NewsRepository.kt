@@ -15,4 +15,6 @@ class NewsRepository @Inject constructor(
     fun testIfInjected() {
         Log.i("INJECTED", db.hashCode().toString() + " api ->" + api.hashCode().toString())
     }
+
+    suspend fun getBreakingNews(countryCode: String, pageNumber: Int) = api.getBreakingNews(countryCode, pageNumber = pageNumber)
 }
