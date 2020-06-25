@@ -45,4 +45,6 @@ object AppModule {
     @Provides
     fun provideNewsApi(retrofit: Retrofit) = retrofit.create(NewsApi::class.java)
 
+    @Provides
+    fun provideAdapter(): NewsAdapter = NewsAdapter()
 }
