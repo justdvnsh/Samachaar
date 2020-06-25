@@ -1,13 +1,16 @@
-package divyansh.tech.kotnewreader.ui
+package divyansh.tech.kotnewreader.ui.fragments
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
@@ -15,7 +18,10 @@ import divyansh.tech.kotnewreader.adapters.NewsAdapter
 import divyansh.tech.kotnewreader.ui.viewModels.newsViewModel
 import divyansh.tech.kotnewreader.utils.Constants.Companion.SEARCH_TIME_DELAY
 import divyansh.tech.kotnewreader.utils.Resource
-import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.common_toolbar.view.*
+import kotlinx.android.synthetic.main.fragment_breaking_news.*
+import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.android.synthetic.main.fragment_search.paginationProgressBar
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -23,15 +29,21 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SearchActivity : AppCompatActivity() {
+class SearchFragment : BaseFragment() {
 
-    val viewModel: newsViewModel by viewModels()
     @Inject
     lateinit var newsAdapter: NewsAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
+    override fun provideView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return inflater.inflate(R.layout.fragment_search, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupObservers()
         setupEditText()
@@ -54,9 +66,18 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
+        newsAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("article", it)
+            }
+            findNavController().navigate(
+                R.id.action_searchFragment_to_articleFragment,
+                bundle
+            )
+        }
         rvSearchNews.apply {
             adapter = newsAdapter
-            layoutManager = LinearLayoutManager(this@SearchActivity)
+            layoutManager = LinearLayoutManager(activity)
         }
     }
 
@@ -69,21 +90,20 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun  setupObservers() {
-        viewModel.searchNews.observe(this@SearchActivity, Observer {
+        viewModel.searchNews.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
                     hideProgress()
                     it.data?.let {
                         newsAdapter.differ.submitList(it.articles)
-                        Toast.makeText(this@SearchActivity, "Success ${it.articles.size.toString()}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "Success ${it.articles.size.toString()}", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 is Resource.Error -> {
                     hideProgress()
-                    Log.i("Search", it.message.toString())
                     it.message?.let {
-                        Toast.makeText(this@SearchActivity, "Failed ${it}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "Failed ${it}", Toast.LENGTH_SHORT).show()
                     }
                 }
 

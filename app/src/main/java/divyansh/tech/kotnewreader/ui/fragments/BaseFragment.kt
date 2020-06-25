@@ -6,8 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.ui.NewsActivity
-import divyansh.tech.kotnewreader.ui.SearchActivity
 import divyansh.tech.kotnewreader.ui.viewModels.newsViewModel
 import kotlinx.android.synthetic.main.common_toolbar.*
 
@@ -27,7 +28,7 @@ abstract class BaseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
         search?.setOnClickListener {
-            startActivity(Intent(context, SearchActivity::class.java))
+            findNavController().navigate(R.id.searchFragment)
         }
     }
 
