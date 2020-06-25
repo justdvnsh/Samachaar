@@ -44,10 +44,19 @@ class BreakingNewsFragment : BaseFragment() {
         }
     }
 
+    private fun showProgress() {
+        paginationProgressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgress() {
+        paginationProgressBar.visibility = View.GONE
+    }
+
     private fun  setupObservers() {
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
+                    hideProgress()
                     it.data?.let {
                         newsAdapter.differ.submitList(it.articles)
                         Toast.makeText(activity, "Success ${it.articles.size.toString()}", Toast.LENGTH_SHORT).show()
@@ -55,9 +64,14 @@ class BreakingNewsFragment : BaseFragment() {
                 }
 
                 is Resource.Error -> {
+                    hideProgress()
                     it.message?.let {
                         Toast.makeText(activity, "Failed", Toast.LENGTH_SHORT).show()
                     }
+                }
+
+                is Resource.Loading -> {
+                    showProgress()
                 }
             }
         })

@@ -43,12 +43,4 @@
         android:id="@+id/articleFragment"
         android:name="divyansh.tech.kotnewreader.ui.fragments.ArticleFragment"
         android:label="ArticleFragment" />
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="divyansh.tech.kotnewreader.ui.fragments.SearchFragment"
-        android:label="SearchFragment" >
-        <action
-            android:id="@+id/action_searchFragment_to_articleFragment"
-            app:destination="@id/articleFragment" />
-    </fragment>
 </navigation>
