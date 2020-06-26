@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import divyansh.tech.kotnewreader.R
 import kotlinx.android.synthetic.main.common_toolbar.view.*
 import kotlinx.android.synthetic.main.fragment_article.*
@@ -26,12 +27,20 @@ class ArticleFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         view.titleText.text = args.article.title.substring(0, 15) + "...."
         setupWebView()
+        setupFab(view)
     }
 
     private fun setupWebView() {
         webView.apply {
             webViewClient = WebViewClient()
             loadUrl(args.article.url)
+        }
+    }
+
+    private fun setupFab(view: View) {
+        fab.setOnClickListener {
+            viewModel.upsertArticle(args.article)
+            Snackbar.make(view, "Article Saved Successfully.", Snackbar.LENGTH_SHORT).show()
         }
     }
 }

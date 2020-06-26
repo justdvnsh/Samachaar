@@ -5,6 +5,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import divyansh.tech.kotnewreader.network.models.Article
 import divyansh.tech.kotnewreader.network.models.NewsResponse
 import divyansh.tech.kotnewreader.repositories.NewsRepository
 import divyansh.tech.kotnewreader.utils.Resource
@@ -56,5 +57,15 @@ class newsViewModel @ViewModelInject constructor(
         searchNews.postValue(Resource.Loading())
         val response = newRepository.searchNews(searchQuery, searchPageNumber)
         searchNews.postValue(handleSearchReponse(response))
+    }
+
+    fun upsertArticle(article: Article) = viewModelScope.launch {
+        newRepository.upsertArticle(article)
+    }
+
+    fun getAllArticles() = newRepository.getAllArticles()
+
+    fun deleteArticle(article: Article) = viewModelScope.launch {
+        newRepository.deleteArticle(article)
     }
 }

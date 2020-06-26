@@ -7,8 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.adapters.NewsAdapter
@@ -36,7 +40,37 @@ class FavouritesFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         view.titleText.text = "Favourites"
         Log.i("INJECTED FROM FAV ", viewModel.newRepository.db.hashCode().toString() + " api ->" + viewModel.newRepository.api.hashCode().toString())
+        setupObservers()
+        setupItemTouchHelperCallback(view)
         setupRecyclerView()
+    }
+
+    private fun setupItemTouchHelperCallback(view: View) {
+        val ItemTouchHelperCallback = object: ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val article = newsAdapter.differ.currentList[viewHolder.adapterPosition]
+                viewModel.deleteArticle(article)
+                Snackbar.make(view, "Article Deleted Successfully", Snackbar.LENGTH_LONG).apply {
+                    setAction("Undo") {
+                        viewModel.upsertArticle(article)
+                    }
+                    show()
+                }
+            }
+        }
+
+        ItemTouchHelper(ItemTouchHelperCallback).attachToRecyclerView(rvSavedNews)
     }
 
     private fun setupRecyclerView() {
@@ -53,5 +87,11 @@ class FavouritesFragment : BaseFragment() {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
         }
+    }
+
+    private fun setupObservers() {
+        viewModel.getAllArticles().observe(viewLifecycleOwner, Observer {
+            newsAdapter.differ.submitList(it)
+        })
     }
 }
