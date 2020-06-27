@@ -36,7 +36,7 @@ class AuthRepository @Inject constructor(
                     authenticatedUserMutableLiveData.value = user
                 }
             } else {
-                Log.i("AUTHREPO", "FAILED")
+                Log.i("AUTHREPO", "FAILED ${authResult.exception?.message}")
             }
         }
 
@@ -62,7 +62,7 @@ class AuthRepository @Inject constructor(
                     newUserMutableLiveData.value = user
                 }
             } else {
-                Log.i("AUTHREPO", "FAILED")
+                Log.i("AUTHREPO", "FAILED ${task.exception?.message}")
             }
         }
 

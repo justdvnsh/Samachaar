@@ -35,7 +35,7 @@ object AppModule {
         app,
         ArticleDatabase::class.java,
         ARTICLE_DATABASE
-    ).build()
+    ).fallbackToDestructiveMigration().build()
 
     @Singleton
     @Provides
