@@ -17,10 +17,12 @@ class newsViewModel @ViewModelInject constructor(
 ): ViewModel() {
 
     val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    val breakingPageNumber = 1
+    var breakingPageNumber = 1
+    var breakingNewsResponse: NewsResponse? = null
 
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    val searchPageNumber = 1
+    var searchPageNumber = 1
+    var searchNewsResponse: NewsResponse? = null
 
     init {
         getBreakingNews("in")
@@ -29,8 +31,13 @@ class newsViewModel @ViewModelInject constructor(
     fun handleNewsReponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let {
-                Log.i("ViewMOdel", it.articles.size.toString())
-                return Resource.Success(it)
+                breakingPageNumber++
+                if (breakingNewsResponse == null) {
+                    breakingNewsResponse = it
+                } else {
+                    breakingNewsResponse?.articles?.addAll(it.articles)
+                }
+                return Resource.Success(breakingNewsResponse ?: it)
             }
         }
         return Resource.Error(response.message())
@@ -39,8 +46,13 @@ class newsViewModel @ViewModelInject constructor(
     fun handleSearchReponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let {
-                Log.i("ViewMOdel", it.articles.size.toString())
-                return Resource.Success(it)
+                searchPageNumber++
+                if (searchNewsResponse == null) {
+                    searchNewsResponse = it
+                } else {
+                    searchNewsResponse?.articles?.addAll(it.articles)
+                }
+                return Resource.Success(searchNewsResponse ?: it)
             }
         }
         return Resource.Error(response.message())
