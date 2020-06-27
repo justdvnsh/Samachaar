@@ -45,7 +45,7 @@ class AuthRepository @Inject constructor(
 
     fun createUserInFirestoreIfNotExists(user: User): MutableLiveData<User> {
         val newUserMutableLiveData: MutableLiveData<User> = MutableLiveData()
-        val uidRef: DocumentReference = usersRef.document(user.email)
+        val uidRef: DocumentReference = usersRef.document(user.email!!)
         uidRef.get().addOnCompleteListener {task ->
             if (task.isSuccessful) {
                 val document = task.result
