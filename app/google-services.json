@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "484886932761",
+    "firebase_url": "https://the-tech-reads.firebaseio.com",
+    "project_id": "the-tech-reads",
+    "storage_bucket": "the-tech-reads.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:484886932761:android:8d5e3bd68db79807272988",
+        "android_client_info": {
+          "package_name": "divyansh.tech.kotnewreader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "484886932761-t510v9kqo2i8hoj9t1fo15ah8l21qaj1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNOCRholC4Y732WRtBTsYil3uhLlWykqc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "484886932761-t510v9kqo2i8hoj9t1fo15ah8l21qaj1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
