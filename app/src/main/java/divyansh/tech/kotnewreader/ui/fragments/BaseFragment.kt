@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import divyansh.tech.kotnewreader.R
+import divyansh.tech.kotnewreader.network.models.User
 import divyansh.tech.kotnewreader.ui.NewsActivity
 import divyansh.tech.kotnewreader.ui.viewModels.newsViewModel
 import kotlinx.android.synthetic.main.common_toolbar.*
@@ -15,6 +16,7 @@ import kotlinx.android.synthetic.main.common_toolbar.*
 abstract class BaseFragment : Fragment() {
 
     lateinit var viewModel: newsViewModel
+    lateinit var user: User
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +32,7 @@ abstract class BaseFragment : Fragment() {
         search?.setOnClickListener {
             findNavController().navigate(R.id.searchFragment)
         }
+        user = (activity as NewsActivity).user
     }
 
     abstract fun provideView(

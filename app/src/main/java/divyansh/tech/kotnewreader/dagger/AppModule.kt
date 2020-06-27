@@ -3,12 +3,16 @@ package divyansh.tech.kotnewreader.dagger
 import android.content.Context
 import androidx.room.Room
 import com.bumptech.glide.Glide
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.adapters.NewsAdapter
 import divyansh.tech.kotnewreader.database.ArticleDatabase
 import divyansh.tech.kotnewreader.network.api.NewsApi
@@ -47,4 +51,13 @@ object AppModule {
 
     @Provides
     fun provideAdapter(): NewsAdapter = NewsAdapter()
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuthClient() = FirebaseAuth.getInstance()
+
+    @Provides
+    @Singleton
+    fun provideFirebaseFirestore() = FirebaseFirestore.getInstance()
+
 }

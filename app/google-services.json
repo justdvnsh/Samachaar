@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "484886932761-15e6535bil48ciic4c3834volth1gevh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "divyansh.tech.kotnewreader",
+            "certificate_hash": "36d63351aea5b30a72c88b933c89aea5d05ef616"
+          }
+        },
+        {
           "client_id": "484886932761-t510v9kqo2i8hoj9t1fo15ah8l21qaj1.apps.googleusercontent.com",
           "client_type": 3
         }

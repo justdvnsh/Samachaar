@@ -19,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.database.ArticleDao
 import divyansh.tech.kotnewreader.network.api.NewsApi
+import divyansh.tech.kotnewreader.network.models.User
 import divyansh.tech.kotnewreader.ui.viewModels.newsViewModel
 import kotlinx.android.synthetic.main.activity_news.*
 import javax.inject.Inject
@@ -27,6 +28,7 @@ import javax.inject.Inject
 class NewsActivity : AppCompatActivity() {
 
     val viewModel: newsViewModel by viewModels()
+    lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,5 +36,10 @@ class NewsActivity : AppCompatActivity() {
 
         bottomNavigationView.setupWithNavController(newsNavHostFragment.findNavController())
         viewModel.newRepository.testIfInjected()
+        initUser()
+    }
+
+    private fun initUser() {
+        user = intent.getSerializableExtra("User") as User
     }
 }
