@@ -9,12 +9,11 @@ import divyansh.tech.kotnewreader.network.models.Article
 
 @Database(
     entities = [Article::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class ArticleDatabase: RoomDatabase() {
 
     abstract fun getArticleDao(): ArticleDao
-
 }

@@ -5,11 +5,14 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.squareup.okhttp.Dispatcher
 import divyansh.tech.kotnewreader.network.models.Article
 import divyansh.tech.kotnewreader.network.models.NewsResponse
 import divyansh.tech.kotnewreader.repositories.NewsRepository
 import divyansh.tech.kotnewreader.utils.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 class newsViewModel @ViewModelInject constructor(

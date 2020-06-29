@@ -1,9 +1,7 @@
 package divyansh.tech.kotnewreader.repositories
 
 import android.util.Log
-import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.database.ArticleDao
-import divyansh.tech.kotnewreader.database.ArticleDatabase
 import divyansh.tech.kotnewreader.network.api.NewsApi
 import divyansh.tech.kotnewreader.network.models.Article
 import javax.inject.Inject
@@ -26,4 +24,5 @@ class NewsRepository @Inject constructor(
     fun getAllArticles() = db.getAllArticles()
 
     suspend fun deleteArticle(article: Article) = db.deleteArticle(article)
+
 }
