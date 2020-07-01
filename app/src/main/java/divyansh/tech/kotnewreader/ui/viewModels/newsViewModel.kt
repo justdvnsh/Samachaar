@@ -3,6 +3,7 @@ package divyansh.tech.kotnewreader.ui.viewModels
 import android.content.Context
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -90,29 +91,16 @@ class newsViewModel @ViewModelInject constructor(
     }
 
 
-//    val applicationScope = CoroutineScope(Dispatchers.Default)
-
-    fun delayedInit(context: Context) = viewModelScope.launch {
-        setupSync(context)
-    }
-
-    private fun setupSync(context: Context) {
+    fun syncNews(context: Context): LiveData<Operation.State> {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.UNMETERED)
             .build()
 
-        val repeatingRequest = PeriodicWorkRequestBuilder<SyncWorker>(1, TimeUnit.DAYS)
+        val repeatingRequest = OneTimeWorkRequestBuilder<SyncWorker>()
             .setConstraints(constraints).build()
 
-        val operation = WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-            SyncWorker.WORK_NAME,
-            ExistingPeriodicWorkPolicy.KEEP,
+        return WorkManager.getInstance(context).enqueue(
             repeatingRequest
-        ).result
-
-        operation.addListener(
-            {Log.i("NEWSVIEWMODEL", "SYNC IN PROGRESS")},
-            {it.run()}
-        )
+        ).state
     }
 }

@@ -41,7 +41,11 @@ class SplashRepository @Inject constructor(
             if (it.isSuccessful) {
                 val document = it.result
                 if (document?.exists()!!) {
-                    val user: User = document.toObject(User::class.java)!!
+                    val user: User = User(
+                        uid = document.get("uid") as String,
+                        email = document.get("email") as String,
+                        name = document.get("name") as String
+                    )
                     userMutableLiveData.value = user
                 }
             } else {

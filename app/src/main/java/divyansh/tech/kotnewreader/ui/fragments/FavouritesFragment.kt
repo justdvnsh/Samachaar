@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.Operation
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
@@ -40,7 +41,7 @@ class FavouritesFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         view.titleText.text = "Favourites"
         Log.i("INJECTED FROM FAV ", viewModel.newRepository.db.hashCode().toString() + " api ->" + viewModel.newRepository.api.hashCode().toString())
-        setupObservers()
+        setupObservers(view)
         setupItemTouchHelperCallback(view)
         setupRecyclerView()
     }
@@ -89,11 +90,19 @@ class FavouritesFragment : BaseFragment() {
         }
     }
 
-    private fun setupObservers() {
+    private fun setupObservers(view: View) {
         viewModel.getAllArticles().observe(viewLifecycleOwner, Observer {
             newsAdapter.differ.submitList(it)
         })
 
-        viewModel.delayedInit(context!!)
+        viewModel.syncNews(context!!).observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Operation.State.IN_PROGRESS -> Snackbar.make(view, "Sync has started", Snackbar.LENGTH_SHORT).show()
+
+                is Operation.State.FAILURE -> Snackbar.make(view, "Sync has failed", Snackbar.LENGTH_SHORT).show()
+
+                is Operation.State.SUCCESS -> Snackbar.make(view, "Sync completed successfully", Snackbar.LENGTH_SHORT).show()
+            }
+        })
     }
 }
