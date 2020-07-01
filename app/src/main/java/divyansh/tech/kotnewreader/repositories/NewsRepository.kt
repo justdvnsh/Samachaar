@@ -10,6 +10,7 @@ import divyansh.tech.kotnewreader.network.api.NewsApi
 import divyansh.tech.kotnewreader.network.models.Article
 import divyansh.tech.kotnewreader.network.models.User
 import divyansh.tech.kotnewreader.utils.Constants.Companion.USERS
+import org.w3c.dom.Document
 import javax.inject.Inject
 
 class NewsRepository @Inject constructor(
@@ -35,4 +36,35 @@ class NewsRepository @Inject constructor(
 
     suspend fun deleteArticle(article: Article) = db.deleteArticle(article)
 
+    fun syncArticles(articles: List<Article>) {
+        val currentUser: FirebaseUser? = firebaseAuth.currentUser
+        val emailRef: DocumentReference = usersRef.document(currentUser?.email!!)
+        emailRef.get().addOnCompleteListener {
+            if (it.isSuccessful) {
+                val document = it.result
+                if (!document?.exists()!!) {
+                    val user: User = User(
+                        email = currentUser.email,
+                        uid = currentUser.uid,
+                        name = currentUser.displayName,
+                        isAuthenticated = true,
+                        isNew = false,
+                        isCreated = true,
+                        articles = articles
+                    )
+                    emailRef.set(user).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Log.i("NEWSREPO", "SYNCCED SUCCESS")
+                        } else {
+                            Log.i("NEWSREPO", task.exception?.message)
+                        }
+                    }
+                } else {
+                    Log.i("NEWSREPO", it.exception?.message)
+                }
+            } else {
+                Log.i("NEWSREPO", "SOMETHING WENT WRONG")
+            }
+        }
+    }
 }

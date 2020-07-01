@@ -1,25 +1,31 @@
 package divyansh.tech.kotnewreader.work
 
 import android.content.Context
+import androidx.hilt.Assisted
+import androidx.hilt.work.WorkerInject
 import androidx.work.CoroutineWorker
+import androidx.work.Worker
 import androidx.work.WorkerParameters
 import divyansh.tech.kotnewreader.database.ArticleDao
 import divyansh.tech.kotnewreader.network.models.Article
 import divyansh.tech.kotnewreader.repositories.NewsRepository
 import javax.inject.Inject
 
-class SyncWorker(context: Context, params: WorkerParameters): CoroutineWorker(context, params) {
+class SyncWorker @WorkerInject constructor(
+    @Assisted appContext: Context,
+    @Assisted workerParameters: WorkerParameters,
+    private val newsRepository: NewsRepository,
+    private val db: ArticleDao
+): Worker(appContext, workerParameters) {
 
-    @Inject
-    lateinit var db: ArticleDao
-
-    override suspend fun doWork(): Result {
-        var result: List<Article> = db.getAllArticlesList()
-        return try {
-//            syncWithRemoteDatabase(result)
-            Result.success()
-        } catch (e: Exception){
-            Result.failure()
+    override fun doWork(): Result {
+        val articles = db.getAllArticlesList()
+        try {
+            newsRepository.syncArticles(articles)
+            return Result.success()
+        } catch (e: Exception) {
+            return Result.failure()
         }
     }
+
 }
