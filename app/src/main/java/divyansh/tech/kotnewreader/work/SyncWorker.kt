@@ -1,6 +1,7 @@
 package divyansh.tech.kotnewreader.work
 
 import android.content.Context
+import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.work.WorkerInject
 import androidx.work.CoroutineWorker
@@ -20,6 +21,7 @@ class SyncWorker @WorkerInject constructor(
 
     override fun doWork(): Result {
         val articles = db.getAllArticlesList()
+        Log.i("WORK", articles.size.toString())
         try {
             newsRepository.syncArticles(articles)
             return Result.success()
@@ -28,4 +30,7 @@ class SyncWorker @WorkerInject constructor(
         }
     }
 
+    companion object {
+        const val WORK_NAME = "Sync"
+    }
 }

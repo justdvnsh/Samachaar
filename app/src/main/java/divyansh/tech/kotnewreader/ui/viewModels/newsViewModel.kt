@@ -1,19 +1,24 @@
 package divyansh.tech.kotnewreader.ui.viewModels
 
+import android.content.Context
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.*
 import com.squareup.okhttp.Dispatcher
 import divyansh.tech.kotnewreader.network.models.Article
 import divyansh.tech.kotnewreader.network.models.NewsResponse
 import divyansh.tech.kotnewreader.repositories.NewsRepository
 import divyansh.tech.kotnewreader.utils.Resource
+import divyansh.tech.kotnewreader.work.SyncWorker
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import java.util.concurrent.TimeUnit
 
 class newsViewModel @ViewModelInject constructor(
     val newRepository: NewsRepository
@@ -82,5 +87,32 @@ class newsViewModel @ViewModelInject constructor(
 
     fun deleteArticle(article: Article) = viewModelScope.launch {
         newRepository.deleteArticle(article)
+    }
+
+
+//    val applicationScope = CoroutineScope(Dispatchers.Default)
+
+    fun delayedInit(context: Context) = viewModelScope.launch {
+        setupSync(context)
+    }
+
+    private fun setupSync(context: Context) {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.UNMETERED)
+            .build()
+
+        val repeatingRequest = PeriodicWorkRequestBuilder<SyncWorker>(1, TimeUnit.DAYS)
+            .setConstraints(constraints).build()
+
+        val operation = WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+            SyncWorker.WORK_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            repeatingRequest
+        ).result
+
+        operation.addListener(
+            {Log.i("NEWSVIEWMODEL", "SYNC IN PROGRESS")},
+            {it.run()}
+        )
     }
 }

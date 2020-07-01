@@ -93,5 +93,7 @@ class FavouritesFragment : BaseFragment() {
         viewModel.getAllArticles().observe(viewLifecycleOwner, Observer {
             newsAdapter.differ.submitList(it)
         })
+
+        viewModel.delayedInit(context!!)
     }
 }

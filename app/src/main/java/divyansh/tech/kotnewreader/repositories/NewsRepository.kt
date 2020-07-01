@@ -39,10 +39,11 @@ class NewsRepository @Inject constructor(
     fun syncArticles(articles: List<Article>) {
         val currentUser: FirebaseUser? = firebaseAuth.currentUser
         val emailRef: DocumentReference = usersRef.document(currentUser?.email!!)
+        Log.i("NEWSREPO", articles.size.toString())
         emailRef.get().addOnCompleteListener {
             if (it.isSuccessful) {
                 val document = it.result
-                if (!document?.exists()!!) {
+                if (document?.exists()!!) {
                     val user: User = User(
                         email = currentUser.email,
                         uid = currentUser.uid,
