@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import divyansh.tech.kotnewreader.R
 import kotlinx.android.synthetic.main.common_toolbar.*
 import kotlinx.android.synthetic.main.common_toolbar.view.*
+import kotlinx.android.synthetic.main.fragment_settings.*
 
 class SettingsFragment : BaseFragment() {
 
@@ -22,6 +23,12 @@ class SettingsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.titleText.text = user.name
+        view.titleText.text = "Settings"
+        setupView()
+    }
+
+    private fun setupView() {
+        displayName.text = user.name
+        displayEmail.text = user.email
     }
 }
