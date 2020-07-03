@@ -25,7 +25,7 @@ class ArticleFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.titleText.text = args.article.title?.substring(0, 15) + "...."
+        view.titleText.text = "Article"
         setupWebView()
         setupFab(view)
     }
