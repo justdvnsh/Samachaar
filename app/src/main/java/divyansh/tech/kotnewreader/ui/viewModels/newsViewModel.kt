@@ -1,6 +1,7 @@
 package divyansh.tech.kotnewreader.ui.viewModels
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
@@ -90,6 +91,9 @@ class newsViewModel @ViewModelInject constructor(
         newRepository.deleteArticle(article)
     }
 
+    fun detectImage(image: Bitmap): LiveData<String>? {
+        return newRepository.detectImage(image)
+    }
 
     fun syncNews(context: Context): LiveData<Operation.State> {
         val constraints = Constraints.Builder()

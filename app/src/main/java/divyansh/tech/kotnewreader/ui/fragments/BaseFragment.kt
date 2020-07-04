@@ -2,12 +2,15 @@ package divyansh.tech.kotnewreader.ui.fragments
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.network.models.User
@@ -20,6 +23,7 @@ abstract class BaseFragment : Fragment() {
     lateinit var viewModel: newsViewModel
     lateinit var user: User
     val REQUEST_IMAGE_CAPTURE: Int = 1
+    var imageBitmap: Bitmap? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,6 +59,13 @@ abstract class BaseFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val extras: Bundle? = data?.extras
+            imageBitmap = extras?.get("data") as Bitmap
+            imageBitmap?.let {
+                viewModel.detectImage(it)?.observe(viewLifecycleOwner, Observer {
+                    Log.i("BASEFRAG", it)
+                    findNavController().navigate(R.id.searchFragment)
+                })
+            }
         }
     }
 

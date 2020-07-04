@@ -1,10 +1,15 @@
 package divyansh.tech.kotnewreader.repositories
 
+import android.graphics.Bitmap
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ml.vision.FirebaseVision
+import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer
 import divyansh.tech.kotnewreader.database.ArticleDao
 import divyansh.tech.kotnewreader.network.api.NewsApi
 import divyansh.tech.kotnewreader.network.models.Article
@@ -35,6 +40,21 @@ class NewsRepository @Inject constructor(
     fun getAllArticles() = db.getAllArticles()
 
     suspend fun deleteArticle(article: Article) = db.deleteArticle(article)
+
+    fun detectImage(image: Bitmap): MutableLiveData<String>? {
+        val recogText: MutableLiveData<String>? = MutableLiveData()
+        val firebaseImage: FirebaseVisionImage = FirebaseVisionImage.fromBitmap(image)
+        val textRecognizer: FirebaseVisionTextRecognizer = FirebaseVision.getInstance().onDeviceTextRecognizer
+        textRecognizer.processImage(firebaseImage).addOnCompleteListener {
+            if (it.isSuccessful) {
+                recogText?.value = it.result?.text
+            } else {
+                recogText?.value = null
+                Log.i("NEWSREPO", it.exception?.message)
+            }
+        }
+        return recogText
+    }
 
     fun syncArticles(articles: List<Article>) {
         val currentUser: FirebaseUser? = firebaseAuth.currentUser
