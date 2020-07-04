@@ -2,6 +2,7 @@ package divyansh.tech.kotnewreader.ui.fragments
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,9 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
+import androidx.navigation.NavArgs
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,6 +42,9 @@ class SearchFragment : BaseFragment() {
     var isLoading = false
     var isLastPage = false
     var isScrolling = false
+
+    val args: SearchFragmentArgs by navArgs()
+
     val scrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
@@ -88,6 +94,10 @@ class SearchFragment : BaseFragment() {
 
     private fun setupEditText() {
         // set a time delay fot the user to type in the complete query
+        if (args.query != "android") {
+            etSearch.setText(args.query)
+            viewModel.getSearchNews(args.query)
+        }
         var job: Job? = null
         etSearch.addTextChangedListener {
             job?.cancel()
