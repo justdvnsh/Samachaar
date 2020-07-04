@@ -78,6 +78,7 @@ class newsViewModel @ViewModelInject constructor(
     fun getSearchNews(searchQuery: String) = viewModelScope.launch {
         searchNews.postValue(Resource.Loading())
         val response = newRepository.searchNews(searchQuery, searchPageNumber)
+        Log.i("SEARCH", response.raw().request.url.toString() + response.body().toString())
         searchNews.postValue(handleSearchReponse(response))
     }
 

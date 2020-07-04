@@ -24,8 +24,6 @@ interface NewsApi {
     suspend fun searchForNews(
         @Query("q")
         searchQuery: String,
-        @Query("category")
-        category: String = "technology",
         @Query("page")
         pageNumber: Int = 1,
         @Query("apiKey")
