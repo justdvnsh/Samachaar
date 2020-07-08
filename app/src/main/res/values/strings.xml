@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">The Tech Reads</string>
+    <string name="general">General</string>
+    <string name="business">Business</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="tech">Technology</string>
+    <string name="sports">Sports</string>
+    <string name="health">Health</string>
+    <string name="science">Science</string>
 </resources>

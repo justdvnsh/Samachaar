@@ -14,11 +14,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
+import divyansh.tech.kotnewreader.adapters.NewsAdapter
 import divyansh.tech.kotnewreader.network.models.User
 import divyansh.tech.kotnewreader.ui.NewsActivity
 import divyansh.tech.kotnewreader.ui.viewModels.newsViewModel
 import kotlinx.android.synthetic.main.common_toolbar.*
+import javax.inject.Inject
 
 abstract class BaseFragment : Fragment() {
 

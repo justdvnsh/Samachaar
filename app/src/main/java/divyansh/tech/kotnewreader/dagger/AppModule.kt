@@ -13,6 +13,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import divyansh.tech.kotnewreader.R
+import divyansh.tech.kotnewreader.adapters.FragmentsAdapter
 import divyansh.tech.kotnewreader.adapters.NewsAdapter
 import divyansh.tech.kotnewreader.database.ArticleDatabase
 import divyansh.tech.kotnewreader.network.api.NewsApi
