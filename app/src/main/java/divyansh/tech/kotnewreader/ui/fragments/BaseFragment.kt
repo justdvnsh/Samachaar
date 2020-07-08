@@ -67,7 +67,7 @@ abstract class BaseFragment : Fragment() {
 
     private fun setupPagination(shouldPaginate: Boolean) {
         if (shouldPaginate) {
-            viewModel.getBreakingNews("in")
+            viewModel.getBreakingNews("in", provideCategory())
             isScrolling = false
         }
     }
@@ -136,4 +136,5 @@ abstract class BaseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View
+    abstract fun provideCategory(): String
 }

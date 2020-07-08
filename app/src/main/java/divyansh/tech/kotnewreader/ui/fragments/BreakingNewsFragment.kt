@@ -40,6 +40,10 @@ class BreakingNewsFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_breaking_news, container, false)
     }
 
+    override fun provideCategory(): String {
+        return ""
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.titleText.text = "Breaking News"
@@ -72,12 +76,12 @@ class BreakingNewsFragment : BaseFragment() {
         fragmentAdapter = FragmentsAdapter(childFragmentManager)
         fragmentAdapter.apply {
             addFragment(GeneralFragment(), getString(R.string.general))
-            addFragment(GeneralFragment(), getString(R.string.business))
-            addFragment(GeneralFragment(), getString(R.string.entertainment))
-            addFragment(GeneralFragment(), getString(R.string.tech))
-            addFragment(GeneralFragment(), getString(R.string.sports))
-            addFragment(GeneralFragment(), getString(R.string.health))
-            addFragment(GeneralFragment(), getString(R.string.science))
+            addFragment(BusinessFragment(), getString(R.string.business))
+            addFragment(EntertainmentFragment(), getString(R.string.entertainment))
+            addFragment(TechFragment(), getString(R.string.tech))
+            addFragment(SportsFragment(), getString(R.string.sports))
+            addFragment(HealthFragment(), getString(R.string.health))
+            addFragment(ScienceFragment(), getString(R.string.science))
         }
         pager.adapter = fragmentAdapter
         tabs.setupWithViewPager(pager, true)

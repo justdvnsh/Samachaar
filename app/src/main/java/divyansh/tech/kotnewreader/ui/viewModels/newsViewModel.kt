@@ -34,9 +34,9 @@ class newsViewModel @ViewModelInject constructor(
     var searchPageNumber = 1
     var searchNewsResponse: NewsResponse? = null
 
-    init {
-        getBreakingNews("in")
-    }
+//    init {
+//        getBreakingNews("in")
+//    }
 
     fun handleNewsReponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
         if (response.isSuccessful) {
@@ -68,9 +68,9 @@ class newsViewModel @ViewModelInject constructor(
         return Resource.Error(response.message())
     }
 
-    fun getBreakingNews(countryCode: String) = viewModelScope.launch {
+    fun getBreakingNews(countryCode: String, category: String) = viewModelScope.launch {
         breakingNews.postValue(Resource.Loading())
-        val response = newRepository.getBreakingNews(countryCode, breakingPageNumber)
+        val response = newRepository.getBreakingNews(countryCode, breakingPageNumber, category)
         Log.i("vIEWMoDEL", response.raw().request.url.toString() + response.body().toString())
         breakingNews.postValue(handleNewsReponse(response))
     }

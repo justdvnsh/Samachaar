@@ -4,14 +4,47 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import divyansh.tech.kotnewreader.ui.fragments.BaseFragment
+import android.widget.ProgressBar
+import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
+import divyansh.tech.kotnewreader.R
+import divyansh.tech.kotnewreader.adapters.NewsAdapter
+import kotlinx.android.synthetic.main.fragment_tech.*
+import javax.inject.Inject
 
-class TechFragment: BaseFragment() {
+@AndroidEntryPoint
+class TechFragment: BaseTabFragment() {
+
+    @Inject
+    lateinit var newsAdapter: NewsAdapter
+
     override fun provideView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        TODO("Not yet implemented")
+        return inflater.inflate(R.layout.fragment_tech, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupObservers()
+        setupRecyclerView()
+    }
+
+    override fun provideRecyclerView(): RecyclerView {
+        return rvTechBreakingNews
+    }
+
+    override fun provideAdapter(): NewsAdapter {
+        return newsAdapter
+    }
+
+    override fun provideProgressBar(): ProgressBar {
+        return paginationProgressBar
+    }
+
+    override fun provideCategory(): String {
+        return getString(R.string.tech).toLowerCase()
     }
 }
