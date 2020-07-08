@@ -39,36 +39,36 @@ class SearchFragment : BaseFragment() {
 
     @Inject
     lateinit var newsAdapter: NewsAdapter
-    var isLoading = false
-    var isLastPage = false
-    var isScrolling = false
+//    override var isLoading = false
+//    override var isLastPage = false
+//    override var isScrolling = false
 
     val args: SearchFragmentArgs by navArgs()
 
-    val scrollListener = object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            super.onScrolled(recyclerView, dx, dy)
-            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-            val firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
-            val visibleItemCount = layoutManager.childCount
-            val totalItemCount = layoutManager.itemCount
-
-            val isNotLoadingAndNotLastPage = !isLoading && !isLastPage
-            val isAtLastItem = firstVisibleItem + visibleItemCount >= totalItemCount
-            val isNotAtBeginning = firstVisibleItem >= 0
-            val isTotalMoreThanVisible = totalItemCount >= Constants.QUERY_PAGE_SIZE
-            val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning && isTotalMoreThanVisible && isScrolling
-            setupPagination(shouldPaginate)
-        }
-
-        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            super.onScrollStateChanged(recyclerView, newState)
-            // check if the list is currently scrolling
-            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                isScrolling = true
-            }
-        }
-    }
+//    val scrollListener = object : RecyclerView.OnScrollListener() {
+//        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//            super.onScrolled(recyclerView, dx, dy)
+//            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+//            val firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
+//            val visibleItemCount = layoutManager.childCount
+//            val totalItemCount = layoutManager.itemCount
+//
+//            val isNotLoadingAndNotLastPage = !isLoading && !isLastPage
+//            val isAtLastItem = firstVisibleItem + visibleItemCount >= totalItemCount
+//            val isNotAtBeginning = firstVisibleItem >= 0
+//            val isTotalMoreThanVisible = totalItemCount >= Constants.QUERY_PAGE_SIZE
+//            val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning && isTotalMoreThanVisible && isScrolling
+//            setupPagination(shouldPaginate)
+//        }
+//
+//        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+//            super.onScrollStateChanged(recyclerView, newState)
+//            // check if the list is currently scrolling
+//            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+//                isScrolling = true
+//            }
+//        }
+//    }
 
     override fun provideView(
         inflater: LayoutInflater,
@@ -125,25 +125,15 @@ class SearchFragment : BaseFragment() {
         rvSearchNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
-            addOnScrollListener(this@SearchFragment.scrollListener)
+            addOnScrollListener(scrollListener)
         }
-    }
-
-    private fun showProgress() {
-        paginationProgressBar.visibility = View.VISIBLE
-        isLoading = true
-    }
-
-    private fun hideProgress() {
-        paginationProgressBar.visibility = View.GONE
-        isLoading = false
     }
 
     private fun  setupObservers() {
         viewModel.searchNews.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
-                    hideProgress()
+                    hideProgress(paginationProgressBar)
                     it.data?.let {
                         newsAdapter.differ.submitList(it.articles.toList())
                         val totalPages = it.totalResults / Constants.QUERY_PAGE_SIZE + 2
@@ -152,14 +142,14 @@ class SearchFragment : BaseFragment() {
                 }
 
                 is Resource.Error -> {
-                    hideProgress()
+                    hideProgress(paginationProgressBar)
                     it.message?.let {
                         Toast.makeText(activity, "Failed ${it}", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 is Resource.Loading -> {
-                    showProgress()
+                    showProgress(paginationProgressBar)
                 }
             }
         })

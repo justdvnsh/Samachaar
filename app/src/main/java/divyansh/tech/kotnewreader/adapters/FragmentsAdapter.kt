@@ -3,6 +3,8 @@ package divyansh.tech.kotnewreader.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import divyansh.tech.kotnewreader.ui.fragments.FavouritesFragment
+import divyansh.tech.kotnewreader.ui.fragments.tabbedFragments.GeneralFragment
 
 class FragmentsAdapter(val fm: FragmentManager): FragmentStatePagerAdapter(fm) {
 

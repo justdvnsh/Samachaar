@@ -59,11 +59,11 @@ class BreakingNewsFragment : BaseFragment() {
             }
 
             override fun onTabReselected(p0: TabLayout.Tab?) {
-                TODO("Not yet implemented")
+//                TODO("Not yet implemented")
             }
 
             override fun onTabUnselected(p0: TabLayout.Tab?) {
-                TODO("Not yet implemented")
+//                TODO("Not yet implemented")
             }
         })
     }
@@ -72,12 +72,12 @@ class BreakingNewsFragment : BaseFragment() {
         fragmentAdapter = FragmentsAdapter(childFragmentManager)
         fragmentAdapter.apply {
             addFragment(GeneralFragment(), getString(R.string.general))
-            addFragment(BusinessFragment(), getString(R.string.business))
-            addFragment(EntertainmentFragment(), getString(R.string.entertainment))
-            addFragment(TechFragment(), getString(R.string.tech))
-            addFragment(SportsFragment(), getString(R.string.sports))
-            addFragment(HealthFragment(), getString(R.string.health))
-            addFragment(ScienceFragment(), getString(R.string.science))
+            addFragment(GeneralFragment(), getString(R.string.business))
+            addFragment(GeneralFragment(), getString(R.string.entertainment))
+            addFragment(GeneralFragment(), getString(R.string.tech))
+            addFragment(GeneralFragment(), getString(R.string.sports))
+            addFragment(GeneralFragment(), getString(R.string.health))
+            addFragment(GeneralFragment(), getString(R.string.science))
         }
         pager.adapter = fragmentAdapter
         tabs.setupWithViewPager(pager, true)

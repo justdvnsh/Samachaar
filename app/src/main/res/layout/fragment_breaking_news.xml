@@ -21,13 +21,15 @@
             app:tabMode="scrollable"
             android:minHeight="?attr/actionBarSize"
             app:tabGravity="fill"
-            app:tabTextColor="#FFF"
+            app:tabIndicator="@drawable/tab_indicator"
+            app:tabTextColor="@android:color/black"
             app:tabSelectedTextColor="@color/colorAccent"
             />
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tabs"/>
 
     </RelativeLayout>
 

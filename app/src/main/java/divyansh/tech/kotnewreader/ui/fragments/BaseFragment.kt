@@ -9,18 +9,24 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.adapters.NewsAdapter
 import divyansh.tech.kotnewreader.network.models.User
 import divyansh.tech.kotnewreader.ui.NewsActivity
 import divyansh.tech.kotnewreader.ui.viewModels.newsViewModel
+import divyansh.tech.kotnewreader.utils.Constants
 import kotlinx.android.synthetic.main.common_toolbar.*
+import kotlinx.android.synthetic.main.fragment_general_news.*
 import javax.inject.Inject
 
 abstract class BaseFragment : Fragment() {
@@ -30,6 +36,51 @@ abstract class BaseFragment : Fragment() {
     val REQUEST_IMAGE_CAPTURE: Int = 1
     var imageBitmap: Bitmap? = null
     var detectedText: String? = null
+    open var isLoading = false
+    open var isLastPage = false
+    open var isScrolling = false
+    val scrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+            val firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
+            val visibleItemCount = layoutManager.childCount
+            val totalItemCount = layoutManager.itemCount
+
+            val isNotLoadingAndNotLastPage = !isLoading && !isLastPage
+            val isAtLastItem = firstVisibleItem + visibleItemCount >= totalItemCount
+            val isNotAtBeginning = firstVisibleItem >= 0
+            val isTotalMoreThanVisible = totalItemCount >= Constants.QUERY_PAGE_SIZE
+            val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning && isTotalMoreThanVisible && isScrolling
+            setupPagination(shouldPaginate)
+        }
+
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            // check if the list is currently scrolling
+            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                isScrolling = true
+            }
+        }
+    }
+
+
+    private fun setupPagination(shouldPaginate: Boolean) {
+        if (shouldPaginate) {
+            viewModel.getBreakingNews("in")
+            isScrolling = false
+        }
+    }
+
+    fun showProgress(progressBar: ProgressBar) {
+        progressBar.visibility = View.VISIBLE
+        isLoading = true
+    }
+
+    fun hideProgress(progressBar: ProgressBar) {
+        progressBar.visibility = View.GONE
+        isLoading = false
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
