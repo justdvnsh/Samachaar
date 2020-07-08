@@ -39,36 +39,8 @@ class SearchFragment : BaseFragment() {
 
     @Inject
     lateinit var newsAdapter: NewsAdapter
-//    override var isLoading = false
-//    override var isLastPage = false
-//    override var isScrolling = false
 
     val args: SearchFragmentArgs by navArgs()
-
-//    val scrollListener = object : RecyclerView.OnScrollListener() {
-//        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-//            super.onScrolled(recyclerView, dx, dy)
-//            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-//            val firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
-//            val visibleItemCount = layoutManager.childCount
-//            val totalItemCount = layoutManager.itemCount
-//
-//            val isNotLoadingAndNotLastPage = !isLoading && !isLastPage
-//            val isAtLastItem = firstVisibleItem + visibleItemCount >= totalItemCount
-//            val isNotAtBeginning = firstVisibleItem >= 0
-//            val isTotalMoreThanVisible = totalItemCount >= Constants.QUERY_PAGE_SIZE
-//            val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning && isTotalMoreThanVisible && isScrolling
-//            setupPagination(shouldPaginate)
-//        }
-//
-//        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//            super.onScrollStateChanged(recyclerView, newState)
-//            // check if the list is currently scrolling
-//            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-//                isScrolling = true
-//            }
-//        }
-//    }
 
     override fun provideView(
         inflater: LayoutInflater,
