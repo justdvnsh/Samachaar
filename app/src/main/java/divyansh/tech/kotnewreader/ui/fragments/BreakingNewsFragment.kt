@@ -75,13 +75,13 @@ class BreakingNewsFragment : BaseFragment() {
     private fun setStatePagerAdapter() {
         fragmentAdapter = FragmentsAdapter(childFragmentManager)
         fragmentAdapter.apply {
-            addFragment(GeneralFragment(), getString(R.string.general))
-            addFragment(BusinessFragment(), getString(R.string.business))
-            addFragment(EntertainmentFragment(), getString(R.string.entertainment))
-            addFragment(TechFragment(), getString(R.string.tech))
-            addFragment(SportsFragment(), getString(R.string.sports))
-            addFragment(HealthFragment(), getString(R.string.health))
-            addFragment(ScienceFragment(), getString(R.string.science))
+//            addFragment(NewsFragment(getString(R.string.general)), getString(R.string.general))
+            addFragment(NewsFragment(getString(R.string.business)), getString(R.string.business))
+            addFragment(NewsFragment(getString(R.string.entertainment)), getString(R.string.entertainment))
+            addFragment(NewsFragment(getString(R.string.tech)), getString(R.string.tech))
+            addFragment(NewsFragment(getString(R.string.sports)), getString(R.string.sports))
+            addFragment(NewsFragment(getString(R.string.health)), getString(R.string.health))
+            addFragment(NewsFragment(getString(R.string.science)), getString(R.string.science))
         }
         pager.adapter = fragmentAdapter
         tabs.setupWithViewPager(pager, true)

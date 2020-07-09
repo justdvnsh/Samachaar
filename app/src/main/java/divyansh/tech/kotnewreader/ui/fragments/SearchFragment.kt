@@ -94,7 +94,6 @@ class SearchFragment : BaseFragment() {
         rvSearchNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
-            addOnScrollListener(scrollListener)
         }
     }
 
@@ -105,8 +104,6 @@ class SearchFragment : BaseFragment() {
                     hideProgress(paginationProgressBar)
                     it.data?.let {
                         newsAdapter.differ.submitList(it.articles.toList())
-                        val totalPages = it.totalResults / Constants.QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.searchPageNumber == totalPages
                     }
                 }
 

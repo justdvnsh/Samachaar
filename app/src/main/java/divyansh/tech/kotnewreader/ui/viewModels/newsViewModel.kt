@@ -27,11 +27,9 @@ class newsViewModel @ViewModelInject constructor(
 ): ViewModel() {
 
     val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    var breakingPageNumber = 1
     var breakingNewsResponse: NewsResponse? = null
 
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    var searchPageNumber = 1
     var searchNewsResponse: NewsResponse? = null
 
 //    init {
@@ -41,7 +39,6 @@ class newsViewModel @ViewModelInject constructor(
     fun handleNewsReponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let {
-                breakingPageNumber++
                 if (breakingNewsResponse == null) {
                     breakingNewsResponse = it
                 } else {
@@ -56,7 +53,6 @@ class newsViewModel @ViewModelInject constructor(
     fun handleSearchReponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let {
-                searchPageNumber++
                 if (searchNewsResponse == null) {
                     searchNewsResponse = it
                 } else {
@@ -70,14 +66,14 @@ class newsViewModel @ViewModelInject constructor(
 
     fun getBreakingNews(countryCode: String, category: String) = viewModelScope.launch {
         breakingNews.postValue(Resource.Loading())
-        val response = newRepository.getBreakingNews(countryCode, breakingPageNumber, category)
+        val response = newRepository.getBreakingNews(countryCode, category)
         Log.i("vIEWMoDEL", response.raw().request.url.toString() + response.body().toString())
         breakingNews.postValue(handleNewsReponse(response))
     }
 
     fun getSearchNews(searchQuery: String) = viewModelScope.launch {
         searchNews.postValue(Resource.Loading())
-        val response = newRepository.searchNews(searchQuery, searchPageNumber)
+        val response = newRepository.searchNews(searchQuery)
         Log.i("SEARCH", response.raw().request.url.toString())
         searchNews.postValue(handleSearchReponse(response))
     }

@@ -12,11 +12,11 @@ import divyansh.tech.kotnewreader.adapters.NewsAdapter
 import kotlinx.android.synthetic.main.fragment_general_news.*
 import javax.inject.Inject
 
-@AndroidEntryPoint
+//@AndroidEntryPoint
 class GeneralFragment: BaseTabFragment() {
 
-    @Inject
-    lateinit var newsAdapter: NewsAdapter
+//    @Inject
+//    lateinit var newsAdapter: NewsAdapter
 
     override fun provideView(
         inflater: LayoutInflater,
@@ -37,7 +37,7 @@ class GeneralFragment: BaseTabFragment() {
     }
 
     override fun provideAdapter(): NewsAdapter {
-        return newsAdapter
+        return NewsAdapter()
     }
 
     override fun provideProgressBar(): ProgressBar {

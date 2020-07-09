@@ -1,20 +1,31 @@
 package divyansh.tech.kotnewreader.ui.fragments.tabbedFragments
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ProgressBar
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.adapters.NewsAdapter
 import divyansh.tech.kotnewreader.ui.fragments.BaseFragment
 import divyansh.tech.kotnewreader.utils.Constants
 import divyansh.tech.kotnewreader.utils.Resource
+import kotlinx.android.synthetic.main.fragment_general_news.*
 
-abstract class BaseTabFragment : BaseFragment(){
+class NewsFragment(val category: String): BaseFragment() {
+
+    lateinit var newsAdapter: NewsAdapter
+
+    override fun provideView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return inflater.inflate(R.layout.fragment_general_news, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -23,8 +34,8 @@ abstract class BaseTabFragment : BaseFragment(){
     }
 
     fun setupRecyclerView() {
-        val adapterNews = NewsAdapter()
-        adapterNews.setOnItemClickListener {
+        newsAdapter = NewsAdapter()
+        newsAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable("article", it)
             }
@@ -33,38 +44,40 @@ abstract class BaseTabFragment : BaseFragment(){
                 bundle
             )
         }
-        provideRecyclerView().apply {
-            adapter = adapterNews
+        rvGeneralBreakingNews.apply {
+            adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
+//            addOnScrollListener(scrollListener)
         }
     }
 
     fun setupObservers() {
-        viewModel.getBreakingNews("in", provideCategory())
+        viewModel.getBreakingNews("in", category.toLowerCase())
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
-                    hideProgress(provideProgressBar())
+                    hideProgress(paginationProgressBar)
                     it.data?.let {
-                        provideAdapter().differ.submitList(it.articles.toList())
+                        newsAdapter.differ.submitList(it.articles.toList())
                     }
                 }
 
                 is Resource.Error -> {
-                    hideProgress(provideProgressBar())
+                    hideProgress(paginationProgressBar)
                     it.message?.let {
                         Toast.makeText(activity, "Failed", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 is Resource.Loading -> {
-                    showProgress(provideProgressBar())
+                    showProgress(paginationProgressBar)
                 }
             }
         })
     }
 
-    abstract fun provideRecyclerView(): RecyclerView
-    abstract fun provideAdapter(): NewsAdapter
-    abstract fun provideProgressBar(): ProgressBar
+
+    override fun provideCategory(): String {
+        return ""
+    }
 }
