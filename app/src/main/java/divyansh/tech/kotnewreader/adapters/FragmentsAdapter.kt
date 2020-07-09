@@ -3,28 +3,26 @@ package divyansh.tech.kotnewreader.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import divyansh.tech.kotnewreader.ui.fragments.FavouritesFragment
-import divyansh.tech.kotnewreader.ui.fragments.tabbedFragments.GeneralFragment
+import divyansh.tech.kotnewreader.ui.fragments.SearchFragment
+import divyansh.tech.kotnewreader.ui.fragments.tabbedFragments.*
 
-class FragmentsAdapter(val fm: FragmentManager): FragmentStatePagerAdapter(fm) {
-
-    val fragmentList: MutableList<Fragment> = ArrayList<Fragment>()
-    val fragmentTitleList: MutableList<String> = ArrayList<String>()
-
-    override fun getItem(position: Int): Fragment {
-        return fragmentList.get(position)
+class FragmentsAdapter(val fragment: Fragment): FragmentStateAdapter(fragment) {
+    override fun getItemCount(): Int {
+        return 6
     }
 
-    override fun getCount(): Int {
-        return fragmentList.size
+    override fun createFragment(position: Int): Fragment {
+        when (position) {
+            0 -> return BusinessFragment()
+            1 -> return EntertainmentFragment()
+            2 -> return TechFragment()
+            3 -> return SportsFragment()
+            4 -> return HealthFragment()
+            5 -> return ScienceFragment()
+            else -> return SearchFragment()
+        }
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
-        return fragmentTitleList.get(position)
-    }
-
-    fun addFragment(fragment: Fragment, title: String) {
-        fragmentList.add(fragment)
-        fragmentTitleList.add(title)
-    }
 }

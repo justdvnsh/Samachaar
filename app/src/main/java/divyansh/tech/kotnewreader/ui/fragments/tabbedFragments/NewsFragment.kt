@@ -58,6 +58,8 @@ class NewsFragment(val category: String): BaseFragment() {
                 is Resource.Success -> {
                     hideProgress(paginationProgressBar)
                     it.data?.let {
+                        newsAdapter.differ.currentList.toMutableList().clear()
+                        newsAdapter.differ.submitList(null)
                         newsAdapter.differ.submitList(it.articles.toList())
                     }
                 }

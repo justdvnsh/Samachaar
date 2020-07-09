@@ -1,6 +1,7 @@
 package divyansh.tech.kotnewreader.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.adapters.FragmentsAdapter
@@ -25,11 +27,8 @@ import kotlinx.android.synthetic.main.common_toolbar.view.*
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
 import javax.inject.Inject
 
-@AndroidEntryPoint
 class BreakingNewsFragment : BaseFragment() {
 
-    @Inject
-    lateinit var newsAdapter: NewsAdapter
     lateinit var fragmentAdapter: FragmentsAdapter
 
     override fun provideView(
@@ -48,42 +47,21 @@ class BreakingNewsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         view.titleText.text = "Breaking News"
         setStatePagerAdapter()
-        setupTabLayoutListener()
-    }
-
-    private fun setupTabLayoutListener() {
-        tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                pager.currentItem = tab.position
-                val fm = childFragmentManager
-                val ft = fm.beginTransaction()
-                val count = fm.backStackEntryCount
-                if (count >= 1) fm.popBackStack()
-                ft.commit()
-            }
-
-            override fun onTabReselected(p0: TabLayout.Tab?) {
-//                TODO("Not yet implemented")
-            }
-
-            override fun onTabUnselected(p0: TabLayout.Tab?) {
-//                TODO("Not yet implemented")
-            }
-        })
     }
 
     private fun setStatePagerAdapter() {
-        fragmentAdapter = FragmentsAdapter(childFragmentManager)
-        fragmentAdapter.apply {
-//            addFragment(NewsFragment(getString(R.string.general)), getString(R.string.general))
-            addFragment(NewsFragment(getString(R.string.business)), getString(R.string.business))
-            addFragment(NewsFragment(getString(R.string.entertainment)), getString(R.string.entertainment))
-            addFragment(NewsFragment(getString(R.string.tech)), getString(R.string.tech))
-            addFragment(NewsFragment(getString(R.string.sports)), getString(R.string.sports))
-            addFragment(NewsFragment(getString(R.string.health)), getString(R.string.health))
-            addFragment(NewsFragment(getString(R.string.science)), getString(R.string.science))
-        }
+        fragmentAdapter = FragmentsAdapter(this)
         pager.adapter = fragmentAdapter
-        tabs.setupWithViewPager(pager, true)
+        TabLayoutMediator(tabs, pager) {tab, position ->
+            when (position) {
+                0 -> tab.text = getString(R.string.business)
+                1 -> tab.text = getString(R.string.entertainment)
+                2 -> tab.text = getString(R.string.tech)
+                3 -> tab.text = getString(R.string.sports)
+                4 -> tab.text = getString(R.string.health)
+                5 -> tab.text = getString(R.string.science)
+            }
+        }.attach()
     }
+
 }

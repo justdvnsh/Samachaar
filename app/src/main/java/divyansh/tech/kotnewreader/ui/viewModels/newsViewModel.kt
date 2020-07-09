@@ -42,6 +42,7 @@ class newsViewModel @ViewModelInject constructor(
                 if (breakingNewsResponse == null) {
                     breakingNewsResponse = it
                 } else {
+                    breakingNewsResponse?.articles?.clear()
                     breakingNewsResponse?.articles?.addAll(it.articles)
                 }
                 return Resource.Success(breakingNewsResponse ?: it)
@@ -66,8 +67,8 @@ class newsViewModel @ViewModelInject constructor(
 
     fun getBreakingNews(countryCode: String, category: String) = viewModelScope.launch {
         breakingNews.postValue(Resource.Loading())
-        val response = newRepository.getBreakingNews(countryCode, category)
-        Log.i("vIEWMoDEL", response.raw().request.url.toString() + response.body().toString())
+        val response = newRepository.getBreakingNews(countryCode, category.toLowerCase())
+        Log.i("vIEWMoDEL", response.raw().request.url.toString() + "\n" + response.body().toString())
         breakingNews.postValue(handleNewsReponse(response))
     }
 
