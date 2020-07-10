@@ -24,5 +24,4 @@ class FragmentsAdapter(val fragment: Fragment): FragmentStateAdapter(fragment) {
             else -> return SearchFragment()
         }
     }
-
 }

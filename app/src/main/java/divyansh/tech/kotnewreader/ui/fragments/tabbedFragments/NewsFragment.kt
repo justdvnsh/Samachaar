@@ -8,15 +8,19 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.adapters.NewsAdapter
 import divyansh.tech.kotnewreader.ui.fragments.BaseFragment
 import divyansh.tech.kotnewreader.utils.Constants
 import divyansh.tech.kotnewreader.utils.Resource
 import kotlinx.android.synthetic.main.fragment_general_news.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class NewsFragment(val category: String): BaseFragment() {
 
+    @Inject
     lateinit var newsAdapter: NewsAdapter
 
     override fun provideView(
@@ -34,7 +38,6 @@ class NewsFragment(val category: String): BaseFragment() {
     }
 
     fun setupRecyclerView() {
-        newsAdapter = NewsAdapter()
         newsAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable("article", it)
