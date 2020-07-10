@@ -31,7 +31,7 @@ class NewsRepository @Inject constructor(
         Log.i("INJECTED", db.hashCode().toString() + " api ->" + api.hashCode().toString())
     }
 
-    suspend fun getBreakingNews(countryCode: String, category: String) = api.getBreakingNews(countryCode, category = category)
+    suspend fun getBreakingNews(countryCode: String, category: String, pageNumber: Int) = api.getBreakingNews(countryCode, category = category, pageNumber = pageNumber)
 
     suspend fun searchNews(searchQuery: String) = api.searchForNews(searchQuery)
 

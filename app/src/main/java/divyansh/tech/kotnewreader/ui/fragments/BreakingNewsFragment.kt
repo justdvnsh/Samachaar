@@ -69,7 +69,7 @@ class BreakingNewsFragment : BaseFragment() {
                 positionOffset: Float,
                 positionOffsetPixels: Int
             ) {
-//                TODO("Not yet implemented")
+                if (shouldPaginate) viewModel.getBreakingNews("in", tabs.getTabAt(position)?.text.toString().toLowerCase())
             }
 
             override fun onPageSelected(position: Int) {

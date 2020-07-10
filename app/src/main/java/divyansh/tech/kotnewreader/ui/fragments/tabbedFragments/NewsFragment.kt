@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.adapters.NewsAdapter
@@ -50,7 +53,7 @@ class NewsFragment(): BaseFragment() {
         rvGeneralBreakingNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
-//            addOnScrollListener(scrollListener)
+            addOnScrollListener(scrollListener)
         }
     }
 

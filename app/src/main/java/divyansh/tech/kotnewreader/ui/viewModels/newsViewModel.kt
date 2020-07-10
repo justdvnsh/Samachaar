@@ -13,6 +13,7 @@ import com.squareup.okhttp.Dispatcher
 import divyansh.tech.kotnewreader.network.models.Article
 import divyansh.tech.kotnewreader.network.models.NewsResponse
 import divyansh.tech.kotnewreader.repositories.NewsRepository
+import divyansh.tech.kotnewreader.ui.fragments.BaseFragment
 import divyansh.tech.kotnewreader.utils.Resource
 import divyansh.tech.kotnewreader.work.SyncWorker
 import kotlinx.coroutines.CoroutineScope
@@ -28,6 +29,7 @@ class newsViewModel @ViewModelInject constructor(
 
     var breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var breakingNewsResponse: NewsResponse? = null
+    var breakingNewsPage = 1
     var pageChanged: Boolean = false
 
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
@@ -40,11 +42,16 @@ class newsViewModel @ViewModelInject constructor(
     fun handleNewsReponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let {
+                if (BaseFragment.shouldPaginate) breakingNewsPage++
                 if (breakingNewsResponse == null) {
                     breakingNewsResponse = it
                 } else {
-                    if (pageChanged) breakingNewsResponse?.articles?.clear()
-                    breakingNewsResponse?.articles?.addAll(it.articles)
+                    if (pageChanged) {
+                        breakingNewsResponse?.articles?.clear()
+                        breakingNewsResponse?.articles?.addAll(it.articles)
+                    } else {
+                        breakingNewsResponse?.articles?.addAll(it.articles)
+                    }
                 }
                 return Resource.Success(breakingNewsResponse ?: it)
             }
@@ -68,7 +75,7 @@ class newsViewModel @ViewModelInject constructor(
 
     fun getBreakingNews(countryCode: String, category: String) = viewModelScope.launch {
         breakingNews.postValue(Resource.Loading())
-        val response = newRepository.getBreakingNews(countryCode, category.toLowerCase())
+        val response = newRepository.getBreakingNews(countryCode, category.toLowerCase(), breakingNewsPage)
         Log.i("vIEWMoDEL", response.raw().request.url.toString() + "\n" + response.body().toString())
         breakingNews.postValue(handleNewsReponse(response))
     }
