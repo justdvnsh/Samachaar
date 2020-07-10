@@ -50,10 +50,6 @@ class SearchFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
-    override fun provideCategory(): String {
-        return ""
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()

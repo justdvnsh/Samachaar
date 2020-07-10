@@ -40,10 +40,6 @@ class BreakingNewsFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_breaking_news, container, false)
     }
 
-    override fun provideCategory(): String {
-        return ""
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.titleText.text = "Breaking News"

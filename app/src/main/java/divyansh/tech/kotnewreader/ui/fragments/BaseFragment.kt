@@ -136,5 +136,4 @@ abstract class BaseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View
-    abstract fun provideCategory(): String
 }
