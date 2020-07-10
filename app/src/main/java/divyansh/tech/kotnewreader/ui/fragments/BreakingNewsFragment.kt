@@ -74,13 +74,34 @@ class BreakingNewsFragment : BaseFragment() {
 
             override fun onPageSelected(position: Int) {
                 when (position) {
-                    0 -> NewsFragment("Business")
-                    1 -> NewsFragment("Entertainment")
-                    2 -> NewsFragment("Technology")
-                    3 -> NewsFragment("Sports")
-                    4 -> NewsFragment("Health")
-                    5 -> NewsFragment("Science")
-                    else -> SearchFragment()
+                    0 -> {
+                        viewModel.pageChanged = true
+                        viewModel.getBreakingNews("in", getString(R.string.business))
+                    }
+                    1 -> {
+                        viewModel.pageChanged = true
+                        viewModel.getBreakingNews("in", getString(R.string.entertainment))
+                    }
+                    2 -> {
+                        viewModel.pageChanged = true
+                        viewModel.getBreakingNews("in", getString(R.string.tech))
+                    }
+                    3 -> {
+                        viewModel.pageChanged = true
+                        viewModel.getBreakingNews("in", getString(R.string.sports))
+                    }
+                    4 -> {
+                        viewModel.pageChanged = true
+                        viewModel.getBreakingNews("in", getString(R.string.health))
+                    }
+                    5 -> {
+                        viewModel.pageChanged = true
+                        viewModel.getBreakingNews("in", getString(R.string.science))
+                    }
+                    else -> {
+                        viewModel.pageChanged = false
+                        SearchFragment()
+                    }
                 }
             }
 

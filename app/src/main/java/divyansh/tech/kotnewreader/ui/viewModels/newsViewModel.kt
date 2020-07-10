@@ -26,8 +26,9 @@ class newsViewModel @ViewModelInject constructor(
     val newRepository: NewsRepository
 ): ViewModel() {
 
-    val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var breakingNewsResponse: NewsResponse? = null
+    var pageChanged: Boolean = false
 
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var searchNewsResponse: NewsResponse? = null
@@ -42,7 +43,7 @@ class newsViewModel @ViewModelInject constructor(
                 if (breakingNewsResponse == null) {
                     breakingNewsResponse = it
                 } else {
-                    breakingNewsResponse?.articles?.clear()
+                    if (pageChanged) breakingNewsResponse?.articles?.clear()
                     breakingNewsResponse?.articles?.addAll(it.articles)
                 }
                 return Resource.Success(breakingNewsResponse ?: it)

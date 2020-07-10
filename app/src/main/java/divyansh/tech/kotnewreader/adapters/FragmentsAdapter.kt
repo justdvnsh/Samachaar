@@ -14,14 +14,7 @@ class FragmentsAdapter(val fragment: Fragment): FragmentStateAdapter(fragment) {
     }
 
     override fun createFragment(position: Int): Fragment {
-        when (position) {
-            0 -> return NewsFragment("Business")
-            1 -> return NewsFragment("Entertainment")
-            2 -> return NewsFragment("Technology")
-            3 -> return NewsFragment("Sports")
-            4 -> return NewsFragment("Health")
-            5 -> return NewsFragment("Science")
-            else -> return SearchFragment()
-        }
+        if (position in 0..5) return NewsFragment()
+        return SearchFragment()
     }
 }

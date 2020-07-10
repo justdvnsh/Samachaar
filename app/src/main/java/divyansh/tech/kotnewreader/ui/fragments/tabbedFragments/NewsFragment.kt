@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_general_news.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class NewsFragment(val category: String): BaseFragment() {
+class NewsFragment(): BaseFragment() {
 
     @Inject
     lateinit var newsAdapter: NewsAdapter
@@ -55,7 +55,6 @@ class NewsFragment(val category: String): BaseFragment() {
     }
 
     fun setupObservers() {
-        viewModel.getBreakingNews("in", category.toLowerCase())
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
@@ -77,10 +76,5 @@ class NewsFragment(val category: String): BaseFragment() {
                 }
             }
         })
-    }
-
-
-    override fun provideCategory(): String {
-        return ""
     }
 }

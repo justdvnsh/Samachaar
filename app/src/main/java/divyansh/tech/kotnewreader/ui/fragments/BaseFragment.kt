@@ -63,8 +63,8 @@ abstract class BaseFragment : Fragment() {
 //            }
 //        }
 //    }
-//
-//
+
+
 //    private fun setupPagination(shouldPaginate: Boolean) {
 //        if (shouldPaginate) {
 //            viewModel.getBreakingNews("in", provideCategory())
