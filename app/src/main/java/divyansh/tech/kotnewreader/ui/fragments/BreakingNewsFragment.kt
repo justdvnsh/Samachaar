@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,6 +63,32 @@ class BreakingNewsFragment : BaseFragment() {
                 5 -> tab.text = getString(R.string.science)
             }
         }.attach()
+        pager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrollStateChanged(state: Int) {
+//                TODO("Not yet implemented")
+            }
+
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+//                TODO("Not yet implemented")
+            }
+
+            override fun onPageSelected(position: Int) {
+                when (position) {
+                    0 -> NewsFragment("Business")
+                    1 -> NewsFragment("Entertainment")
+                    2 -> NewsFragment("Technology")
+                    3 -> NewsFragment("Sports")
+                    4 -> NewsFragment("Health")
+                    5 -> NewsFragment("Science")
+                    else -> SearchFragment()
+                }
+            }
+
+        })
     }
 
 }

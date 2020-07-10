@@ -15,12 +15,12 @@ class FragmentsAdapter(val fragment: Fragment): FragmentStateAdapter(fragment) {
 
     override fun createFragment(position: Int): Fragment {
         when (position) {
-            0 -> return BusinessFragment()
-            1 -> return EntertainmentFragment()
-            2 -> return TechFragment()
-            3 -> return SportsFragment()
-            4 -> return HealthFragment()
-            5 -> return ScienceFragment()
+            0 -> return NewsFragment("Business")
+            1 -> return NewsFragment("Entertainment")
+            2 -> return NewsFragment("Technology")
+            3 -> return NewsFragment("Sports")
+            4 -> return NewsFragment("Health")
+            5 -> return NewsFragment("Science")
             else -> return SearchFragment()
         }
     }
