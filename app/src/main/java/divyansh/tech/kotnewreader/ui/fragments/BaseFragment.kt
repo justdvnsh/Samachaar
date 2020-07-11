@@ -41,7 +41,6 @@ abstract class BaseFragment : Fragment(), TextToSpeech.OnInitListener {
     var isLoading = false
     var isLastPage = false
     var isScrolling = false
-    lateinit var tts: TextToSpeech
     companion object {
         var shouldPaginate = false
     }
@@ -96,7 +95,6 @@ abstract class BaseFragment : Fragment(), TextToSpeech.OnInitListener {
         viewModel = (activity as NewsActivity).viewModel
         setupListeners()
         user = (activity as NewsActivity).user
-        tts = TextToSpeech(view.context, this)
     }
 
     private fun setupListeners() {
@@ -107,25 +105,18 @@ abstract class BaseFragment : Fragment(), TextToSpeech.OnInitListener {
             openCamera()
         }
         speak?.setOnClickListener {
-            speakOut()
+            openMediaPlayerActivity()
         }
         speak?.isEnabled = false
     }
 
-    private fun speakOut() {
-        if (Build.VERSION.SDK_INT >= 21) tts.speak("Hello, I am Divyansh. The Developer of this amazing app", TextToSpeech.QUEUE_FLUSH, null, "")
-        else speak?.isEnabled = false
+    private fun openMediaPlayerActivity() {
+        if (speak?.isEnabled!!)  startActivity(Intent(activity, AudioPlayerActivity::class.java))
     }
 
     // text to speech initialization
     override fun onInit(status: Int) {
-        speak?.isEnabled = true
-    }
-
-    override fun onDestroy() {
-        tts.stop()
-        tts.shutdown()
-        super.onDestroy()
+        if (status == TextToSpeech.SUCCESS) speak?.isEnabled = true
     }
 
     private fun openCamera() {
