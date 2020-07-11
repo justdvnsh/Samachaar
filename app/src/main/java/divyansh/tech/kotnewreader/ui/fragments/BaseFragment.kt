@@ -3,8 +3,10 @@ package divyansh.tech.kotnewreader.ui.fragments
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +31,7 @@ import kotlinx.android.synthetic.main.common_toolbar.*
 import kotlinx.android.synthetic.main.fragment_general_news.*
 import javax.inject.Inject
 
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment : Fragment(), TextToSpeech.OnInitListener {
 
     lateinit var viewModel: newsViewModel
     lateinit var user: User
@@ -39,6 +41,7 @@ abstract class BaseFragment : Fragment() {
     var isLoading = false
     var isLastPage = false
     var isScrolling = false
+    lateinit var tts: TextToSpeech
     companion object {
         var shouldPaginate = false
     }
@@ -93,6 +96,7 @@ abstract class BaseFragment : Fragment() {
         viewModel = (activity as NewsActivity).viewModel
         setupListeners()
         user = (activity as NewsActivity).user
+        tts = TextToSpeech(view.context, this)
     }
 
     private fun setupListeners() {
@@ -102,6 +106,26 @@ abstract class BaseFragment : Fragment() {
         scanner?.setOnClickListener {
             openCamera()
         }
+        speak?.setOnClickListener {
+            speakOut()
+        }
+        speak?.isEnabled = false
+    }
+
+    private fun speakOut() {
+        if (Build.VERSION.SDK_INT >= 21) tts.speak("Hello, I am Divyansh. The Developer of this amazing app", TextToSpeech.QUEUE_FLUSH, null, "")
+        else speak?.isEnabled = false
+    }
+
+    // text to speech initialization
+    override fun onInit(status: Int) {
+        speak?.isEnabled = true
+    }
+
+    override fun onDestroy() {
+        tts.stop()
+        tts.shutdown()
+        super.onDestroy()
     }
 
     private fun openCamera() {
