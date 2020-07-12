@@ -24,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.adapters.NewsAdapter
 import divyansh.tech.kotnewreader.network.models.User
+import divyansh.tech.kotnewreader.ui.AudioPlayerActivity
 import divyansh.tech.kotnewreader.ui.NewsActivity
 import divyansh.tech.kotnewreader.ui.viewModels.newsViewModel
 import divyansh.tech.kotnewreader.utils.Constants
@@ -31,7 +32,7 @@ import kotlinx.android.synthetic.main.common_toolbar.*
 import kotlinx.android.synthetic.main.fragment_general_news.*
 import javax.inject.Inject
 
-abstract class BaseFragment : Fragment(), TextToSpeech.OnInitListener {
+abstract class BaseFragment : Fragment(){
 
     lateinit var viewModel: newsViewModel
     lateinit var user: User
@@ -107,16 +108,10 @@ abstract class BaseFragment : Fragment(), TextToSpeech.OnInitListener {
         speak?.setOnClickListener {
             openMediaPlayerActivity()
         }
-        speak?.isEnabled = false
     }
 
-    private fun openMediaPlayerActivity() {
-        if (speak?.isEnabled!!)  startActivity(Intent(activity, AudioPlayerActivity::class.java))
-    }
-
-    // text to speech initialization
-    override fun onInit(status: Int) {
-        if (status == TextToSpeech.SUCCESS) speak?.isEnabled = true
+    fun openMediaPlayerActivity() {
+        startActivity(Intent(activity, AudioPlayerActivity::class.java))
     }
 
     private fun openCamera() {
