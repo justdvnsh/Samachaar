@@ -51,6 +51,9 @@ object AppModule {
     fun provideNewsApi(retrofit: Retrofit) = retrofit.create(NewsApi::class.java)
 
     @Provides
+    fun provideAdapter(): NewsAdapter = NewsAdapter()
+
+    @Provides
     @Singleton
     fun provideFirebaseAuthClient() = FirebaseAuth.getInstance()
 

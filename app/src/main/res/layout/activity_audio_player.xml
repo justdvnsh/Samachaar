@@ -56,11 +56,172 @@
         android:layout_height="wrap_content"
         android:visibility="invisible"
         android:background="@android:color/transparent"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.5"
         />
+
+    <ScrollView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/cardView"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+        <RelativeLayout
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            >
+            <GridLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:columnCount="2"
+                android:padding="20dp"
+                android:id="@+id/gridLayout"
+                >
+
+                <androidx.cardview.widget.CardView
+                    android:layout_height="200dp"
+                    android:layout_width="wrap_content"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="10dp"
+                    android:id="@+id/business"
+                    >
+                    <TextView
+                        android:padding="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:text="@string/business"
+                        android:textSize="22sp"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold"
+                        />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_height="200dp"
+                    android:layout_width="wrap_content"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="10dp"
+                    android:id="@+id/entertainment"
+                    >
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:text="@string/entertainment"
+                        android:textSize="22sp"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold"
+                        />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_height="200dp"
+                    android:layout_width="wrap_content"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="10dp"
+                    android:id="@+id/technology"
+                    >
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:text="@string/tech"
+                        android:textSize="22sp"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold"
+                        />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_height="200dp"
+                    android:layout_width="wrap_content"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="10dp"
+                    android:id="@+id/sports"
+                    >
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:text="@string/sports"
+                        android:textSize="22sp"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold"
+                        />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_height="200dp"
+                    android:layout_width="wrap_content"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="10dp"
+                    android:id="@+id/health"
+                    >
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:text="@string/health"
+                        android:textSize="22sp"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold"
+                        />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_height="200dp"
+                    android:layout_width="wrap_content"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="10dp"
+                    android:id="@+id/science"
+                    >
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:text="@string/science"
+                        android:textSize="22sp"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold"
+                        />
+                </androidx.cardview.widget.CardView>
+
+            </GridLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_height="200dp"
+                android:layout_width="match_parent"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="10dp"
+                android:id="@+id/favorites"
+                android:layout_below="@id/gridLayout"
+                >
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:text="Favorites"
+                    android:textSize="22sp"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    />
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
