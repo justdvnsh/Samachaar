@@ -40,7 +40,6 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         setContentView(R.layout.activity_audio_player)
         initializeTextToSpeech()
         setupListeners()
-        setupObservers()
     }
 
     private fun initializeTextToSpeech() {
@@ -75,6 +74,7 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private fun loadArticlesAndDirectory(name: String) {
         viewModel.getBreakingNews("in", name)
+        setupObservers()
     }
 
     fun showProgress(progressBar: ProgressBar) {
@@ -115,16 +115,15 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             Log.i("Audio", news.title!!)
             newses.add(news.title + "  " + news.description)
         }
-        val directory = File(baseContext.getExternalFilesDir(null) , "/KotNews/${SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())}")
-        directory.delete()
-        directory.mkdir()
+        val directory = File(baseContext.getExternalFilesDir(null) , "/KotNews")
+        if (!directory.exists()) directory.mkdir()
         for (index in 0 until newses.size) {
             Log.i("Audio", cacheDir.toString())
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 tts.synthesizeToFile(
                     newses.get(index),
                     null,
-                    File(directory, utteranceId + "_news_${index}.mp3"),
+                    File(directory, utteranceId + "_news_${index}.wav"),
                     utteranceId
                 )
             } else {

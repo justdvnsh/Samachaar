@@ -73,10 +73,10 @@
         >
 
         <RelativeLayout
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             >
-            <GridLayout
+            <TableLayout
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:columnCount="2"
@@ -84,17 +84,19 @@
                 android:id="@+id/gridLayout"
                 >
 
+                <TableRow>
                 <androidx.cardview.widget.CardView
                     android:layout_height="200dp"
                     android:layout_width="wrap_content"
                     app:cardElevation="10dp"
                     app:cardCornerRadius="10dp"
                     android:id="@+id/business"
+                    android:layout_weight="1"
                     >
                     <TextView
                         android:padding="10dp"
                         android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_gravity="center"
                         android:text="@string/business"
                         android:textSize="22sp"
@@ -110,10 +112,11 @@
                     app:cardElevation="10dp"
                     app:cardCornerRadius="10dp"
                     android:id="@+id/entertainment"
+                    android:layout_weight="1"
                     >
                     <TextView
                         android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_gravity="center"
                         android:text="@string/entertainment"
                         android:textSize="22sp"
@@ -122,17 +125,20 @@
                         android:textStyle="bold"
                         />
                 </androidx.cardview.widget.CardView>
+                </TableRow>
 
+                <TableRow>
                 <androidx.cardview.widget.CardView
                     android:layout_height="200dp"
                     android:layout_width="wrap_content"
                     app:cardElevation="10dp"
                     app:cardCornerRadius="10dp"
                     android:id="@+id/technology"
+                    android:layout_weight="1"
                     >
                     <TextView
                         android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_gravity="center"
                         android:text="@string/tech"
                         android:textSize="22sp"
@@ -148,10 +154,11 @@
                     app:cardElevation="10dp"
                     app:cardCornerRadius="10dp"
                     android:id="@+id/sports"
+                    android:layout_weight="1"
                     >
                     <TextView
                         android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_gravity="center"
                         android:text="@string/sports"
                         android:textSize="22sp"
@@ -160,17 +167,20 @@
                         android:textStyle="bold"
                         />
                 </androidx.cardview.widget.CardView>
+                </TableRow>
 
+                <TableRow>
                 <androidx.cardview.widget.CardView
                     android:layout_height="200dp"
                     android:layout_width="wrap_content"
                     app:cardElevation="10dp"
                     app:cardCornerRadius="10dp"
                     android:id="@+id/health"
+                    android:layout_weight="1"
                     >
                     <TextView
                         android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_gravity="center"
                         android:text="@string/health"
                         android:textSize="22sp"
@@ -186,10 +196,11 @@
                     app:cardElevation="10dp"
                     app:cardCornerRadius="10dp"
                     android:id="@+id/science"
+                    android:layout_weight="1"
                     >
                     <TextView
                         android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_gravity="center"
                         android:text="@string/science"
                         android:textSize="22sp"
@@ -198,8 +209,9 @@
                         android:textStyle="bold"
                         />
                 </androidx.cardview.widget.CardView>
+                </TableRow>
 
-            </GridLayout>
+            </TableLayout>
 
             <androidx.cardview.widget.CardView
                 android:layout_height="200dp"
@@ -208,10 +220,11 @@
                 app:cardCornerRadius="10dp"
                 android:id="@+id/favorites"
                 android:layout_below="@id/gridLayout"
+                android:layout_marginBottom="40dp"
                 >
                 <TextView
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_gravity="center"
                     android:text="Favorites"
                     android:textSize="22sp"
