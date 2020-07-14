@@ -115,6 +115,9 @@ dependencies {
     // work manager
     implementation "android.arch.work:work-runtime-ktx:2.3.4"
 
+    // easy permissions
+    implementation 'pub.devrel:easypermissions:3.0.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

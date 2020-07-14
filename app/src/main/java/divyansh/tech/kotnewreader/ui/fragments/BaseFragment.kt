@@ -1,5 +1,6 @@
 package divyansh.tech.kotnewreader.ui.fragments
 
+import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Bitmap
@@ -20,6 +21,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.adapters.NewsAdapter
@@ -30,6 +32,7 @@ import divyansh.tech.kotnewreader.ui.viewModels.newsViewModel
 import divyansh.tech.kotnewreader.utils.Constants
 import kotlinx.android.synthetic.main.common_toolbar.*
 import kotlinx.android.synthetic.main.fragment_general_news.*
+import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
 abstract class BaseFragment : Fragment(){
@@ -103,7 +106,7 @@ abstract class BaseFragment : Fragment(){
             findNavController().navigate(R.id.searchFragment)
         }
         scanner?.setOnClickListener {
-            openCamera()
+            openCamera(it)
         }
         speak?.setOnClickListener {
             openMediaPlayerActivity()
@@ -114,11 +117,15 @@ abstract class BaseFragment : Fragment(){
         startActivity(Intent(activity, AudioPlayerActivity::class.java))
     }
 
-    private fun openCamera() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        takePictureIntent.resolveActivity((activity as NewsActivity).packageManager)?.let {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-        }
+    private fun hasCameraPermissions() :Boolean = EasyPermissions.hasPermissions(context!!, Manifest.permission.CAMERA)
+
+    private fun openCamera(view: View) {
+        if (hasCameraPermissions()) {
+            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            takePictureIntent.resolveActivity((activity as NewsActivity).packageManager)?.let {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            }
+        } else Snackbar.make(view, "Camera Permission Not Allowed", Snackbar.LENGTH_SHORT).show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
