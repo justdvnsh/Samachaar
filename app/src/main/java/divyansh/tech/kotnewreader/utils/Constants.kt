@@ -9,5 +9,9 @@ class Constants {
         const val BASE_URL = "https://newsapi.org"
         const val RC_SIGN_IN = 123
         const val USERS = "users"
+        const val RC_LOCATION_PERM = 124
+        const val RC_CAMERA_PERM = 125
+        const val RC_WRITE_PERM = 126
+        const val RC_READ_PERM = 127
     }
 }

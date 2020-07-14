@@ -24,12 +24,15 @@ import divyansh.tech.kotnewreader.database.ArticleDao
 import divyansh.tech.kotnewreader.network.api.NewsApi
 import divyansh.tech.kotnewreader.network.models.User
 import divyansh.tech.kotnewreader.ui.viewModels.newsViewModel
+import divyansh.tech.kotnewreader.utils.Constants.Companion.RC_CAMERA_PERM
+import divyansh.tech.kotnewreader.utils.Constants.Companion.RC_LOCATION_PERM
 import kotlinx.android.synthetic.main.activity_news.*
+import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class NewsActivity : AppCompatActivity() {
+class NewsActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
 
     val viewModel: newsViewModel by viewModels()
     lateinit var user: User
@@ -48,7 +51,32 @@ class NewsActivity : AppCompatActivity() {
     private fun fetchLocation() {
         if (hasLocationPermission()) {
             // do something .. Fetch Location
-        } else Toast.makeText(this, "Location Permissions have not been allowed", Toast.LENGTH_SHORT).show()
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.rationale_location),
+                RC_LOCATION_PERM,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode:Int,
+                                            permissions:Array<String>,
+                                            grantResults:IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // EasyPermissions handles the request result.
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms))
+        {
+            AppSettingsDialog.Builder(this).build().show()
+        }
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+//        TODO("Not yet implemented")
     }
 
     private fun initUser() {

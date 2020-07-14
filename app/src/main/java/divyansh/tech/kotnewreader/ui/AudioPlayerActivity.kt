@@ -17,8 +17,10 @@ import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.adapters.NewsAdapter
 import divyansh.tech.kotnewreader.network.models.Article
 import divyansh.tech.kotnewreader.ui.viewModels.newsViewModel
+import divyansh.tech.kotnewreader.utils.Constants
 import divyansh.tech.kotnewreader.utils.Resource
 import kotlinx.android.synthetic.main.activity_audio_player.*
+import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 import java.text.SimpleDateFormat
@@ -28,7 +30,7 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 @AndroidEntryPoint
-class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
+class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, EasyPermissions.PermissionCallbacks {
 
     @Inject
     lateinit var newsAdapter: NewsAdapter
@@ -100,7 +102,8 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 is Resource.Error -> {
                     hideProgress(paginationProgressBar)
                     it.message?.let {
-                        Toast.makeText(this@AudioPlayerActivity, "Failed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@AudioPlayerActivity, "Failed", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
 
@@ -111,8 +114,11 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         })
     }
 
-    private fun hasWritePermissions(): Boolean = EasyPermissions.hasPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    private fun hasReadPermissions(): Boolean = EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+    private fun hasWritePermissions(): Boolean =
+        EasyPermissions.hasPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+    private fun hasReadPermissions(): Boolean =
+        EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)
 
     private fun saveAudio(articles: List<Article>) {
         var newses: MutableList<String?> = ArrayList<String?>()
@@ -121,7 +127,7 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             newses.add(news.title + "  " + news.description)
         }
         if (hasWritePermissions() && hasReadPermissions()) {
-            val directory = File(baseContext.getExternalFilesDir(null) , "/KotNews")
+            val directory = File(baseContext.getExternalFilesDir(null), "/KotNews")
             if (!directory.exists()) directory.mkdir()
             for (index in 0 until newses.size) {
                 Log.i("Audio", cacheDir.toString())
@@ -135,13 +141,51 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 } else {
                     val params: HashMap<String, String> = HashMap()
                     params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceId);
-                    tts.synthesizeToFile(newses.get(index), params, File(cacheDir, utteranceId + "_news-${index}.mp3").path)
+                    tts.synthesizeToFile(
+                        newses.get(index),
+                        params,
+                        File(cacheDir, utteranceId + "_news-${index}.mp3").path
+                    )
                 }
             }
-        } else Toast.makeText(this, "Permissions Not Allowed", Toast.LENGTH_SHORT).show()
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.rationale_write),
+                Constants.RC_WRITE_PERM,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.rationale_read),
+                Constants.RC_READ_PERM,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        }
     }
 
 
     override fun onInit(status: Int) {
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // EasyPermissions handles the request result.
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            AppSettingsDialog.Builder(this).build().show()
+        }
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+//        TODO("Not yet implemented")
     }
 }

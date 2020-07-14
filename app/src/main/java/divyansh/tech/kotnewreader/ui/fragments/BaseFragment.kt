@@ -32,10 +32,11 @@ import divyansh.tech.kotnewreader.ui.viewModels.newsViewModel
 import divyansh.tech.kotnewreader.utils.Constants
 import kotlinx.android.synthetic.main.common_toolbar.*
 import kotlinx.android.synthetic.main.fragment_general_news.*
+import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
-abstract class BaseFragment : Fragment(){
+abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks{
 
     lateinit var viewModel: newsViewModel
     lateinit var user: User
@@ -125,7 +126,32 @@ abstract class BaseFragment : Fragment(){
             takePictureIntent.resolveActivity((activity as NewsActivity).packageManager)?.let {
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
             }
-        } else Snackbar.make(view, "Camera Permission Not Allowed", Snackbar.LENGTH_SHORT).show()
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.rationale_camera),
+                Constants.RC_CAMERA_PERM,
+                Manifest.permission.CAMERA)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode:Int,
+                                            permissions:Array<String>,
+                                            grantResults:IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // EasyPermissions handles the request result.
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms))
+        {
+            AppSettingsDialog.Builder(this).build().show()
+        }
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+//        TODO("Not yet implemented")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

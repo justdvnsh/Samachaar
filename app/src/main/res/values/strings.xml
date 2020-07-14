@@ -7,4 +7,8 @@
     <string name="sports">Sports</string>
     <string name="health">Health</string>
     <string name="science">Science</string>
+    <string name="rationale_location">This app needs access to your location to know where you are.</string>
+    <string name="rationale_camera">This app needs access to your camera in order to use the OCR feature.</string>
+    <string name="rationale_write">This app needs write access to your memory in order to use the Audio feature.</string>
+    <string name="rationale_read">This app needs read access to your memory in order to use the Audio feature.</string>
 </resources>
