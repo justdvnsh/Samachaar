@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -88,46 +89,72 @@
                 <androidx.cardview.widget.CardView
                     android:layout_height="200dp"
                     android:layout_width="wrap_content"
-                    app:cardElevation="10dp"
-                    app:cardCornerRadius="10dp"
                     android:id="@+id/business"
                     android:layout_weight="1"
                     android:padding="20dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginRight="20dp">
-                    <TextView
-                        android:padding="10dp"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/business"
-                        android:textSize="16sp"
-                        android:textAllCaps="true"
-                        android:textColor="@android:color/black"
-                        android:textStyle="bold"
-                        />
+
+                    <FrameLayout android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
+
+                        <ImageView
+                            android:scaleType="centerInside"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:src="@drawable/ic_business_4271251"
+                            />
+
+                        <TextView
+                            android:padding="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="bottom|center"
+                            android:text="@string/business"
+                            android:textSize="16sp"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            />
+
+                    </FrameLayout>
+
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_height="200dp"
                     android:layout_width="wrap_content"
-                    app:cardElevation="10dp"
-                    app:cardCornerRadius="10dp"
                     android:id="@+id/entertainment"
                     android:layout_weight="1"
                     android:padding="20dp"
+                    android:layout_marginBottom="20dp"
                     >
-                    <TextView
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="center"
-                        android:padding="10dp"
-                        android:text="@string/entertainment"
-                        android:textSize="16sp"
-                        android:textAllCaps="true"
-                        android:textColor="@android:color/black"
-                        android:textStyle="bold"
-                        />
+                    <FrameLayout android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
+
+                        <ImageView
+                            android:scaleType="centerInside"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:src="@drawable/ic_film_162029"
+                            />
+
+                        <TextView
+                            android:padding="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="bottom|center"
+                            android:text="@string/entertainment"
+                            android:textSize="16sp"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            />
+
+                    </FrameLayout>
                 </androidx.cardview.widget.CardView>
                 </TableRow>
 
@@ -135,47 +162,71 @@
                 <androidx.cardview.widget.CardView
                     android:layout_height="200dp"
                     android:layout_width="wrap_content"
-                    app:cardElevation="10dp"
-                    app:cardCornerRadius="10dp"
                     android:id="@+id/technology"
                     android:layout_weight="1"
                     android:padding="20dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginRight="20dp"
                     >
-                    <TextView
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/tech"
-                        android:textSize="16sp"
-                        android:textAllCaps="true"
-                        android:padding="10dp"
-                        android:textColor="@android:color/black"
-                        android:textStyle="bold"
-                        />
+                    <FrameLayout android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
+
+                        <ImageView
+                            android:scaleType="centerInside"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:src="@drawable/ic_laptop_2298286"
+                            />
+
+                        <TextView
+                            android:padding="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="bottom|center"
+                            android:text="@string/tech"
+                            android:textSize="16sp"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            />
+
+                    </FrameLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_height="200dp"
                     android:layout_width="wrap_content"
-                    app:cardElevation="10dp"
-                    app:cardCornerRadius="10dp"
                     android:id="@+id/sports"
                     android:layout_weight="1"
                     android:padding="20dp"
+                    android:layout_marginBottom="20dp"
                     >
-                    <TextView
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/sports"
-                        android:textSize="16sp"
-                        android:textAllCaps="true"
-                        android:padding="10dp"
-                        android:textColor="@android:color/black"
-                        android:textStyle="bold"
-                        />
+                    <FrameLayout android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
+
+                        <ImageView
+                            android:scaleType="centerInside"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:src="@drawable/ic_golf_23794"
+                            />
+
+                        <TextView
+                            android:padding="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="bottom|center"
+                            android:text="@string/sports"
+                            android:textSize="16sp"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            />
+
+                    </FrameLayout>
                 </androidx.cardview.widget.CardView>
                 </TableRow>
 
@@ -183,47 +234,71 @@
                 <androidx.cardview.widget.CardView
                     android:layout_height="200dp"
                     android:layout_width="wrap_content"
-                    app:cardElevation="10dp"
-                    app:cardCornerRadius="10dp"
                     android:id="@+id/health"
                     android:layout_weight="1"
                     android:padding="20dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginRight="20dp"
                     >
-                    <TextView
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/health"
-                        android:textSize="16sp"
-                        android:textAllCaps="true"
-                        android:padding="10dp"
-                        android:textColor="@android:color/black"
-                        android:textStyle="bold"
-                        />
+                    <FrameLayout android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
+
+                        <ImageView
+                            android:scaleType="centerInside"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:src="@drawable/ic_sports_1050966"
+                            />
+
+                        <TextView
+                            android:padding="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="bottom|center"
+                            android:text="@string/health"
+                            android:textSize="16sp"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            />
+
+                    </FrameLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_height="200dp"
                     android:layout_width="wrap_content"
-                    app:cardElevation="10dp"
-                    app:cardCornerRadius="10dp"
                     android:id="@+id/science"
                     android:layout_weight="1"
                     android:padding="20dp"
+                    android:layout_marginBottom="20dp"
                     >
-                    <TextView
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/science"
-                        android:textSize="16sp"
-                        android:padding="10dp"
-                        android:textAllCaps="true"
-                        android:textColor="@android:color/black"
-                        android:textStyle="bold"
-                        />
+                    <FrameLayout android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
+
+                        <ImageView
+                            android:scaleType="centerInside"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:src="@drawable/ic_brain_2750415"
+                            />
+
+                        <TextView
+                            android:padding="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="bottom|center"
+                            android:text="@string/science"
+                            android:textSize="16sp"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            />
+
+                    </FrameLayout>
                 </androidx.cardview.widget.CardView>
                 </TableRow>
 
@@ -232,24 +307,35 @@
             <androidx.cardview.widget.CardView
                 android:layout_height="200dp"
                 android:layout_width="match_parent"
-                app:cardElevation="10dp"
-                app:cardCornerRadius="10dp"
                 android:id="@+id/favorites"
                 android:layout_below="@id/gridLayout"
-                android:layout_marginBottom="40dp"
+                android:layout_marginBottom="80dp"
                 android:padding="20dp"
                 >
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Favorites"
-                    android:textSize="16sp"
-                    android:textAllCaps="true"
-                    android:padding="10dp"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold"
-                    />
+                <FrameLayout android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+
+                    <ImageView
+                        android:scaleType="centerInside"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:src="@drawable/ic_bookmark_1294473"
+                        />
+
+                    <TextView
+                        android:padding="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="bottom|center"
+                        android:text="Favorites"
+                        android:textSize="16sp"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold"
+                        />
+
+                </FrameLayout>
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
     </ScrollView>
