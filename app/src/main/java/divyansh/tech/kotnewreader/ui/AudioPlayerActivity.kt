@@ -1,6 +1,7 @@
 package divyansh.tech.kotnewreader.ui
 
 import android.Manifest
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -128,6 +129,9 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Ea
         }
         if (hasWritePermissions() && hasReadPermissions()) {
             val directory = File(baseContext.getExternalFilesDir(null), "/KotNews")
+            for (child in directory.list()) {
+                File(directory, child).delete()
+            }
             if (!directory.exists()) directory.mkdir()
             for (index in 0 until newses.size) {
                 Log.i("Audio", cacheDir.toString())
@@ -148,6 +152,7 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Ea
                     )
                 }
             }
+            startActivity(Intent(this@AudioPlayerActivity, AudioActivity::class.java))
         } else {
             EasyPermissions.requestPermissions(
                 this,

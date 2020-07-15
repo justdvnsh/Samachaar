@@ -108,16 +108,15 @@
                             />
 
                         <TextView
-                            android:padding="10dp"
-                            android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="bottom|center"
+                            android:padding="10dp"
                             android:text="@string/business"
-                            android:textSize="16sp"
                             android:textAllCaps="true"
                             android:textColor="@android:color/black"
-                            android:textStyle="bold"
-                            />
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
                     </FrameLayout>
 
