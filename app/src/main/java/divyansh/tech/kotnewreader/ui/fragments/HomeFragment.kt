@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
@@ -59,7 +61,32 @@ class HomeFragment: BaseFragment() {
     private fun  setupObservers() {
         (activity as NewsActivity).city?.let {
             viewModel.getSearchNews(it)
+            viewModel.getDailyReports()
         }
+        viewModel.coronaDetails.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Resource.Success -> {
+                    hideProgress(paginationProgressBar)
+                    it.data?.let {
+                        totalCases.text = it.totalCases.toString()
+                        activeCases.text = it.activeCases.toString()
+                        totalRecoveries.text = it.recovered.toString()
+                        totalDeaths.text = it.deaths.toString()
+                    }
+                }
+
+                is Resource.Error -> {
+                    hideProgress(paginationProgressBar)
+                    it.message?.let {
+                        Toast.makeText(activity, "Failed ${it}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                is Resource.Loading -> {
+                    showProgress(paginationProgressBar)
+                }
+            }
+        })
         viewModel.searchNews.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {

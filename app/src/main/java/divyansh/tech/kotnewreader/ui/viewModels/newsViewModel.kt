@@ -9,19 +9,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.*
-import com.squareup.okhttp.Dispatcher
 import divyansh.tech.kotnewreader.network.models.Article
+import divyansh.tech.kotnewreader.network.models.Corona
 import divyansh.tech.kotnewreader.network.models.NewsResponse
 import divyansh.tech.kotnewreader.repositories.NewsRepository
 import divyansh.tech.kotnewreader.ui.fragments.BaseFragment
 import divyansh.tech.kotnewreader.utils.Resource
 import divyansh.tech.kotnewreader.work.SyncWorker
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Response
-import java.util.concurrent.TimeUnit
+import java.text.SimpleDateFormat
+import java.util.*
 
 class newsViewModel @ViewModelInject constructor(
     val newRepository: NewsRepository
@@ -34,6 +32,8 @@ class newsViewModel @ViewModelInject constructor(
 
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var searchNewsResponse: NewsResponse? = null
+
+    var coronaDetails: MutableLiveData<Resource<Corona>> = MutableLiveData()
 
 //    init {
 //        getBreakingNews("in")
@@ -85,6 +85,22 @@ class newsViewModel @ViewModelInject constructor(
         val response = newRepository.searchNews(searchQuery)
         Log.i("SEARCH", response.raw().request.url.toString())
         searchNews.postValue(handleSearchReponse(response))
+    }
+
+    private fun handleCoronaResponse(response: Response<Corona>): Resource<Corona> {
+        if (response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    fun getDailyReports() = viewModelScope.launch {
+        coronaDetails.postValue(Resource.Loading())
+        val response = newRepository.getDailyReport()
+        Log.i("MainActivity", response.raw().request.url.toString())
+        coronaDetails.postValue(handleCoronaResponse(response))
     }
 
     fun upsertArticle(article: Article) = viewModelScope.launch {

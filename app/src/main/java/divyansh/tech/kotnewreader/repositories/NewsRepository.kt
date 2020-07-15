@@ -11,6 +11,7 @@ import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer
 import divyansh.tech.kotnewreader.database.ArticleDao
+import divyansh.tech.kotnewreader.network.api.CoronaApi
 import divyansh.tech.kotnewreader.network.api.NewsApi
 import divyansh.tech.kotnewreader.network.models.Article
 import divyansh.tech.kotnewreader.network.models.User
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class NewsRepository @Inject constructor(
     val db: ArticleDao,
     val api: NewsApi,
+    val coronaApi: CoronaApi,
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore
 ) {
@@ -36,6 +38,11 @@ class NewsRepository @Inject constructor(
     suspend fun searchNews(searchQuery: String) = api.searchForNews(searchQuery)
 
     suspend fun upsertArticle(article: Article) = db.upsert(article)
+
+    suspend fun getDailyReport() =
+        coronaApi.getDailyReport(
+            "https://api.apify.com/v2/key-value-stores/toDWvRj1JpTXiM8FF/records/LATEST?disableRedirect=true"
+        )
 
     fun getAllArticles() = db.getAllArticles()
 

@@ -16,6 +16,7 @@ import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.adapters.FragmentsAdapter
 import divyansh.tech.kotnewreader.adapters.NewsAdapter
 import divyansh.tech.kotnewreader.database.ArticleDatabase
+import divyansh.tech.kotnewreader.network.api.CoronaApi
 import divyansh.tech.kotnewreader.network.api.NewsApi
 import divyansh.tech.kotnewreader.utils.Constants.Companion.ARTICLE_DATABASE
 import divyansh.tech.kotnewreader.utils.Constants.Companion.BASE_URL
@@ -48,7 +49,11 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideNewsApi(retrofit: Retrofit) = retrofit.create(NewsApi::class.java)
+    fun provideNewsApi(retrofit: Retrofit): NewsApi = retrofit.create(NewsApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideCoronaApi(retrofit: Retrofit): CoronaApi = retrofit.create(CoronaApi::class.java)
 
     @Provides
     fun provideAdapter(): NewsAdapter = NewsAdapter()
