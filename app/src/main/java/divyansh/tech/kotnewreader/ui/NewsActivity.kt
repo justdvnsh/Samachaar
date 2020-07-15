@@ -1,41 +1,38 @@
 package divyansh.tech.kotnewreader.ui
 
 import android.Manifest
-import android.app.SearchManager
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.EditText
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
-import androidx.core.view.MenuItemCompat
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
-import divyansh.tech.kotnewreader.database.ArticleDao
-import divyansh.tech.kotnewreader.network.api.NewsApi
 import divyansh.tech.kotnewreader.network.models.User
 import divyansh.tech.kotnewreader.ui.viewModels.newsViewModel
-import divyansh.tech.kotnewreader.utils.Constants.Companion.RC_CAMERA_PERM
-import divyansh.tech.kotnewreader.utils.Constants.Companion.RC_LOCATION_PERM
 import kotlinx.android.synthetic.main.activity_news.*
-import pub.devrel.easypermissions.AppSettingsDialog
-import pub.devrel.easypermissions.EasyPermissions
-import javax.inject.Inject
+import java.util.*
 
 @AndroidEntryPoint
-class NewsActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
+class NewsActivity : AppCompatActivity(),LocationListener {
 
     val viewModel: newsViewModel by viewModels()
     lateinit var user: User
+    lateinit var country: String
+    lateinit var city: String
+    lateinit var mLocationManager: LocationManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,42 +41,93 @@ class NewsActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         bottomNavigationView.setupWithNavController(newsNavHostFragment.findNavController())
         viewModel.newRepository.testIfInjected()
         initUser()
+        fetchLocation()
     }
 
-    private fun hasLocationPermission(): Boolean = EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-
     private fun fetchLocation() {
-        if (hasLocationPermission()) {
-            // do something .. Fetch Location
+        mLocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (!mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            buildAlertMessage()
         } else {
-            EasyPermissions.requestPermissions(
-                this,
-                getString(R.string.rationale_location),
-                RC_LOCATION_PERM,
-                Manifest.permission.ACCESS_COARSE_LOCATION)
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return
+            }
+            mLocationManager.let {
+                it.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000L, 10f, this)
+                val loc = it.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                Log.i("MainActivity", "In location manager " + loc?.toString())
+                loc?.let {
+                    getGeoAddress(it.latitude, it.longitude)
+                }
+            }
         }
+    }
+
+    private fun buildAlertMessage() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setMessage("Your Location services seems to be disabled, do you want to enable it?")
+            .setCancelable(false)
+            .setPositiveButton("Yes", object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface?, which: Int) {
+                    startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                }
+            })
+            .setNegativeButton("No", object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface?, which: Int) {
+                    dialog?.cancel()
+                }
+            })
+        val alert: AlertDialog = builder.create()
+        alert.show()
+    }
+
+    private fun getGeoAddress(lat: Double, long: Double) {
+        val address = Geocoder(this, Locale.getDefault()).getFromLocation(lat, long, 1)
+        country = address.get(0).countryCode.toLowerCase()
+        city = address.get(0).locality
+        Log.i("MainActivity", country + " " + city)
     }
 
     override fun onRequestPermissionsResult(requestCode:Int,
                                             permissions:Array<String>,
                                             grantResults:IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        // EasyPermissions handles the request result.
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
-    }
-
-    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms))
-        {
-            AppSettingsDialog.Builder(this).build().show()
-        }
-    }
-
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-//        TODO("Not yet implemented")
+        fetchLocation()
     }
 
     private fun initUser() {
         user = intent.getSerializableExtra("User") as User
+    }
+
+    override fun onLocationChanged(location: Location?) {
+        Log.i("MainActivity", location.toString())
+//        getGeoAddress(location.latitude, location.longitude)
+    }
+
+    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+//        TODO("Not yet implemented")
+    }
+
+    override fun onProviderEnabled(provider: String?) {
+        Log.i("MainActivity", "enabled")
+        fetchLocation()
+    }
+
+    override fun onProviderDisabled(provider: String?) {
+        Log.i("MainActivity", "disabled")
     }
 }
