@@ -30,8 +30,8 @@ class NewsActivity : AppCompatActivity(),LocationListener {
 
     val viewModel: newsViewModel by viewModels()
     lateinit var user: User
-    lateinit var country: String
-    lateinit var city: String
+    var country: String? = null
+    var city: String? = null
     lateinit var mLocationManager: LocationManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +41,10 @@ class NewsActivity : AppCompatActivity(),LocationListener {
         bottomNavigationView.setupWithNavController(newsNavHostFragment.findNavController())
         viewModel.newRepository.testIfInjected()
         initUser()
+    }
+
+    override fun onResume() {
+        super.onResume()
         fetchLocation()
     }
 

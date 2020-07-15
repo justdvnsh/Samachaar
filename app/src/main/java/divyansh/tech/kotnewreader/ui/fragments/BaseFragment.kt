@@ -46,6 +46,7 @@ abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks{
     var isLoading = false
     var isLastPage = false
     var isScrolling = false
+
     companion object {
         var shouldPaginate = false
     }
