@@ -118,6 +118,9 @@ dependencies {
     // easy permissions
     implementation 'pub.devrel:easypermissions:3.0.0'
 
+    // exoplayer
+    implementation 'com.google.android.exoplayer:exoplayer:2.9.4'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -139,7 +139,7 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Ea
                     tts.synthesizeToFile(
                         newses.get(index),
                         null,
-                        File(directory, utteranceId + "_news_${index}.wav"),
+                        File(directory, utteranceId + "_news_${index}.mp3"),
                         utteranceId
                     )
                 } else {
@@ -152,7 +152,7 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Ea
                     )
                 }
             }
-            startActivity(Intent(this@AudioPlayerActivity, AudioActivity::class.java))
+//            startActivity(Intent(this@AudioPlayerActivity, AudioActivity::class.java))
         } else {
             EasyPermissions.requestPermissions(
                 this,
