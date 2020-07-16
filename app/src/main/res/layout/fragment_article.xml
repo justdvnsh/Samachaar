@@ -60,6 +60,13 @@
                 android:textSize="14sp"
                 />
 
+            <ImageView
+                android:layout_height="200dp"
+                android:layout_width="match_parent"
+                android:id="@+id/imageArticle"
+                android:scaleType="centerCrop"
+                />
+
             <TextView
                 android:paddingStart="25dp"
                 android:paddingEnd="25dp"
@@ -80,12 +87,24 @@
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_share_24"
+        app:fabSize="normal"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/fab"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="32dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_favorite"
         app:fabSize="normal"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="24dp"
         android:layout_marginEnd="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

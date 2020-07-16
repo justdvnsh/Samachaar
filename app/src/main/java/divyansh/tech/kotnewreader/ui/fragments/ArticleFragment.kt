@@ -1,5 +1,6 @@
 package divyansh.tech.kotnewreader.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.utils.Alert.Companion.createAlertDialog
@@ -56,6 +58,7 @@ class ArticleFragment: BaseFragment() {
                     titleArticle.text = args.article.title
                     dateArticle.text = args.article.publishedAt
                     article.text = it.data?.article_text
+                    Glide.with(context!!).load(args.article.urlToImage).into(imageArticle)
                     createAlertDialog(context!!).dismiss()
                 }
 
@@ -81,6 +84,15 @@ class ArticleFragment: BaseFragment() {
     }
 
     private fun setupFab(view: View) {
+        share.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, "I am using The Tech Reads app. You use it too. Read this article with me" +
+                    args.article.url)
+            intent.putExtra(Intent.EXTRA_SUBJECT, args.article.title)
+            startActivity(Intent.createChooser(intent, "Share Using "))
+
+        }
         fab.setOnClickListener {
             viewModel.upsertArticle(args.article)
             Snackbar.make(view, "Article Saved Successfully.", Snackbar.LENGTH_SHORT).show()
