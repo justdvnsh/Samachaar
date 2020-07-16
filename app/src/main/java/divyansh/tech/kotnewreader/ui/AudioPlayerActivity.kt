@@ -129,8 +129,10 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Ea
         }
         if (hasWritePermissions() && hasReadPermissions()) {
             val directory = File(baseContext.getExternalFilesDir(null), "/KotNews")
-            for (child in directory.list()) {
-                File(directory, child).delete()
+            if (!directory.list().isNullOrEmpty()) {
+                for (child in directory.list()) {
+                    File(directory, child).delete()
+                }
             }
             if (!directory.exists()) directory.mkdir()
             for (index in 0 until newses.size) {
@@ -152,7 +154,7 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Ea
                     )
                 }
             }
-//            startActivity(Intent(this@AudioPlayerActivity, AudioActivity::class.java))
+            startActivity(Intent(this@AudioPlayerActivity, AudioActivity::class.java))
         } else {
             EasyPermissions.requestPermissions(
                 this,
