@@ -10,11 +10,10 @@ import divyansh.tech.kotnewreader.R
 class Alert() {
 
     companion object {
-        fun createAlertDialog(context: Context){
+        fun createAlertDialog(context: Context): AlertDialog{
             val builder: AlertDialog.Builder = AlertDialog.Builder(context)
             builder.setView(R.layout.alert_view).setCancelable(true)
-            val alert: AlertDialog = builder.create()
-            alert.show()
+            return builder.create()
         }
     }
 

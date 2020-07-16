@@ -52,19 +52,22 @@ class ArticleFragment: BaseFragment() {
             when (it) {
                 is Resource.Success -> {
                     webView.visibility = GONE
-                    article.visibility = VISIBLE
+                    scrollArticle.visibility = VISIBLE
+                    titleArticle.text = args.article.title
+                    dateArticle.text = args.article.publishedAt
                     article.text = it.data?.article_text
+                    createAlertDialog(context!!).dismiss()
                 }
 
                 is Resource.Error -> {
-                    createAlertDialog(context!!)
+                    createAlertDialog(context!!).show()
                     it.message?.let {
                         Toast.makeText(activity, "Failed ${it}", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 is Resource.Loading -> {
-                    createAlertDialog(context!!)
+                    createAlertDialog(context!!).show()
                 }
             }
         })
