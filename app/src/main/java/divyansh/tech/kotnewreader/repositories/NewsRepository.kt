@@ -12,6 +12,7 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer
 import divyansh.tech.kotnewreader.database.ArticleDao
 import divyansh.tech.kotnewreader.network.api.CoronaApi
+import divyansh.tech.kotnewreader.network.api.MLApi
 import divyansh.tech.kotnewreader.network.api.NewsApi
 import divyansh.tech.kotnewreader.network.models.Article
 import divyansh.tech.kotnewreader.network.models.User
@@ -23,6 +24,7 @@ class NewsRepository @Inject constructor(
     val db: ArticleDao,
     val api: NewsApi,
     val coronaApi: CoronaApi,
+    val mlApi: MLApi,
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore
 ) {
@@ -43,6 +45,8 @@ class NewsRepository @Inject constructor(
         coronaApi.getDailyReport(
             "https://api.apify.com/v2/key-value-stores/toDWvRj1JpTXiM8FF/records/LATEST?disableRedirect=true"
         )
+
+    suspend fun changeToArticleView(url: String) = mlApi.getArticleText(query_url = url)
 
     fun getAllArticles() = db.getAllArticles()
 

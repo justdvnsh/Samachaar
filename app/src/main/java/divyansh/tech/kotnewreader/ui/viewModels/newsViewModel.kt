@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.*
 import divyansh.tech.kotnewreader.network.models.Article
 import divyansh.tech.kotnewreader.network.models.Corona
+import divyansh.tech.kotnewreader.network.models.MLModels.ArticleView
 import divyansh.tech.kotnewreader.network.models.NewsResponse
 import divyansh.tech.kotnewreader.repositories.NewsRepository
 import divyansh.tech.kotnewreader.ui.fragments.BaseFragment
@@ -34,6 +35,8 @@ class newsViewModel @ViewModelInject constructor(
     var searchNewsResponse: NewsResponse? = null
 
     var coronaDetails: MutableLiveData<Resource<Corona>> = MutableLiveData()
+
+    var articleText: MutableLiveData<Resource<ArticleView>> = MutableLiveData()
 
 //    init {
 //        getBreakingNews("in")
@@ -128,5 +131,16 @@ class newsViewModel @ViewModelInject constructor(
         return WorkManager.getInstance(context).enqueue(
             repeatingRequest
         ).state
+    }
+
+    fun changeToArticleView(url: String) = viewModelScope.launch {
+        articleText.postValue(Resource.Loading())
+        val response = newRepository.changeToArticleView(url)
+        Log.i("Main", response.raw().request.url.toString())
+        if (response.isSuccessful) response.body()?.let {
+            articleText.postValue(Resource.Success(it))
+            Log.i("Main", it.article_text)
+        }
+        else articleText.postValue(Resource.Error(response.message()))
     }
 }

@@ -3,7 +3,8 @@ package divyansh.tech.kotnewreader.utils
 class Constants {
     companion object {
         const val API_KEY = "7eb04dd3f8df465e93fcf6cb5e3eef93"
-        const val CORONA_API_KEY = "793d98fcbdmsh56022b37e59b384p193491jsn5315f486960b"
+        const val RAPID_API_KEY = "793d98fcbdmsh56022b37e59b384p193491jsn5315f486960b"
+        const val ARTICLE_API = "https://text-analyzer.p.rapidapi.com/analyze-text/text"
         const val SEARCH_TIME_DELAY = 500L
         const val QUERY_PAGE_SIZE = 20
         const val ARTICLE_DATABASE = "article_db.db"
