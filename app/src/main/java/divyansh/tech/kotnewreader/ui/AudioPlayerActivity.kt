@@ -5,7 +5,9 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
@@ -136,12 +138,11 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Ea
             }
             if (!directory.exists()) directory.mkdir()
             for (index in 0 until newses.size) {
-                Log.i("Audio", cacheDir.toString())
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     tts.synthesizeToFile(
                         newses.get(index),
                         null,
-                        File(directory, utteranceId + "_news_${index}.mp3"),
+                        File(directory, utteranceId + "_news_${index}.wav"),
                         utteranceId
                     )
                 } else {
@@ -154,7 +155,20 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Ea
                     )
                 }
             }
-            startActivity(Intent(this@AudioPlayerActivity, AudioActivity::class.java))
+            tts.setOnUtteranceProgressListener(object: UtteranceProgressListener() {
+                override fun onDone(utteranceId: String?) {
+                    startActivity(Intent(this@AudioPlayerActivity, AudioActivity::class.java))
+                }
+
+                override fun onError(utteranceId: String?) {
+//                    TODO("Not yet implemented")
+                }
+
+                override fun onStart(utteranceId: String?) {
+//                    TODO("Not yet implemented")
+                }
+
+            })
         } else {
             EasyPermissions.requestPermissions(
                 this,
