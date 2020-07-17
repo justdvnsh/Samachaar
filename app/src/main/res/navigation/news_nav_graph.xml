@@ -57,6 +57,9 @@
         <argument
             android:name="article"
             app:argType="divyansh.tech.kotnewreader.network.models.Article" />
+        <action
+            android:id="@+id/action_articleFragment_to_analyzeFragment"
+            app:destination="@id/analyzeFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -96,5 +99,25 @@
         <action
             android:id="@+id/action_homeFragment2_to_articleFragment"
             app:destination="@id/articleFragment" />
+        <argument
+            android:name="query"
+            app:argType="string"
+            android:defaultValue="android" />
+    </fragment>
+    <fragment
+        android:id="@+id/analyzeFragment"
+        android:name="divyansh.tech.kotnewreader.ui.fragments.AnalyzeFragment"
+        android:label="AnalyzeFragment" >
+        <action
+            android:id="@+id/action_articleFragment_to_analyzeFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_out_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="query"
+            app:argType="string"
+            android:defaultValue="android" />
     </fragment>
 </navigation>

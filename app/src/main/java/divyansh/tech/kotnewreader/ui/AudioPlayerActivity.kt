@@ -20,6 +20,7 @@ import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.adapters.NewsAdapter
 import divyansh.tech.kotnewreader.network.models.Article
 import divyansh.tech.kotnewreader.ui.viewModels.newsViewModel
+import divyansh.tech.kotnewreader.utils.Alert
 import divyansh.tech.kotnewreader.utils.Constants
 import divyansh.tech.kotnewreader.utils.Resource
 import kotlinx.android.synthetic.main.activity_audio_player.*
@@ -40,6 +41,7 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Ea
     lateinit var tts: TextToSpeech
     val viewModel: newsViewModel by viewModels()
     val utteranceId: String = "TechReads"
+    val placeholderList: MutableList<String> = ArrayList()
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +49,16 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Ea
         setContentView(R.layout.activity_audio_player)
         initializeTextToSpeech()
         setupListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val directory = File(baseContext.getExternalFilesDir(null), "/KotNews")
+        if (!directory.list().isNullOrEmpty()) {
+            for (child in directory.list()) {
+                File(directory, child).delete()
+            }
+        }
     }
 
     private fun initializeTextToSpeech() {
@@ -124,6 +136,7 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Ea
         EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)
 
     private fun saveAudio(articles: List<Article>) {
+        Alert.createAlertDialog(this).show()
         var newses: MutableList<String?> = ArrayList<String?>()
         for (news in articles) {
             Log.i("Audio", news.title!!)
@@ -131,11 +144,11 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Ea
         }
         if (hasWritePermissions() && hasReadPermissions()) {
             val directory = File(baseContext.getExternalFilesDir(null), "/KotNews")
-            if (!directory.list().isNullOrEmpty()) {
-                for (child in directory.list()) {
-                    File(directory, child).delete()
-                }
-            }
+//            if (!directory.list().isNullOrEmpty()) {
+//                for (child in directory.list()) {
+//                    File(directory, child).delete()
+//                }
+//            }
             if (!directory.exists()) directory.mkdir()
             for (index in 0 until newses.size) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -157,7 +170,11 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Ea
             }
             tts.setOnUtteranceProgressListener(object: UtteranceProgressListener() {
                 override fun onDone(utteranceId: String?) {
-                    startActivity(Intent(this@AudioPlayerActivity, AudioActivity::class.java))
+                    if (placeholderList.size == 19) startActivity(Intent(this@AudioPlayerActivity, AudioActivity::class.java))
+                    else {
+                        Log.i("Audio", "Addind File ${placeholderList.size}")
+                        placeholderList.add("Done")
+                    }
                 }
 
                 override fun onError(utteranceId: String?) {

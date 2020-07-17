@@ -48,7 +48,7 @@ class HomeFragment: BaseFragment() {
                 putSerializable("article", it)
             }
             findNavController().navigate(
-                R.id.action_searchFragment_to_articleFragment,
+                R.id.action_homeFragment2_to_articleFragment,
                 bundle
             )
         }

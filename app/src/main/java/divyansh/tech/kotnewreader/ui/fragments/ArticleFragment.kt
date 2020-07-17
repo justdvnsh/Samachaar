@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -24,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_search.*
 class ArticleFragment: BaseFragment() {
 
     val args: ArticleFragmentArgs by navArgs()
+    lateinit var bundle: Bundle
 
     override fun provideView(
         inflater: LayoutInflater,
@@ -59,6 +61,10 @@ class ArticleFragment: BaseFragment() {
                     dateArticle.text = args.article.publishedAt
                     article.text = it.data?.article_text
                     Glide.with(context!!).load(args.article.urlToImage).into(imageArticle)
+                    analyze.visibility = VISIBLE
+                    bundle = Bundle().apply {
+                        putSerializable("article", it.data?.article_text)
+                    }
                     createAlertDialog(context!!).dismiss()
                 }
 
@@ -84,6 +90,12 @@ class ArticleFragment: BaseFragment() {
     }
 
     private fun setupFab(view: View) {
+        analyze.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_articleFragment_to_analyzeFragment,
+                bundle
+            )
+        }
         share.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = "text/plain"
