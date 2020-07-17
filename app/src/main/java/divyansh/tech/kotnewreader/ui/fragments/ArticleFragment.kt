@@ -63,7 +63,7 @@ class ArticleFragment: BaseFragment() {
                     Glide.with(context!!).load(args.article.urlToImage).into(imageArticle)
                     analyze.visibility = VISIBLE
                     bundle = Bundle().apply {
-                        putSerializable("article", it.data?.article_text)
+                        putString("query", it.data?.article_text)
                     }
                     translate?.visibility = VISIBLE
                     translate?.setOnClickListener {v ->

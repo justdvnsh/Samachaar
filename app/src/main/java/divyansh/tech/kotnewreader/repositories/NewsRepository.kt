@@ -10,7 +10,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer
-import com.squareup.okhttp.*
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import divyansh.tech.kotnewreader.database.ArticleDao
 import divyansh.tech.kotnewreader.network.api.CoronaApi
 import divyansh.tech.kotnewreader.network.api.MLApi
@@ -19,6 +20,9 @@ import divyansh.tech.kotnewreader.network.models.Article
 import divyansh.tech.kotnewreader.network.models.MLModels.translationModel
 import divyansh.tech.kotnewreader.network.models.User
 import divyansh.tech.kotnewreader.utils.Constants.Companion.USERS
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
 import org.json.JSONObject
 import java.net.URLEncoder
 import javax.inject.Inject
@@ -52,6 +56,17 @@ class NewsRepository @Inject constructor(
     suspend fun changeToArticleView(url: String) = mlApi.getArticleText(query_url = url)
 
     suspend fun translate(text: String) = mlApi.getTranslation(query_text = text)
+
+    suspend fun getSetimentAnalysis(text: String) = mlApi.getSentiments(
+        body =  text
+    )
+
+    suspend fun getEmotions(text: String) = mlApi.getEmotions(
+        request = RequestBody.create(
+            "application/json".toMediaTypeOrNull(),
+            "[ {  \"id\": \"1\",  \"language\": \"en\",  \"text\": \"${text}\" }]"
+        )
+    )
 
     fun getAllArticles() = db.getAllArticles()
 

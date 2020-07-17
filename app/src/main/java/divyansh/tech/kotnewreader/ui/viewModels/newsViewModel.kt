@@ -12,6 +12,8 @@ import androidx.work.*
 import divyansh.tech.kotnewreader.network.models.Article
 import divyansh.tech.kotnewreader.network.models.Corona
 import divyansh.tech.kotnewreader.network.models.MLModels.ArticleView
+import divyansh.tech.kotnewreader.network.models.MLModels.communicationAnalysis
+import divyansh.tech.kotnewreader.network.models.MLModels.sentimentModel
 import divyansh.tech.kotnewreader.network.models.NewsResponse
 import divyansh.tech.kotnewreader.repositories.NewsRepository
 import divyansh.tech.kotnewreader.ui.fragments.BaseFragment
@@ -43,9 +45,9 @@ class newsViewModel @ViewModelInject constructor(
 
     var translatedText: MutableLiveData<Resource<String>> = MutableLiveData()
 
-//    init {
-//        getBreakingNews("in")
-//    }
+    var sentimentText: MutableLiveData<Resource<sentimentModel>> = MutableLiveData()
+
+    var emotionText: MutableLiveData<Resource<List<communicationAnalysis>>> = MutableLiveData()
 
     fun handleNewsReponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
         if (response.isSuccessful) {
@@ -158,5 +160,27 @@ class newsViewModel @ViewModelInject constructor(
             Log.i("Main", it.toString())
         }
         else translatedText.postValue(Resource.Error(response.message()))
+    }
+
+    fun getSentiments(text: String) =  CoroutineScope(Dispatchers.IO + Job()).launch {
+        sentimentText.postValue(Resource.Loading())
+        val response = newRepository.getSetimentAnalysis(text)
+        Log.i("Main", response.raw().request.url.toString())
+        if (response.isSuccessful) response.body()?.let {
+            sentimentText.postValue(Resource.Success(it))
+            Log.i("Main", it.toString())
+        }
+        else sentimentText.postValue(Resource.Error(response.message()))
+    }
+
+    fun getEmotion(text: String) =  CoroutineScope(Dispatchers.IO + Job()).launch {
+        emotionText.postValue(Resource.Loading())
+        val response = newRepository.getEmotions(text)
+        Log.i("Main", response.raw().request.url.toString())
+        if (response.isSuccessful) response.body()?.let {
+            emotionText.postValue(Resource.Success(it))
+            Log.i("Main", it.toString())
+        }
+        else emotionText.postValue(Resource.Error(response.message()))
     }
 }
