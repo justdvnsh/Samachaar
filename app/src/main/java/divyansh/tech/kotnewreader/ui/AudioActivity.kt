@@ -10,6 +10,7 @@ import com.google.android.exoplayer2.DefaultRenderersFactory
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
+import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
@@ -37,7 +38,12 @@ class AudioActivity : AppCompatActivity() {
 
     private fun initAudioPlayer() {
         Log.i("Audio", "file://" + File(baseContext.getExternalFilesDir(null), "/KotNews/TechReads_news_0.wav").absolutePath)
-        val mediaSource = extractMediaSourceFromUri(Uri.parse(File(baseContext.getExternalFilesDir(null), "/KotNews/TechReads_news_0.wav").absolutePath))
+        var concatenatedSource: ConcatenatingMediaSource = ConcatenatingMediaSource()
+        val directory = File(baseContext.getExternalFilesDir(null), "/KotNews")
+        for (child in directory.list()) {
+            val mediaSource = extractMediaSourceFromUri(Uri.parse(File(directory, child).absolutePath))
+            concatenatedSource.addMediaSource(mediaSource)
+        }
         val exoplayer = ExoPlayerFactory.newSimpleInstance(
             baseContext,
             DefaultRenderersFactory(
@@ -53,7 +59,7 @@ class AudioActivity : AppCompatActivity() {
                 .build()
             // In 2.9.X you don't need to manually handle audio focus :D
             setAudioAttributes(attr, true)
-            prepare(mediaSource, true, true)
+            prepare(concatenatedSource, true, true)
             // THAT IS ALL YOU NEED
             playWhenReady = true
         }

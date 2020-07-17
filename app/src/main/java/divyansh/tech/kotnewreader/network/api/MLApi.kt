@@ -45,8 +45,18 @@ interface MLApi {
     ): Response<sentimentModel>
 
     @POST
-    suspend fun getEmotions(
+    suspend fun getCommunicationAnalysis(
         @Url url: String = "https://text-analytics-by-symanto.p.rapidapi.com/communication",
+        @Header("X-RapidAPI-Host") api: String = "text-analytics-by-symanto.p.rapidapi.com",
+        @Header("X-RapidAPI-Key") apiKey: String = RAPID_API_KEY,
+        @Header("content-type") type: String = "application/json",
+        @Header("accept") accept: String = "application/json",
+        @Body request: RequestBody
+    ): Response<List<communicationAnalysis>>
+
+    @POST
+    suspend fun getEmotions(
+        @Url url: String = "https://text-analytics-by-symanto.p.rapidapi.com/emotion",
         @Header("X-RapidAPI-Host") api: String = "text-analytics-by-symanto.p.rapidapi.com",
         @Header("X-RapidAPI-Key") apiKey: String = RAPID_API_KEY,
         @Header("content-type") type: String = "application/json",

@@ -24,8 +24,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import java.text.SimpleDateFormat
-import java.util.*
 
 class newsViewModel @ViewModelInject constructor(
     val newRepository: NewsRepository
@@ -47,6 +45,7 @@ class newsViewModel @ViewModelInject constructor(
 
     var sentimentText: MutableLiveData<Resource<sentimentModel>> = MutableLiveData()
 
+    var communicationText: MutableLiveData<Resource<List<communicationAnalysis>>> = MutableLiveData()
     var emotionText: MutableLiveData<Resource<List<communicationAnalysis>>> = MutableLiveData()
 
     fun handleNewsReponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
@@ -173,9 +172,20 @@ class newsViewModel @ViewModelInject constructor(
         else sentimentText.postValue(Resource.Error(response.message()))
     }
 
-    fun getEmotion(text: String) =  CoroutineScope(Dispatchers.IO + Job()).launch {
+    fun getCommunicationAnalysis(text: String) =  CoroutineScope(Dispatchers.IO + Job()).launch {
+        communicationText.postValue(Resource.Loading())
+        val response = newRepository.getCommunicationAnalysis(text)
+        Log.i("Main", response.raw().request.url.toString())
+        if (response.isSuccessful) response.body()?.let {
+            communicationText.postValue(Resource.Success(it))
+            Log.i("Main", it.toString())
+        }
+        else communicationText.postValue(Resource.Error(response.message()))
+    }
+
+    fun getEmotionalAnalysis(text: String) =  CoroutineScope(Dispatchers.IO + Job()).launch {
         emotionText.postValue(Resource.Loading())
-        val response = newRepository.getEmotions(text)
+        val response = newRepository.getEmotionalAnalysis(text)
         Log.i("Main", response.raw().request.url.toString())
         if (response.isSuccessful) response.body()?.let {
             emotionText.postValue(Resource.Success(it))

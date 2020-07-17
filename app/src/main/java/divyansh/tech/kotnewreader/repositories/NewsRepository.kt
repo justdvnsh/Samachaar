@@ -61,7 +61,14 @@ class NewsRepository @Inject constructor(
         body =  text
     )
 
-    suspend fun getEmotions(text: String) = mlApi.getEmotions(
+    suspend fun getCommunicationAnalysis(text: String) = mlApi.getCommunicationAnalysis(
+        request = RequestBody.create(
+            "application/json".toMediaTypeOrNull(),
+            "[ {  \"id\": \"1\",  \"language\": \"en\",  \"text\": \"${text}\" }]"
+        )
+    )
+
+    suspend fun getEmotionalAnalysis(text: String) = mlApi.getEmotions(
         request = RequestBody.create(
             "application/json".toMediaTypeOrNull(),
             "[ {  \"id\": \"1\",  \"language\": \"en\",  \"text\": \"${text}\" }]"

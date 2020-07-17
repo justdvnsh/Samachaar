@@ -66,4 +66,12 @@
         android:id="@+id/emotion"
         />
 
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/emotion"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/emotionalAnalysis"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

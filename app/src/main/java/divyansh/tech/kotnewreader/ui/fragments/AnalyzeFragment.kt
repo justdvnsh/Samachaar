@@ -7,13 +7,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.utils.Alert
 import divyansh.tech.kotnewreader.utils.Resource
-import kotlinx.android.synthetic.main.common_toolbar.*
 import kotlinx.android.synthetic.main.fragment_analyze.*
-import kotlinx.android.synthetic.main.fragment_article.*
 
 class AnalyzeFragment : BaseFragment() {
 
@@ -57,11 +54,31 @@ class AnalyzeFragment : BaseFragment() {
     }
 
     private fun setupEmotionText() {
-        viewModel.getEmotion(args.query)
-        viewModel.emotionText.observe(viewLifecycleOwner, Observer {
+        viewModel.getCommunicationAnalysis(args.query)
+        viewModel.getEmotionalAnalysis(args.query)
+        viewModel.communicationText.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
                     emotion.text = it.data?.get(0)?.predictions?.get(0)?.prediction + " " + it.data?.get(0)?.predictions?.get(0)?.probability.toString()
+                }
+
+                is Resource.Error -> {
+                    Alert.createAlertDialog(context!!).show()
+                    it.message?.let {
+                        Toast.makeText(activity, "Failed ${it}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                is Resource.Loading -> {
+                    Alert.createAlertDialog(context!!).show()
+                }
+            }
+        })
+
+        viewModel.emotionText.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Resource.Success -> {
+                    emotionalAnalysis.text = it.data?.get(0)?.predictions?.get(0)?.prediction + " " + it.data?.get(0)?.predictions?.get(0)?.probability.toString()
                 }
 
                 is Resource.Error -> {
