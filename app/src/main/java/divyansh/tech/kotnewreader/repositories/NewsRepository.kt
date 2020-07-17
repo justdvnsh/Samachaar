@@ -10,14 +10,17 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer
+import com.squareup.okhttp.*
 import divyansh.tech.kotnewreader.database.ArticleDao
 import divyansh.tech.kotnewreader.network.api.CoronaApi
 import divyansh.tech.kotnewreader.network.api.MLApi
 import divyansh.tech.kotnewreader.network.api.NewsApi
 import divyansh.tech.kotnewreader.network.models.Article
+import divyansh.tech.kotnewreader.network.models.MLModels.translationModel
 import divyansh.tech.kotnewreader.network.models.User
 import divyansh.tech.kotnewreader.utils.Constants.Companion.USERS
-import org.w3c.dom.Document
+import org.json.JSONObject
+import java.net.URLEncoder
 import javax.inject.Inject
 
 class NewsRepository @Inject constructor(
@@ -47,6 +50,8 @@ class NewsRepository @Inject constructor(
         )
 
     suspend fun changeToArticleView(url: String) = mlApi.getArticleText(query_url = url)
+
+    suspend fun translate(text: String) = mlApi.getTranslation(query_text = text)
 
     fun getAllArticles() = db.getAllArticles()
 

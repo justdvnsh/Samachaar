@@ -65,6 +65,10 @@ class ArticleFragment: BaseFragment() {
                     bundle = Bundle().apply {
                         putSerializable("article", it.data?.article_text)
                     }
+                    translate?.visibility = VISIBLE
+                    translate?.setOnClickListener {v ->
+                        translateArticle(it.data?.article_text)
+                    }
                     createAlertDialog(context!!).dismiss()
                 }
 
@@ -80,6 +84,30 @@ class ArticleFragment: BaseFragment() {
                 }
             }
         })
+    }
+
+    private fun translateArticle(text: String?) {
+        text?.let {
+            viewModel.translate(it)
+            viewModel.translatedText.observe(viewLifecycleOwner, Observer {
+                when (it) {
+                    is Resource.Success -> {
+                        article.text = it.data
+                    }
+
+                    is Resource.Error -> {
+                        createAlertDialog(context!!).show()
+                        it.message?.let {
+                            Toast.makeText(activity, "Failed ${it}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    is Resource.Loading -> {
+                        createAlertDialog(context!!).show()
+                    }
+                }
+            })
+        }
     }
 
     private fun setupWebView() {

@@ -17,6 +17,9 @@ import divyansh.tech.kotnewreader.repositories.NewsRepository
 import divyansh.tech.kotnewreader.ui.fragments.BaseFragment
 import divyansh.tech.kotnewreader.utils.Resource
 import divyansh.tech.kotnewreader.work.SyncWorker
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.text.SimpleDateFormat
@@ -37,6 +40,8 @@ class newsViewModel @ViewModelInject constructor(
     var coronaDetails: MutableLiveData<Resource<Corona>> = MutableLiveData()
 
     var articleText: MutableLiveData<Resource<ArticleView>> = MutableLiveData()
+
+    var translatedText: MutableLiveData<Resource<String>> = MutableLiveData()
 
 //    init {
 //        getBreakingNews("in")
@@ -142,5 +147,16 @@ class newsViewModel @ViewModelInject constructor(
             Log.i("Main", it.article_text)
         }
         else articleText.postValue(Resource.Error(response.message()))
+    }
+
+    fun translate(text: String) = CoroutineScope(Dispatchers.IO + Job()).launch {
+        translatedText.postValue(Resource.Loading())
+        val response = newRepository.translate(text)
+        Log.i("Main", response.raw().request.url.toString())
+        if (response.isSuccessful) response.body()?.let {
+            translatedText.postValue(Resource.Success(it.translatedText))
+            Log.i("Main", it.toString())
+        }
+        else translatedText.postValue(Resource.Error(response.message()))
     }
 }
