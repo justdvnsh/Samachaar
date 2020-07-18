@@ -60,6 +60,18 @@ git checkout dev
 Let the gradle build the project, download the dependencies and then run the project
 ```
 
+## Screenshots
+
+|![Splash Screen](docs/splash.jpg)|![Auth Activity](docs/authActivity.jpg)|![Auth Activity](docs/authActivity2.jpg)
+|--|--|--|
+|![Breaking News](docs/BreakingNews.jpg)|![Breaking News](docs/BreakingNews2.jpg)|![Home News](docs/homeFragment.jpg)
+|![Favorite News](docs/saved.jpg)|![Favorite News](docs/saved2.jpg)|![Settings](docs/settings.jpg)
+|![Article Web View](docs/ArticleWebView.jpg)|![Article View](docs/ArticleView.jpg)|![Translate View](docs/translate.jpg)
+|![Article Web View](docs/ArticleWebView.jpg)|![Article View](docs/ArticleView.jpg)|![Translate View](docs/translate.jpg)
+|![Analyze View](docs/analyze.jpg)|![Audio Player View](docs/audioPlayerActivity.jpg)|![Location Service](docs/locationService.jpg)
+|![Audio Player](docs/audioPlayer.jpg)
+
+
 ## Contributing
 
 All the development happens in the __dev__ branch of the repository. Steps to contribute ->
