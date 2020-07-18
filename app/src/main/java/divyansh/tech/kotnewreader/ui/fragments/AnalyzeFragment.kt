@@ -31,12 +31,13 @@ class AnalyzeFragment : BaseFragment() {
     }
 
     private fun setupSentimentText() {
-        sentiment?.text = args.query
         viewModel.getSentiments(args.query)
         viewModel.sentimentText.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
-                    sentiment.text = it.data?.pos.toString() + " " + it.data?.neg.toString() + " " + it.data?.mid.toString()
+                    positiveSentiment.text = it.data?.pos.toString() + " - " + it.data?.pos_percent
+                    neutralSentiment.text = it.data?.mid.toString() + " - " + it.data?.mid_percent
+                    negativeSentiment.text = it.data?.neg.toString() + " - " + it.data?.neg_percent
                 }
 
                 is Resource.Error -> {
@@ -59,7 +60,7 @@ class AnalyzeFragment : BaseFragment() {
         viewModel.communicationText.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
-                    emotion.text = it.data?.get(0)?.predictions?.get(0)?.prediction + " " + it.data?.get(0)?.predictions?.get(0)?.probability.toString()
+                    communicationAnalysis.text = it.data?.get(0)?.predictions?.get(0)?.prediction + " - " + it.data?.get(0)?.predictions?.get(0)?.probability.toString()
                 }
 
                 is Resource.Error -> {

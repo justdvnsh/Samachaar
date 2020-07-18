@@ -110,6 +110,8 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 * There are places where still the view is doing more work, so have to use coroutines to reduce the effort on the view
 
+* Ui of the audio player is not applealing
+
 ## Feature to be Included
 
 * Include tests
@@ -127,6 +129,8 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 * Some more UI improvements
 
 * Use coroutines to reduce the efforts made by the view as much as possible
+
+* Make the UI of the audio player more appealing
 
 * Add Dark mode for better redability
 

@@ -52,26 +52,412 @@
 
     <TextView
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:text="Bias Analysis"
+        android:padding="6dp"
+        android:layout_marginStart="10dp"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardView"
+        android:id="@+id/biasText"
+        android:layout_marginLeft="10dp" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:padding="20dp"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="10dp"
+        android:id="@+id/biasCardView"
+        app:cardBackgroundColor="@android:color/holo_green_light"
         app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/sentiment"
-        />
+        app:layout_constraintTop_toBottomOf="@id/biasText"
+        >
+
+
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="top|center"
+                android:text="This article is"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="20dp"
+                />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="top|center"
+                android:text="Not Biased - 98.33489%"
+                android:id="@+id/biasAnalysis"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="20dp"
+                />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/sentiment"
+        android:layout_width="wrap_content"
+        android:text="Sentiment Analysis"
+        android:padding="6dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000000"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/emotion"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/biasCardView"
+        android:id="@+id/sentimentText"
         />
+
+    <HorizontalScrollView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sentimentText"
+        android:id="@+id/sentimentScrollView"
+        >
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <androidx.cardview.widget.CardView
+                android:layout_height="100dp"
+                android:layout_width="wrap_content"
+                android:padding="20dp"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="10dp"
+                app:cardBackgroundColor="@android:color/holo_green_light"
+                android:layout_margin="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="top|center"
+                        android:text="Positive"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="20dp"
+                        />
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="top|center"
+                        android:id="@+id/positiveSentiment"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="20dp"
+                        />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_height="100dp"
+                android:layout_width="wrap_content"
+                android:padding="20dp"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="10dp"
+                app:cardBackgroundColor="@android:color/holo_orange_light"
+                android:layout_margin="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="top|center"
+                        android:text="Neutral"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="20dp"
+                        />
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="top|center"
+                        android:id="@+id/neutralSentiment"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="20dp"
+                        />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_height="100dp"
+                android:layout_width="wrap_content"
+                android:padding="20dp"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="10dp"
+                android:layout_margin="10dp"
+                app:cardBackgroundColor="@android:color/holo_red_dark"
+                >
+
+
+                <LinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="top|center"
+                        android:text="Negative"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="20dp"
+                        />
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="top|center"
+                        android:id="@+id/negativeSentiment"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="20dp"
+                        />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_height="100dp"
+                android:layout_width="wrap_content"
+                android:padding="20dp"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="10dp"
+                android:layout_margin="10dp"
+                app:cardBackgroundColor="@android:color/holo_red_light"
+                >
+
+
+                <LinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="top|center"
+                        android:text="Total Deaths"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="20dp"
+                        />
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="top|center"
+                        android:id="@+id/totalDeaths"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="20dp"
+                        />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
 
     <TextView
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/emotion"
+        android:layout_width="wrap_content"
+        android:text="Communication Analysis"
+        android:padding="6dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000000"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/emotionalAnalysis"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sentimentScrollView"
+        android:id="@+id/communicationText"
         />
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:padding="20dp"
+        app:cardElevation="10dp"
+        android:id="@+id/communicationAnalysisCardView"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/communicationText"
+        >
+
+
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="top|center"
+                android:text="This article shows"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="20dp"
+                />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="top|center"
+                android:id="@+id/communicationAnalysis"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="20dp"
+                />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Emotional Analysis"
+        android:padding="6dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/communicationAnalysisCardView"
+        android:id="@+id/emotionText"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:padding="20dp"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/emotionText"
+        >
+
+
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="top|center"
+                android:text="This article represents"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="20dp"
+                />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="top|center"
+                android:id="@+id/emotionalAnalysis"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="20dp"
+                />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
