@@ -4,8 +4,8 @@
     <img src="docs/logo.png" />
 </p>
 
-This is an android app, which you'll ever need to read News. It is loaded with many unique features which you'd love to use. But before we dive into features, let's know why another news reading app ? You see, most of the news reading apps, like TOI or The Hindu, you'd be able to see the newses from their sources only. Similarly, using apps like inshorts, gives you a summary of articles which are recommended for you. This is okay for the most part, but none of these apps, help us make better descisions and mitigate the bias. Almost all of the news apps, available out there are solely for the purpose of showing you the latest news. However, this is not the case with *Samachaar*. This app is made for the users to read the best news and make intellectual opinions, since due to the incompetency of the Indian media, making sound decisions and forming intellect opinions seems too far.
-This is an android app which will not only help you read news articles, but would also help you mitigate the bias of newses (*i.e. if this news article is biased towards any particular subject or not ? Think of it as Arnab being biased towards Modiji*). So this app would mitigate the bias and tell you wether the news article is biased or not ? What is the sentiment of the news, it is positive , negative or neutral. It will also figure out the emotion of the news article. It automatically figures out the most relevant topics and extracts the most relevant keywords and shows you the news based on the topics. You can also listen to news article on the go, just like an e-book or podcast. And there's much more to the app. Please refer to the features section to know more. *This is an open source project aims to propogate the latest news to the public all while giving the ability to make better and sound decisions*.
+This is an android app, which you'll ever need to read News. It is loaded with many unique features which you'd love to use. But before we dive into features, let's know why another news reading app ? You see, most of the news reading apps, like TOI or The Hindu, you'd be able to see the newses from their sources only. Similarly, using apps like inshorts, gives you a summary of articles which are recommended for you. This is okay for the most part, but none of these apps, help us make better descisions and mitigate the bias. Almost all of the news apps, available out there are solely for the purpose of showing you the latest news. However, this is not the case with __Samachaar__. This app is made for the users to read the best news and make intellectual opinions, since due to the incompetency of the Indian media, making sound decisions and forming intellect opinions seems too far.
+This is an android app which will not only help you read news articles, but would also help you mitigate the bias of newses (__i.e. if this news article is biased towards any particular subject or not ? Think of it as Arnab being biased towards Modiji__). So this app would mitigate the bias and tell you wether the news article is biased or not ? What is the sentiment of the news, it is positive , negative or neutral. It will also figure out the emotion of the news article. It automatically figures out the most relevant topics and extracts the most relevant keywords and shows you the news based on the topics. You can also listen to news article on the go, just like an e-book or podcast. And there's much more to the app. Please refer to the features section to know more. __This is an open source project aims to propogate the latest news to the public all while giving the ability to make better and sound decisions__.
 
 Features -> 
 1. One Step simple Login/Register with Google
@@ -30,7 +30,7 @@ Features ->
 20. Best Design guidelines -> Follows material guidelines
 21. Free and open source
 
-This app is almost complete. This app is made for the users. Please feel free to use this app, find flaws and open issues. I have included the *Known Limitation* and *Features to be Included* sections at the bottom. Please go through them and read the *CONTRIBUTING.md* file in case you want to contribute to the cause.
+This app is almost complete. This app is made for the users. Please feel free to use this app, find flaws and open issues. I have included the __Known Limitation__ and __Features to be Included__ sections at the bottom. Please go through them and read the __CONTRIBUTING.md__ file in case you want to contribute to the cause.
 
 ## Getting Started
 
@@ -60,64 +60,80 @@ git checkout dev
 Let the gradle build the project, download the dependencies and then run the project
 ```
 
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+All the development happens in the __dev__ branch of the repository. Steps to contribute ->
+
+1. Please fork and clone the project.
+2. Checkout the dev branch ```git checkout dev```
+3. Make your changes 
+4. Each change should contain your name, and description of the change as comment
+5. Include tests for each feature you add.
+6. Compare the changes
+7. Submit a pull request
+
+```
+NOTE -> Each pull request will be reviewed thoroughly
+```
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use github for our versioning
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Divyansh Dwivedi** - *Initial work* - [justdvnsh](https://github.com/justdvnsh)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/justdvnsh/Samachaar/contributors) who participated in this project.
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## Acknowledgments
+## Known Limitations
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Currently there are only 3 viewModels respectively for the newsFragment, splashActivity and Authentication
+
+* Audio activity and player do not leveage the use of viewModels
+
+* Socket timeout exception has not been handled
+
+* No tests
+
+* Does not handle the case if the OCR cannot recognise text
+
+* Does not handle pagination (infinite scroll)
+
+* Alert with progress bar have not been handled properly
+
+* Home Fragment uses simple recommendation system
+
+* There are places where still the view is doing more work, so have to use coroutines to reduce the effort on the view
+
+## Feature to be Included
+
+* Include tests
+
+* Leverage viewModels in the Audio activity and player
+
+* Handle Timeout exception
+
+* Handle OCR TextNotRecognised exception
+
+* Handle alerts properly
+
+* Use cutting-edge recommendation system
+
+* Some more UI improvements
+
+* Use coroutines to reduce the efforts made by the view as much as possible
+
+* Add Dark mode for better redability
+
+* Add foreground notification to play audio in the background as well
+
+* Add Whatsapp and Telegram bot to directly send news to Whatsapp or telegram
+
+* Add feature to change the language and read news directly in the native language -> add API endpoints to fetch news in the native language
+
+* Handle notifications more profoundly 
