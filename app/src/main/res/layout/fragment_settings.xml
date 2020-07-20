@@ -33,7 +33,7 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="Name"
+                android:text="@string/name"
                 android:textSize="24sp"
                 android:layout_gravity="center"
                 android:textColor="@android:color/black"
@@ -43,7 +43,7 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="Email"
+                android:text="@string/email"
                 android:textSize="20sp"
                 android:layout_marginTop="10dp"
                 android:id="@+id/displayEmail"
@@ -75,7 +75,7 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="Show Synced Articles"
+                android:text="@string/show_synced_articles"
                 android:textSize="18sp"
                 android:textColor="@android:color/black"
                 android:id="@+id/showSyncedArticles"

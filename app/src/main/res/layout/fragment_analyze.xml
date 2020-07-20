@@ -37,7 +37,7 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="Analyze"
+                android:text="@string/AnalyeTitle"
                 android:padding="6dp"
                 android:textColor="#000000"
                 android:textSize="24sp"
@@ -65,7 +65,7 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="Bias Analysis"
+                android:text="@string/BiasTitle"
                 android:padding="6dp"
                 android:layout_marginStart="10dp"
                 android:textColor="#000000"
@@ -100,7 +100,7 @@
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:layout_gravity="top|center"
-                        android:text="This article is"
+                        android:text="@string/thisArticleIs"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
@@ -113,7 +113,7 @@
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:layout_gravity="top|center"
-                        android:text="Not Biased - 98.33489%"
+                        android:text="@string/notBiased"
                         android:id="@+id/biasAnalysis"
                         android:textSize="22sp"
                         android:textStyle="bold"
@@ -130,7 +130,7 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="Sentiment Analysis"
+                android:text="@string/setimentTitle"
                 android:padding="6dp"
                 android:layout_marginLeft="10dp"
                 android:textColor="#000000"
@@ -175,7 +175,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
                                 android:layout_gravity="top|center"
-                                android:text="Positive"
+                                android:text="@string/positive"
                                 android:textSize="22sp"
                                 android:textStyle="bold"
                                 android:textColor="@android:color/white"
@@ -221,7 +221,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
                                 android:layout_gravity="top|center"
-                                android:text="Neutral"
+                                android:text="@string/neutral"
                                 android:textSize="22sp"
                                 android:textStyle="bold"
                                 android:textColor="@android:color/white"
@@ -268,7 +268,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
                                 android:layout_gravity="top|center"
-                                android:text="Negative"
+                                android:text="@string/negative"
                                 android:textSize="22sp"
                                 android:textStyle="bold"
                                 android:textColor="@android:color/white"
@@ -294,53 +294,6 @@
 
                     </androidx.cardview.widget.CardView>
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_height="100dp"
-                        android:layout_width="wrap_content"
-                        android:padding="20dp"
-                        app:cardElevation="10dp"
-                        app:cardCornerRadius="10dp"
-                        android:layout_margin="10dp"
-                        app:cardBackgroundColor="@android:color/holo_red_light"
-                        >
-
-
-                        <LinearLayout
-                            android:layout_height="match_parent"
-                            android:layout_width="match_parent"
-                            android:orientation="vertical"
-                            >
-
-                            <TextView
-                                android:layout_height="wrap_content"
-                                android:layout_width="wrap_content"
-                                android:layout_gravity="top|center"
-                                android:text="Total Deaths"
-                                android:textSize="22sp"
-                                android:textStyle="bold"
-                                android:textColor="@android:color/white"
-                                android:paddingLeft="20dp"
-                                android:paddingRight="20dp"
-                                android:paddingBottom="20dp"
-                                />
-
-                            <TextView
-                                android:layout_height="wrap_content"
-                                android:layout_width="wrap_content"
-                                android:layout_gravity="top|center"
-                                android:id="@+id/totalDeaths"
-                                android:textSize="22sp"
-                                android:textStyle="bold"
-                                android:textColor="@android:color/white"
-                                android:paddingLeft="20dp"
-                                android:paddingRight="20dp"
-                                android:paddingBottom="20dp"
-                                />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
                 </LinearLayout>
 
             </HorizontalScrollView>
@@ -348,7 +301,7 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="Communication Analysis"
+                android:text="@string/communicationTitle"
                 android:padding="6dp"
                 android:layout_marginLeft="10dp"
                 android:textColor="#000000"
@@ -383,7 +336,7 @@
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:layout_gravity="top|center"
-                        android:text="This article shows"
+                        android:text="@string/this_article_shows"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
@@ -412,7 +365,7 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="Emotional Analysis"
+                android:text="@string/emotionalTitle"
                 android:padding="6dp"
                 android:layout_marginLeft="10dp"
                 android:textColor="#000000"
@@ -446,7 +399,7 @@
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:layout_gravity="top|center"
-                        android:text="This article represents"
+                        android:text="@string/this_article_represents"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"

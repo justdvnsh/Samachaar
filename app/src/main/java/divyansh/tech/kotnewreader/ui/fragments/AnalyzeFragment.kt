@@ -38,9 +38,9 @@ class AnalyzeFragment : BaseFragment() {
             when (it) {
                 is Resource.Success -> {
                     alert.dismiss()
-                    positiveSentiment.text = "${it.data?.pos.toString()} - ${it.data?.pos_percent}"
-                    neutralSentiment.text = "${it.data?.mid.toString()} - ${it.data?.mid_percent}"
-                    negativeSentiment.text = "${it.data?.neg.toString()} - ${it.data?.neg_percent}"
+                    positiveSentiment.text = "${it.data?.pos_percent}"
+                    neutralSentiment.text = "${it.data?.mid_percent}"
+                    negativeSentiment.text = "${it.data?.neg_percent}"
                 }
 
                 is Resource.Error -> {

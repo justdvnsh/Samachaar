@@ -37,7 +37,7 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="Audio Player"
+                android:text="@string/AudioPlayerTitle"
                 android:padding="6dp"
                 android:textColor="#000000"
                 android:textSize="24sp"
@@ -328,7 +328,7 @@
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:layout_gravity="bottom|center"
-                        android:text="Favorites"
+                        android:text="@string/favorites"
                         android:textSize="16sp"
                         android:textAllCaps="true"
                         android:textColor="@android:color/black"

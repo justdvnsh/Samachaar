@@ -35,4 +35,26 @@
     <string name="locationPermission">Your Location services seems to be disabled, do you want to enable it?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="AudioPlayerTitle">Audio Player</string>
+    <string name="favorites">Favorites</string>
+    <string name="BiasTitle">Bias Analysis</string>
+    <string name="AnalyeTitle">Analyze</string>
+    <string name="thisArticleIs">This article is</string>
+    <string name="notBiased">Not Biased - 98.33489%</string>
+    <string name="setimentTitle">Sentiment Analysis</string>
+    <string name="positive">Positive</string>
+    <string name="neutral">Neutral</string>
+    <string name="negative">Negative</string>
+    <string name="communicationTitle">Communication Analysis</string>
+    <string name="this_article_shows">This article shows</string>
+    <string name="emotionalTitle">Emotional Analysis</string>
+    <string name="this_article_represents">This article represents</string>
+    <string name="total_cases">Total Cases</string>
+    <string name="active_cases">Active Cases</string>
+    <string name="total_recoveries">Total Recoveries</string>
+    <string name="total_deaths">Total Deaths</string>
+    <string name="search">Search</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="show_synced_articles">Show Synced Articles</string>
 </resources>
