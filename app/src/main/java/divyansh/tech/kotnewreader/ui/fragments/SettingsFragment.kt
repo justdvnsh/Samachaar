@@ -23,7 +23,7 @@ class SettingsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.titleText.text = "Settings"
+        view.titleText.text = getString(R.string.settingsTitle)
         setupView()
     }
 

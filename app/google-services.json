@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "484886932761",
-    "firebase_url": "https://the-tech-reads.firebaseio.com",
-    "project_id": "the-tech-reads",
-    "storage_bucket": "the-tech-reads.appspot.com"
+    "project_number": "647812144614",
+    "firebase_url": "https://cognitivehome-28056.firebaseio.com",
+    "project_id": "cognitivehome-28056",
+    "storage_bucket": "cognitivehome-28056.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:484886932761:android:8d5e3bd68db79807272988",
+        "mobilesdk_app_id": "1:647812144614:android:640aa32e2cd35ca517ca27",
         "android_client_info": {
-          "package_name": "divyansh.tech.kotnewreader"
+          "package_name": "cognitiveSecurity.tech.cognitivehome"
         }
       },
       "oauth_client": [
         {
-          "client_id": "484886932761-15e6535bil48ciic4c3834volth1gevh.apps.googleusercontent.com",
+          "client_id": "647812144614-b5gpqgci5922ilc28rc7up5v3ja5pn9n.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "divyansh.tech.kotnewreader",
+            "package_name": "cognitiveSecurity.tech.cognitivehome",
             "certificate_hash": "36d63351aea5b30a72c88b933c89aea5d05ef616"
           }
         },
         {
-          "client_id": "484886932761-t510v9kqo2i8hoj9t1fo15ah8l21qaj1.apps.googleusercontent.com",
+          "client_id": "647812144614-ftb0mod9gis43uohsb3c24sh54tavado.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBNOCRholC4Y732WRtBTsYil3uhLlWykqc"
+          "current_key": "AIzaSyCAGpCTegevXBWXtyEm9beDSzriughjLys"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "484886932761-t510v9kqo2i8hoj9t1fo15ah8l21qaj1.apps.googleusercontent.com",
+              "client_id": "647812144614-ftb0mod9gis43uohsb3c24sh54tavado.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

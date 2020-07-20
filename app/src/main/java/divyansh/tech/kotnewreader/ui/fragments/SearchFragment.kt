@@ -59,7 +59,7 @@ class SearchFragment : BaseFragment() {
 
     private fun setupEditText() {
         // set a time delay fot the user to type in the complete query
-        if (args.query != "android") {
+        if (args.query != getString(R.string.android)) {
             etSearch.setText(args.query)
             viewModel.getSearchNews(args.query)
         }
@@ -80,7 +80,7 @@ class SearchFragment : BaseFragment() {
     private fun setupRecyclerView() {
         newsAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
-                putSerializable("article", it)
+                putSerializable(getString(R.string.articleArgument), it)
             }
             findNavController().navigate(
                 R.id.action_searchFragment_to_articleFragment,
@@ -94,24 +94,24 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun  setupObservers() {
-        viewModel.searchNews.observe(viewLifecycleOwner, Observer {
+        viewModel.searchNews.observe(viewLifecycleOwner, Observer {it ->
             when (it) {
                 is Resource.Success -> {
-                    hideProgress(paginationProgressBar)
+                    alert.dismiss()
                     it.data?.let {
                         newsAdapter.differ.submitList(it.articles.toList())
                     }
                 }
 
                 is Resource.Error -> {
-                    hideProgress(paginationProgressBar)
+                    alert.dismiss()
                     it.message?.let {
-                        Toast.makeText(activity, "Failed ${it}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "${getString(R.string.failed)} ${it}", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 is Resource.Loading -> {
-                    showProgress(paginationProgressBar)
+                    alert.show()
                 }
             }
         })

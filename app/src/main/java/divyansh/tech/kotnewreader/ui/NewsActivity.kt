@@ -32,7 +32,7 @@ class NewsActivity : AppCompatActivity(),LocationListener {
     lateinit var user: User
     var country: String? = null
     var city: String? = null
-    lateinit var mLocationManager: LocationManager
+    private lateinit var mLocationManager: LocationManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,18 +83,12 @@ class NewsActivity : AppCompatActivity(),LocationListener {
 
     private fun buildAlertMessage() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setMessage("Your Location services seems to be disabled, do you want to enable it?")
+        builder.setMessage(getString(R.string.locationPermission))
             .setCancelable(false)
-            .setPositiveButton("Yes", object : DialogInterface.OnClickListener {
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-                    startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-                }
-            })
-            .setNegativeButton("No", object : DialogInterface.OnClickListener {
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-                    dialog?.cancel()
-                }
-            })
+            .setPositiveButton(getString(R.string.yes)
+            ) { _, _ -> startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) }
+            .setNegativeButton(getString(R.string.no)
+            ) { dialog, _ -> dialog?.cancel() }
         val alert: AlertDialog = builder.create()
         alert.show()
     }
@@ -114,7 +108,7 @@ class NewsActivity : AppCompatActivity(),LocationListener {
     }
 
     private fun initUser() {
-        user = intent.getSerializableExtra("User") as User
+        user = intent.getSerializableExtra(getString(R.string.userArgument)) as User
     }
 
     override fun onLocationChanged(location: Location?) {

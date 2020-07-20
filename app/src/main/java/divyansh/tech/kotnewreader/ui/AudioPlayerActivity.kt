@@ -14,6 +14,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
@@ -42,6 +43,7 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Ea
     val viewModel: newsViewModel by viewModels()
     val utteranceId: String = "TechReads"
     val placeholderList: MutableList<String> = ArrayList()
+    lateinit var alertDialog: AlertDialog
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +55,7 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Ea
 
     override fun onResume() {
         super.onResume()
-        val directory = File(baseContext.getExternalFilesDir(null), "/KotNews")
+        val directory = File(baseContext.getExternalFilesDir(null), getString(R.string.audioDir))
         if (!directory.list().isNullOrEmpty()) {
             for (child in directory.list()) {
                 File(directory, child).delete()
@@ -63,6 +65,7 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Ea
 
     private fun initializeTextToSpeech() {
         tts = TextToSpeech(this, this)
+        alertDialog = Alert.createAlertDialog(this)
     }
 
     private fun setupListeners() {
@@ -92,38 +95,30 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Ea
     }
 
     private fun loadArticlesAndDirectory(name: String) {
-        viewModel.getBreakingNews("in", name)
+        viewModel.getBreakingNews(getString(R.string.countryCode), name)
         setupObservers()
     }
 
-    fun showProgress(progressBar: ProgressBar) {
-        progressBar.visibility = View.VISIBLE
-    }
-
-    fun hideProgress(progressBar: ProgressBar) {
-        progressBar.visibility = View.GONE
-    }
-
-    fun setupObservers() {
-        viewModel.breakingNews.observe(this, Observer {
+    private fun setupObservers() {
+        viewModel.breakingNews.observe(this, Observer {it ->
             when (it) {
                 is Resource.Success -> {
-                    hideProgress(paginationProgressBar)
+                    alertDialog.dismiss()
                     it.data?.let {
                         saveAudio(it.articles)
                     }
                 }
 
                 is Resource.Error -> {
-                    hideProgress(paginationProgressBar)
+                    alertDialog.dismiss()
                     it.message?.let {
-                        Toast.makeText(this@AudioPlayerActivity, "Failed", Toast.LENGTH_SHORT)
+                        Toast.makeText(this@AudioPlayerActivity, getString(R.string.failed), Toast.LENGTH_SHORT)
                             .show()
                     }
                 }
 
                 is Resource.Loading -> {
-                    showProgress(paginationProgressBar)
+                    alertDialog.show()
                 }
             }
         })
@@ -137,13 +132,13 @@ class AudioPlayerActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Ea
 
     private fun saveAudio(articles: List<Article>) {
         Alert.createAlertDialog(this).show()
-        var newses: MutableList<String?> = ArrayList<String?>()
+        val newses: MutableList<String?> = ArrayList<String?>()
         for (news in articles) {
             Log.i("Audio", news.title!!)
             newses.add(news.title + "  " + news.description)
         }
         if (hasWritePermissions() && hasReadPermissions()) {
-            val directory = File(baseContext.getExternalFilesDir(null), "/KotNews")
+            val directory = File(baseContext.getExternalFilesDir(null), getString(R.string.audioDir))
 //            if (!directory.list().isNullOrEmpty()) {
 //                for (child in directory.list()) {
 //                    File(directory, child).delete()

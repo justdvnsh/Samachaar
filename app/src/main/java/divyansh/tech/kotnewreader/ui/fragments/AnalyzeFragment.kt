@@ -1,5 +1,6 @@
 package divyansh.tech.kotnewreader.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,48 +31,55 @@ class AnalyzeFragment : BaseFragment() {
         setupEmotionText()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupSentimentText() {
         viewModel.getSentiments(args.query)
         viewModel.sentimentText.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
-                    positiveSentiment.text = it.data?.pos.toString() + " - " + it.data?.pos_percent
-                    neutralSentiment.text = it.data?.mid.toString() + " - " + it.data?.mid_percent
-                    negativeSentiment.text = it.data?.neg.toString() + " - " + it.data?.neg_percent
+                    alert.dismiss()
+                    positiveSentiment.text = "${it.data?.pos.toString()} - ${it.data?.pos_percent}"
+                    neutralSentiment.text = "${it.data?.mid.toString()} - ${it.data?.mid_percent}"
+                    negativeSentiment.text = "${it.data?.neg.toString()} - ${it.data?.neg_percent}"
                 }
 
                 is Resource.Error -> {
-                    Alert.createAlertDialog(context!!).show()
+                    alert.dismiss()
                     it.message?.let {
-                        Toast.makeText(activity, "Failed ${it}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "${getString(R.string.failed)} ${it}", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 is Resource.Loading -> {
-                    Alert.createAlertDialog(context!!).show()
+                    alert.show()
                 }
             }
         })
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupEmotionText() {
         viewModel.getCommunicationAnalysis(args.query)
         viewModel.getEmotionalAnalysis(args.query)
         viewModel.communicationText.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
-                    communicationAnalysis.text = it.data?.get(0)?.predictions?.get(0)?.prediction + " - " + it.data?.get(0)?.predictions?.get(0)?.probability.toString()
+                    alert.dismiss()
+                    communicationAnalysis.text =
+                        "${it.data?.get(0)?.predictions?.get(0)?.prediction} - ${it.data?.get(0)?.predictions?.get(
+                            0
+                        )?.probability.toString()}"
                 }
 
                 is Resource.Error -> {
-                    Alert.createAlertDialog(context!!).show()
+                    alert.dismiss()
                     it.message?.let {
-                        Toast.makeText(activity, "Failed ${it}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "${getString(R.string.failed)} ${it}", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 is Resource.Loading -> {
-                    Alert.createAlertDialog(context!!).show()
+                    alert.show()
                 }
             }
         })
@@ -79,18 +87,22 @@ class AnalyzeFragment : BaseFragment() {
         viewModel.emotionText.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
-                    emotionalAnalysis.text = it.data?.get(0)?.predictions?.get(0)?.prediction + " " + it.data?.get(0)?.predictions?.get(0)?.probability.toString()
+                    alert.dismiss()
+                    emotionalAnalysis.text =
+                        "${it.data?.get(0)?.predictions?.get(0)?.prediction} ${it.data?.get(0)?.predictions?.get(
+                            0
+                        )?.probability.toString()}"
                 }
 
                 is Resource.Error -> {
-                    Alert.createAlertDialog(context!!).show()
+                    alert.dismiss()
                     it.message?.let {
-                        Toast.makeText(activity, "Failed ${it}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "${getString(R.string.failed)} ${it}", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 is Resource.Loading -> {
-                    Alert.createAlertDialog(context!!).show()
+                    alert.show()
                 }
             }
         })

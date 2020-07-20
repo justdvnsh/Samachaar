@@ -30,7 +30,7 @@ import javax.inject.Inject
 
 class BreakingNewsFragment : BaseFragment() {
 
-    lateinit var fragmentAdapter: FragmentsAdapter
+    private lateinit var fragmentAdapter: FragmentsAdapter
 
     override fun provideView(
         inflater: LayoutInflater,
@@ -42,7 +42,7 @@ class BreakingNewsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.titleText.text = "Breaking News"
+        view.titleText.text = getString(R.string.BreakingNewsTitle)
         setStatePagerAdapter()
     }
 
@@ -69,34 +69,34 @@ class BreakingNewsFragment : BaseFragment() {
                 positionOffset: Float,
                 positionOffsetPixels: Int
             ) {
-                if (shouldPaginate) viewModel.getBreakingNews("in", tabs.getTabAt(position)?.text.toString().toLowerCase())
+                if (shouldPaginate) viewModel.getBreakingNews(getString(R.string.countryCode), tabs.getTabAt(position)?.text.toString().toLowerCase())
             }
 
             override fun onPageSelected(position: Int) {
                 when (position) {
                     0 -> {
                         viewModel.pageChanged = true
-                        viewModel.getBreakingNews("in", getString(R.string.business))
+                        viewModel.getBreakingNews(getString(R.string.countryCode), getString(R.string.business))
                     }
                     1 -> {
                         viewModel.pageChanged = true
-                        viewModel.getBreakingNews("in", getString(R.string.entertainment))
+                        viewModel.getBreakingNews(getString(R.string.countryCode), getString(R.string.entertainment))
                     }
                     2 -> {
                         viewModel.pageChanged = true
-                        viewModel.getBreakingNews("in", getString(R.string.tech))
+                        viewModel.getBreakingNews(getString(R.string.countryCode), getString(R.string.tech))
                     }
                     3 -> {
                         viewModel.pageChanged = true
-                        viewModel.getBreakingNews("in", getString(R.string.sports))
+                        viewModel.getBreakingNews(getString(R.string.countryCode), getString(R.string.sports))
                     }
                     4 -> {
                         viewModel.pageChanged = true
-                        viewModel.getBreakingNews("in", getString(R.string.health))
+                        viewModel.getBreakingNews(getString(R.string.countryCode), getString(R.string.health))
                     }
                     5 -> {
                         viewModel.pageChanged = true
-                        viewModel.getBreakingNews("in", getString(R.string.science))
+                        viewModel.getBreakingNews(getString(R.string.countryCode), getString(R.string.science))
                     }
                     else -> {
                         viewModel.pageChanged = false

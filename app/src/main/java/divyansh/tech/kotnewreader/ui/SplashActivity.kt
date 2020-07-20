@@ -37,7 +37,7 @@ class SplashActivity : AppCompatActivity() {
         viewModel.setEmail(email!!)
         viewModel.userLiveData?.observe(this, Observer {
             val intent = Intent(this@SplashActivity, NewsActivity::class.java)
-            intent.putExtra("User", it)
+            intent.putExtra(getString(R.string.userArgument), it)
             startActivity(intent)
             finish()
         })

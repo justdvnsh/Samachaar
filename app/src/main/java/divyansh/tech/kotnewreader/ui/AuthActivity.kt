@@ -75,7 +75,7 @@ class AuthActivity : AppCompatActivity() {
 
     private fun goToNewsActivity(user: User) {
         val intent: Intent = Intent(this, NewsActivity::class.java)
-        intent.putExtra("User", user)
+        intent.putExtra(getString(R.string.userArgument), user)
         startActivity(intent)
         finish()
     }

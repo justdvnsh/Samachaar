@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.ProgressBar
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -29,6 +30,7 @@ import divyansh.tech.kotnewreader.network.models.User
 import divyansh.tech.kotnewreader.ui.AudioPlayerActivity
 import divyansh.tech.kotnewreader.ui.NewsActivity
 import divyansh.tech.kotnewreader.ui.viewModels.newsViewModel
+import divyansh.tech.kotnewreader.utils.Alert
 import divyansh.tech.kotnewreader.utils.Constants
 import kotlinx.android.synthetic.main.common_toolbar.*
 import kotlinx.android.synthetic.main.fragment_general_news.*
@@ -40,6 +42,7 @@ abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks{
 
     lateinit var viewModel: newsViewModel
     lateinit var user: User
+    lateinit var alert: AlertDialog
     val REQUEST_IMAGE_CAPTURE: Int = 1
     var imageBitmap: Bitmap? = null
     var detectedText: String? = null
@@ -101,6 +104,7 @@ abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks{
         viewModel = (activity as NewsActivity).viewModel
         setupListeners()
         user = (activity as NewsActivity).user
+        alert = Alert.createAlertDialog(activity as NewsActivity)
     }
 
     private fun setupListeners() {

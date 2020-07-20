@@ -37,7 +37,7 @@ class ArticleFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.titleText.text = "Article"
+        view.titleText.text = getString(R.string.ArticleTitle)
         setupListeners()
         setupWebView()
         setupFab(view)
@@ -63,24 +63,24 @@ class ArticleFragment: BaseFragment() {
                     Glide.with(context!!).load(args.article.urlToImage).into(imageArticle)
                     analyze.visibility = VISIBLE
                     bundle = Bundle().apply {
-                        putString("query", it.data?.article_text)
+                        putString(getString(R.string.queryArgument), it.data?.article_text)
                     }
                     translate?.visibility = VISIBLE
                     translate?.setOnClickListener {v ->
                         translateArticle(it.data?.article_text)
                     }
-                    createAlertDialog(context!!).dismiss()
+                    alert.dismiss()
                 }
 
                 is Resource.Error -> {
-                    createAlertDialog(context!!).show()
+                    alert.dismiss()
                     it.message?.let {
-                        Toast.makeText(activity, "Failed ${it}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "${getString(R.string.failed)} ${it}", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 is Resource.Loading -> {
-                    createAlertDialog(context!!).show()
+                    alert.show()
                 }
             }
         })
@@ -89,21 +89,22 @@ class ArticleFragment: BaseFragment() {
     private fun translateArticle(text: String?) {
         text?.let {
             viewModel.translate(it)
-            viewModel.translatedText.observe(viewLifecycleOwner, Observer {
+            viewModel.translatedText.observe(viewLifecycleOwner, Observer {it ->
                 when (it) {
                     is Resource.Success -> {
                         article.text = it.data
+                        alert.dismiss()
                     }
 
                     is Resource.Error -> {
-                        createAlertDialog(context!!).show()
+                        alert.dismiss()
                         it.message?.let {
-                            Toast.makeText(activity, "Failed ${it}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(activity, "${getString(R.string.failed)} ${it}", Toast.LENGTH_SHORT).show()
                         }
                     }
 
                     is Resource.Loading -> {
-                        createAlertDialog(context!!).show()
+                        alert.show()
                     }
                 }
             })
@@ -127,15 +128,15 @@ class ArticleFragment: BaseFragment() {
         share.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = "text/plain"
-            intent.putExtra(Intent.EXTRA_TEXT, "I am using The Tech Reads app. You use it too. Read this article with me" +
+            intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.shareIntentString) +
                     args.article.url)
             intent.putExtra(Intent.EXTRA_SUBJECT, args.article.title)
-            startActivity(Intent.createChooser(intent, "Share Using "))
+            startActivity(Intent.createChooser(intent, getString(R.string.shareUsing)))
 
         }
         fab.setOnClickListener {
             viewModel.upsertArticle(args.article)
-            Snackbar.make(view, "Article Saved Successfully.", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(view, getString(R.string.articleSaved), Snackbar.LENGTH_SHORT).show()
         }
     }
 }

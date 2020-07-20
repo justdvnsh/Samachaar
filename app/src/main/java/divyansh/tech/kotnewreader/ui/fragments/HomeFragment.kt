@@ -37,7 +37,7 @@ class HomeFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        titleText?.text = "Home"
+        titleText?.text = getString(R.string.homeTitle)
         setupRecyclerView()
         setupObservers()
     }
@@ -45,7 +45,7 @@ class HomeFragment: BaseFragment() {
     private fun setupRecyclerView() {
         newsAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
-                putSerializable("article", it)
+                putSerializable(getString(R.string.articleArgument), it)
             }
             findNavController().navigate(
                 R.id.action_homeFragment2_to_articleFragment,
@@ -63,10 +63,10 @@ class HomeFragment: BaseFragment() {
             viewModel.getSearchNews(it)
             viewModel.getDailyReports()
         }
-        viewModel.coronaDetails.observe(viewLifecycleOwner, Observer {
+        viewModel.coronaDetails.observe(viewLifecycleOwner, Observer {it ->
             when (it) {
                 is Resource.Success -> {
-                    hideProgress(paginationProgressBar)
+                    alert.dismiss()
                     it.data?.let {
                         totalCases.text = it.totalCases.toString()
                         activeCases.text = it.activeCases.toString()
@@ -76,35 +76,35 @@ class HomeFragment: BaseFragment() {
                 }
 
                 is Resource.Error -> {
-                    hideProgress(paginationProgressBar)
+                    alert.dismiss()
                     it.message?.let {
-                        Toast.makeText(activity, "Failed ${it}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "${getString(R.string.failed)} ${it}", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 is Resource.Loading -> {
-                    showProgress(paginationProgressBar)
+                    alert.show()
                 }
             }
         })
-        viewModel.searchNews.observe(viewLifecycleOwner, Observer {
+        viewModel.searchNews.observe(viewLifecycleOwner, Observer {it ->
             when (it) {
                 is Resource.Success -> {
-                    hideProgress(paginationProgressBar)
+                    alert.dismiss()
                     it.data?.let {
                         newsAdapter.differ.submitList(it.articles.toList())
                     }
                 }
 
                 is Resource.Error -> {
-                    hideProgress(paginationProgressBar)
+                    alert.dismiss()
                     it.message?.let {
-                        Toast.makeText(activity, "Failed ${it}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "${getString(R.string.failed)} ${it}", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 is Resource.Loading -> {
-                    showProgress(paginationProgressBar)
+                    alert.show()
                 }
             }
         })

@@ -39,7 +39,7 @@ class FavouritesFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.titleText.text = "Favourites"
+        view.titleText.text = getString(R.string.FavoritesTitle)
         Log.i("INJECTED FROM FAV ", viewModel.newRepository.db.hashCode().toString() + " api ->" + viewModel.newRepository.api.hashCode().toString())
         setupObservers(view)
         setupItemTouchHelperCallback(view)
@@ -62,8 +62,8 @@ class FavouritesFragment : BaseFragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val article = newsAdapter.differ.currentList[viewHolder.adapterPosition]
                 viewModel.deleteArticle(article)
-                Snackbar.make(view, "Article Deleted Successfully", Snackbar.LENGTH_LONG).apply {
-                    setAction("Undo") {
+                Snackbar.make(view, getString(R.string.articleDeleted), Snackbar.LENGTH_LONG).apply {
+                    setAction(getString(R.string.undo)) {
                         viewModel.upsertArticle(article)
                     }
                     show()
@@ -77,7 +77,7 @@ class FavouritesFragment : BaseFragment() {
     private fun setupRecyclerView() {
         newsAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
-                putSerializable("article", it)
+                putSerializable(getString(R.string.articleArgument), it)
             }
             findNavController().navigate(
                 R.id.action_favouritesFragment_to_articleFragment,
@@ -97,11 +97,11 @@ class FavouritesFragment : BaseFragment() {
 
         viewModel.syncNews(context!!).observe(viewLifecycleOwner, Observer {
             when (it) {
-                is Operation.State.IN_PROGRESS -> Snackbar.make(view, "Sync has started", Snackbar.LENGTH_SHORT).show()
+                is Operation.State.IN_PROGRESS -> Snackbar.make(view, getString(R.string.syncStarted), Snackbar.LENGTH_SHORT).show()
 
-                is Operation.State.FAILURE -> Snackbar.make(view, "Sync has failed", Snackbar.LENGTH_SHORT).show()
+                is Operation.State.FAILURE -> Snackbar.make(view, getString(R.string.syncFailed), Snackbar.LENGTH_SHORT).show()
 
-                is Operation.State.SUCCESS -> Snackbar.make(view, "Sync completed successfully", Snackbar.LENGTH_SHORT).show()
+                is Operation.State.SUCCESS -> Snackbar.make(view, getString(R.string.syncCompleted), Snackbar.LENGTH_SHORT).show()
             }
         })
     }

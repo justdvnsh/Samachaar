@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,10 +42,10 @@ class NewsFragment(): BaseFragment() {
         setupObservers()
     }
 
-    fun setupRecyclerView() {
+    private fun setupRecyclerView() {
         newsAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
-                putSerializable("article", it)
+                putSerializable(getString(R.string.articleArgument), it)
             }
             findNavController().navigate(
                 R.id.action_breakingNewsFragment_to_articleFragment,
@@ -58,25 +59,28 @@ class NewsFragment(): BaseFragment() {
         }
     }
 
-    fun setupObservers() {
+    private fun setupObservers() {
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
-                    hideProgress(paginationProgressBar)
+//                    hideProgress(paginationProgressBar)
+                    alert.dismiss()
                     it.data?.let {
                         newsAdapter.differ.submitList(it.articles.toList())
                     }
                 }
 
                 is Resource.Error -> {
-                    hideProgress(paginationProgressBar)
+                    alert.dismiss()
+//                    hideProgress(paginationProgressBar)
                     it.message?.let {
-                        Toast.makeText(activity, "Failed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 is Resource.Loading -> {
-                    showProgress(paginationProgressBar)
+//                    showProgress(paginationProgressBar)
+                    alert.show()
                 }
             }
         })
