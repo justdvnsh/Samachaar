@@ -116,7 +116,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 * Does not handle pagination (infinite scroll)
 
-* Alert with progress bar have not been handled properly
+* ~Alert with progress bar have not been handled properly~
 
 * Home Fragment uses simple recommendation system
 
