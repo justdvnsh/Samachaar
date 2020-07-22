@@ -11,9 +11,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.*
 import divyansh.tech.kotnewreader.network.models.Article
 import divyansh.tech.kotnewreader.network.models.Corona
-import divyansh.tech.kotnewreader.network.models.MLModels.ArticleView
-import divyansh.tech.kotnewreader.network.models.MLModels.communicationAnalysis
-import divyansh.tech.kotnewreader.network.models.MLModels.sentimentModel
+import divyansh.tech.kotnewreader.network.models.MLModels.*
 import divyansh.tech.kotnewreader.network.models.NewsResponse
 import divyansh.tech.kotnewreader.repositories.NewsRepository
 import divyansh.tech.kotnewreader.ui.fragments.BaseFragment
@@ -24,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.net.SocketTimeoutException
 
 class newsViewModel @ViewModelInject constructor(
     val newRepository: NewsRepository
@@ -47,6 +46,8 @@ class newsViewModel @ViewModelInject constructor(
 
     var communicationText: MutableLiveData<Resource<List<communicationAnalysis>>> = MutableLiveData()
     var emotionText: MutableLiveData<Resource<List<communicationAnalysis>>> = MutableLiveData()
+
+    var keyPhrases: MutableLiveData<Resource<List<KeyPhrases>>> = MutableLiveData()
 
     fun handleNewsReponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
         if (response.isSuccessful) {
@@ -141,13 +142,17 @@ class newsViewModel @ViewModelInject constructor(
 
     fun changeToArticleView(url: String) = viewModelScope.launch {
         articleText.postValue(Resource.Loading())
-        val response = newRepository.changeToArticleView(url)
-        Log.i("Main", response.raw().request.url.toString())
-        if (response.isSuccessful) response.body()?.let {
-            articleText.postValue(Resource.Success(it))
-            Log.i("Main", it.article_text)
+        try {
+            val response = newRepository.changeToArticleView(url)
+            Log.i("Main", response.raw().request.url.toString())
+            if (response.isSuccessful) response.body()?.let {
+                articleText.postValue(Resource.Success(it))
+                Log.i("Main", it.article_text)
+            }
+            else articleText.postValue(Resource.Error(response.message()))
+        } catch (e: SocketTimeoutException) {
+            articleText.postValue(Resource.Error("Timed Out"))
         }
-        else articleText.postValue(Resource.Error(response.message()))
     }
 
     fun translate(text: String) = CoroutineScope(Dispatchers.IO + Job()).launch {
@@ -192,5 +197,16 @@ class newsViewModel @ViewModelInject constructor(
             Log.i("Main", it.toString())
         }
         else emotionText.postValue(Resource.Error(response.message()))
+    }
+
+    fun getKeyPhrases(text: String) =  CoroutineScope(Dispatchers.IO + Job()).launch {
+        keyPhrases.postValue(Resource.Loading())
+        val response = newRepository.getKeyPhrases(text)
+        Log.i("Main", response.raw().request.url.toString())
+        if (response.isSuccessful) response.body()?.let {
+            keyPhrases.postValue(Resource.Success(it.documents))
+            Log.i("Main", it.toString())
+        }
+        else keyPhrases.postValue(Resource.Error(response.message()))
     }
 }

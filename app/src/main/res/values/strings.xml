@@ -58,4 +58,7 @@
     <string name="email">Email</string>
     <string name="show_synced_articles">Show Synced Articles</string>
     <string name="importantEntities">Important Entities</string>
+    <string name="keyPhrases">Key Phrases</string>
+    <string name="errorOccured">Some error occured</string>
+    <string name="retry">Retry</string>
 </resources>

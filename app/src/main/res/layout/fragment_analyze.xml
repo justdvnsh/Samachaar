@@ -416,13 +416,33 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:text="@string/keyPhrases"
+                android:padding="6dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:id="@+id/keyPhrasesTextView"
+                android:layout_below="@id/emotionalAnalysisCardView"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvKeyPhrases"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_below="@id/keyPhrasesTextView"
+                android:padding="10dp"
+                />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
                 android:text="@string/importantEntities"
                 android:padding="6dp"
                 android:layout_marginLeft="10dp"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 android:id="@+id/entitiesText"
-                android:layout_below="@id/emotionalAnalysisCardView"
+                android:layout_below="@id/rvKeyPhrases"
                 />
 
             <androidx.recyclerview.widget.RecyclerView

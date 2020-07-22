@@ -38,19 +38,19 @@ class ArticleFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.titleText.text = getString(R.string.ArticleTitle)
-        setupListeners()
+        setupListeners(view)
         setupWebView()
         setupFab(view)
     }
 
-    private fun setupListeners() {
+    private fun setupListeners(view: View) {
         changeToArticle?.visibility = VISIBLE
         changeToArticle?.setOnClickListener {
-            changeToArticleView()
+            changeToArticleView(view)
         }
     }
 
-    private fun changeToArticleView() {
+    private fun changeToArticleView(view: View) {
         viewModel.changeToArticleView(args.article.url!!)
         viewModel.articleText.observe(viewLifecycleOwner, Observer {
             when (it) {
@@ -75,7 +75,12 @@ class ArticleFragment: BaseFragment() {
                 is Resource.Error -> {
                     alert.dismiss()
                     it.message?.let {
-                        Toast.makeText(activity, "${getString(R.string.failed)} ${it}", Toast.LENGTH_SHORT).show()
+                        Snackbar.make(view, getString(R.string.errorOccured), Snackbar.LENGTH_LONG).apply {
+                            setAction(getString(R.string.retry)) {
+                                viewModel.changeToArticleView(args.article.url!!)
+                            }
+                            show()
+                        }
                     }
                 }
 

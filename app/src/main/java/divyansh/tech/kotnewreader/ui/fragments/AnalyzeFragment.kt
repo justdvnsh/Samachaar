@@ -8,13 +8,20 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
+import divyansh.tech.kotnewreader.adapters.KeyPhrasesAdapter
 import divyansh.tech.kotnewreader.utils.Alert
 import divyansh.tech.kotnewreader.utils.Resource
 import kotlinx.android.synthetic.main.fragment_analyze.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AnalyzeFragment : BaseFragment() {
 
+    @Inject
+    lateinit var keyPhrasesAdapter: KeyPhrasesAdapter
     val args: AnalyzeFragmentArgs by navArgs()
 
     override fun provideView(
@@ -29,6 +36,8 @@ class AnalyzeFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupSentimentText()
         setupEmotionText()
+        setupKeyPhraseRecyclerView()
+        setupKeyPhrasesObservers()
     }
 
     @SuppressLint("SetTextI18n")
@@ -92,6 +101,38 @@ class AnalyzeFragment : BaseFragment() {
                         "${it.data?.get(0)?.predictions?.get(0)?.prediction} ${it.data?.get(0)?.predictions?.get(
                             0
                         )?.probability.toString()}"
+                }
+
+                is Resource.Error -> {
+                    alert.dismiss()
+                    it.message?.let {
+                        Toast.makeText(activity, "${getString(R.string.failed)} ${it}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                is Resource.Loading -> {
+                    alert.show()
+                }
+            }
+        })
+    }
+
+    private fun setupKeyPhraseRecyclerView() {
+        rvKeyPhrases.apply {
+            layoutManager = GridLayoutManager(context, 2)
+            adapter = keyPhrasesAdapter
+        }
+    }
+
+    private fun setupKeyPhrasesObservers() {
+        viewModel.getKeyPhrases(args.query)
+        viewModel.keyPhrases.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Resource.Success -> {
+                    alert.dismiss()
+                    it.data?.let {
+                        keyPhrasesAdapter.differ.submitList(it.get(0).keyPhrases.toList())
+                    }
                 }
 
                 is Resource.Error -> {

@@ -14,6 +14,7 @@ import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.adapters.FragmentsAdapter
+import divyansh.tech.kotnewreader.adapters.KeyPhrasesAdapter
 import divyansh.tech.kotnewreader.adapters.NewsAdapter
 import divyansh.tech.kotnewreader.database.ArticleDatabase
 import divyansh.tech.kotnewreader.network.api.CoronaApi
@@ -24,6 +25,7 @@ import divyansh.tech.kotnewreader.utils.Constants.Companion.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
+import java.security.Key
 import javax.inject.Singleton
 
 @Module
@@ -62,6 +64,9 @@ object AppModule {
 
     @Provides
     fun provideAdapter(): NewsAdapter = NewsAdapter()
+
+    @Provides
+    fun provideAdapterKeyPhrases(): KeyPhrasesAdapter = KeyPhrasesAdapter()
 
     @Provides
     @Singleton

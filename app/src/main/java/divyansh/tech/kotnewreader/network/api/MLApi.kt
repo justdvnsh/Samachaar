@@ -1,16 +1,9 @@
 package divyansh.tech.kotnewreader.network.api
 
-import com.google.gson.JsonObject
-import com.squareup.okhttp.Request
-import divyansh.tech.kotnewreader.network.models.MLModels.ArticleView
-import divyansh.tech.kotnewreader.network.models.MLModels.communicationAnalysis
-import divyansh.tech.kotnewreader.network.models.MLModels.sentimentModel
-import divyansh.tech.kotnewreader.network.models.MLModels.translationModel
+import divyansh.tech.kotnewreader.network.models.MLModels.*
 import divyansh.tech.kotnewreader.utils.Constants.Companion.ARTICLE_API
 import divyansh.tech.kotnewreader.utils.Constants.Companion.RAPID_API_KEY
-import divyansh.tech.kotnewreader.utils.Constants.Companion.TRANSLATION_API
 import okhttp3.RequestBody
-import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -63,4 +56,14 @@ interface MLApi {
         @Header("accept") accept: String = "application/json",
         @Body request: RequestBody
     ): Response<List<communicationAnalysis>>
+
+    @POST
+    suspend fun getKeyPhrases(
+        @Url url: String = "https://microsoft-text-analytics1.p.rapidapi.com/keyPhrases",
+        @Header("X-RapidAPI-Host") api: String = "microsoft-text-analytics1.p.rapidapi.com",
+        @Header("X-RapidAPI-Key") apiKey: String = RAPID_API_KEY,
+        @Header("content-type") type: String = "application/json",
+        @Header("accept") accept: String = "application/json",
+        @Body request: RequestBody
+    ) : Response<keyPhrasesModel>
 }
