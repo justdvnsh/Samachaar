@@ -18,11 +18,11 @@ class EntityAdapter: RecyclerView.Adapter<EntityAdapter.EntityViewHolder>() {
 
     private val diffCallback = object: DiffUtil.ItemCallback<Entities>() {
         override fun areItemsTheSame(oldItem: Entities, newItem: Entities): Boolean {
-            return oldItem.text == newItem.text
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(oldItem: Entities, newItem: Entities): Boolean {
-            return oldItem == newItem
+            return oldItem.text == newItem.text
         }
     }
 

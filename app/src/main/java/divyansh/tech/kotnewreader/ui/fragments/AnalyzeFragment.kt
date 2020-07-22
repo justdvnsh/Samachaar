@@ -155,14 +155,14 @@ class AnalyzeFragment : BaseFragment() {
             }
         })
     }
-
+    
     private fun setupEntityRecyclerView() {
-        rvImportantEntities.apply {
+        rvImportantEntities.apply { 
             layoutManager = GridLayoutManager(context, 2)
             adapter = entityAdapter
         }
     }
-
+    
     private fun setupEntityObservers() {
         viewModel.getEntities(args.query)
         viewModel.entities.observe(viewLifecycleOwner, Observer {
@@ -170,7 +170,7 @@ class AnalyzeFragment : BaseFragment() {
                 is Resource.Success -> {
                     alert.dismiss()
                     it.data?.let {
-                        if (it.isEmpty()) Toast.makeText(context, "No Entities for this article", Toast.LENGTH_SHORT).show()
+                        if (it.size == 0) Toast.makeText(context, "No Entities for this article", Toast.LENGTH_SHORT).show()
                         else entityAdapter.differ.submitList(it[0].entities.toList())
                     }
                 }
