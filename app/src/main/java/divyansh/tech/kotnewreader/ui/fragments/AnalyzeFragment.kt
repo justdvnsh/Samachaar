@@ -9,8 +9,10 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
+import divyansh.tech.kotnewreader.adapters.EntityAdapter
 import divyansh.tech.kotnewreader.adapters.KeyPhrasesAdapter
 import divyansh.tech.kotnewreader.utils.Alert
 import divyansh.tech.kotnewreader.utils.Resource
@@ -22,6 +24,8 @@ class AnalyzeFragment : BaseFragment() {
 
     @Inject
     lateinit var keyPhrasesAdapter: KeyPhrasesAdapter
+    @Inject
+    lateinit var entityAdapter: EntityAdapter
     val args: AnalyzeFragmentArgs by navArgs()
 
     override fun provideView(
@@ -38,6 +42,8 @@ class AnalyzeFragment : BaseFragment() {
         setupEmotionText()
         setupKeyPhraseRecyclerView()
         setupKeyPhrasesObservers()
+        setupEntityRecyclerView()
+        setupEntityObservers()
     }
 
     @SuppressLint("SetTextI18n")
@@ -131,7 +137,41 @@ class AnalyzeFragment : BaseFragment() {
                 is Resource.Success -> {
                     alert.dismiss()
                     it.data?.let {
-                        keyPhrasesAdapter.differ.submitList(it.get(0).keyPhrases.toList())
+                        if (it.size == 0) Toast.makeText(context, "No Key Phrases for this article", Toast.LENGTH_SHORT).show()
+                        else keyPhrasesAdapter.differ.submitList(it[0].keyPhrases.toList())
+                    }
+                }
+
+                is Resource.Error -> {
+                    alert.dismiss()
+                    it.message?.let {
+                        Toast.makeText(activity, "${getString(R.string.failed)} ${it}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                is Resource.Loading -> {
+                    alert.show()
+                }
+            }
+        })
+    }
+
+    private fun setupEntityRecyclerView() {
+        rvImportantEntities.apply {
+            layoutManager = GridLayoutManager(context, 2)
+            adapter = entityAdapter
+        }
+    }
+
+    private fun setupEntityObservers() {
+        viewModel.getEntities(args.query)
+        viewModel.entities.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Resource.Success -> {
+                    alert.dismiss()
+                    it.data?.let {
+                        if (it.isEmpty()) Toast.makeText(context, "No Entities for this article", Toast.LENGTH_SHORT).show()
+                        else entityAdapter.differ.submitList(it[0].entities.toList())
                     }
                 }
 

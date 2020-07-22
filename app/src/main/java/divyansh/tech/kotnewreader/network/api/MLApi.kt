@@ -66,4 +66,14 @@ interface MLApi {
         @Header("accept") accept: String = "application/json",
         @Body request: RequestBody
     ) : Response<keyPhrasesModel>
+
+    @POST
+    suspend fun getEntities(
+        @Url url: String = "https://microsoft-text-analytics1.p.rapidapi.com/entities/recognition/general",
+        @Header("X-RapidAPI-Host") api: String = "microsoft-text-analytics1.p.rapidapi.com",
+        @Header("X-RapidAPI-Key") apiKey: String = RAPID_API_KEY,
+        @Header("content-type") type: String = "application/json",
+        @Header("accept") accept: String = "application/json",
+        @Body request: RequestBody
+    ) : Response<entityModel>
 }

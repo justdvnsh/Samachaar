@@ -82,6 +82,13 @@ class NewsRepository @Inject constructor(
         )
     )
 
+    suspend fun getEntities(text: String) = mlApi.getEntities(
+        request = RequestBody.create(
+            "application/json".toMediaTypeOrNull(),
+            "{ \"documents\": [  {   \"id\": \"1\",   \"language\": \"en\",   \"text\": \"${text}\"  } ]}"
+        )
+    )
+
     fun getAllArticles() = db.getAllArticles()
 
     suspend fun deleteArticle(article: Article) = db.deleteArticle(article)

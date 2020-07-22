@@ -49,6 +49,8 @@ class newsViewModel @ViewModelInject constructor(
 
     var keyPhrases: MutableLiveData<Resource<List<KeyPhrases>>> = MutableLiveData()
 
+    var entities: MutableLiveData<Resource<List<EntitiesModels>>> = MutableLiveData()
+
     fun handleNewsReponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let {
@@ -208,5 +210,16 @@ class newsViewModel @ViewModelInject constructor(
             Log.i("Main", it.toString())
         }
         else keyPhrases.postValue(Resource.Error(response.message()))
+    }
+
+    fun getEntities(text: String) =  CoroutineScope(Dispatchers.IO + Job()).launch {
+        entities.postValue(Resource.Loading())
+        val response = newRepository.getEntities(text)
+        Log.i("Main", response.raw().request.url.toString())
+        if (response.isSuccessful) response.body()?.let {
+            entities.postValue(Resource.Success(it.documents))
+            Log.i("Main", it.toString())
+        }
+        else entities.postValue(Resource.Error(response.message()))
     }
 }
