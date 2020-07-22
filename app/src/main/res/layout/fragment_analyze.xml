@@ -57,7 +57,7 @@
         app:layout_constraintStart_toStartOf="parent"
         >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             >
@@ -70,9 +70,6 @@
                 android:layout_marginStart="10dp"
                 android:textColor="#000000"
                 android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/biasText"
                 android:layout_marginLeft="10dp" />
 
@@ -85,8 +82,7 @@
                 android:layout_margin="10dp"
                 android:id="@+id/biasCardView"
                 app:cardBackgroundColor="@android:color/holo_green_light"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/biasText"
+                android:layout_below="@id/biasText"
                 >
 
 
@@ -135,17 +131,14 @@
                 android:layout_marginLeft="10dp"
                 android:textColor="#000000"
                 android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/biasCardView"
                 android:id="@+id/sentimentText"
+                android:layout_below="@id/biasCardView"
                 />
 
             <HorizontalScrollView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/sentimentText"
+                android:layout_below="@id/sentimentText"
                 android:id="@+id/sentimentScrollView"
                 >
 
@@ -306,10 +299,8 @@
                 android:layout_marginLeft="10dp"
                 android:textColor="#000000"
                 android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/sentimentScrollView"
                 android:id="@+id/communicationText"
+                android:layout_below="@id/sentimentScrollView"
                 />
 
             <androidx.cardview.widget.CardView
@@ -321,8 +312,7 @@
                 app:cardCornerRadius="10dp"
                 android:layout_margin="10dp"
                 app:cardBackgroundColor="@android:color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/communicationText"
+                android:layout_below="@id/communicationText"
                 >
 
 
@@ -370,10 +360,8 @@
                 android:layout_marginLeft="10dp"
                 android:textColor="#000000"
                 android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/communicationAnalysisCardView"
                 android:id="@+id/emotionText"
+                android:layout_below="@id/communicationAnalysisCardView"
                 />
 
             <androidx.cardview.widget.CardView
@@ -384,8 +372,8 @@
                 app:cardCornerRadius="10dp"
                 android:layout_margin="10dp"
                 app:cardBackgroundColor="@android:color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/emotionText"
+                android:layout_below="@id/emotionText"
+                android:id="@+id/emotionalAnalysisCardView"
                 >
 
 
@@ -425,7 +413,27 @@
 
             </androidx.cardview.widget.CardView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/importantEntities"
+                android:padding="6dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:id="@+id/entitiesText"
+                android:layout_below="@id/emotionalAnalysisCardView"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvImportantEntities"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_below="@id/entitiesText"
+                android:padding="10dp"
+                />
+
+        </RelativeLayout>
 
     </ScrollView>
 

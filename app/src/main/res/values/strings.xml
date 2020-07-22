@@ -57,4 +57,5 @@
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="show_synced_articles">Show Synced Articles</string>
+    <string name="importantEntities">Important Entities</string>
 </resources>
