@@ -83,6 +83,35 @@
 
     </ScrollView>
 
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="webView, scrollArticle" />
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/barrier"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/related_articles"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:padding="10dp"
+        android:id="@+id/relatedArticlesTextView"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@id/relatedArticlesTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/rvRelatedArticles"
+        />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/analyze"
         android:layout_width="wrap_content"
