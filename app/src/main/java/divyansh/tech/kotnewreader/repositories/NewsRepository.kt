@@ -89,6 +89,10 @@ class NewsRepository @Inject constructor(
         )
     )
 
+    suspend fun getRelatedNews(text: String) = mlApi.getRelatedNews(
+        url = "https://google-search3.p.rapidapi.com/api/v1/news/q%253D${URLEncoder.encode(text)}"
+    )
+
     fun getAllArticles() = db.getAllArticles()
 
     suspend fun deleteArticle(article: Article) = db.deleteArticle(article)

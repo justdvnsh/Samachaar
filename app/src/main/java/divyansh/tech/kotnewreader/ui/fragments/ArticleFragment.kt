@@ -12,20 +12,28 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
+import divyansh.tech.kotnewreader.adapters.RelatedNewsAdapter
+import divyansh.tech.kotnewreader.network.models.Article
 import divyansh.tech.kotnewreader.utils.Alert.Companion.createAlertDialog
 import divyansh.tech.kotnewreader.utils.Resource
 import kotlinx.android.synthetic.main.common_toolbar.*
 import kotlinx.android.synthetic.main.common_toolbar.view.*
 import kotlinx.android.synthetic.main.fragment_article.*
 import kotlinx.android.synthetic.main.fragment_search.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ArticleFragment: BaseFragment() {
 
     val args: ArticleFragmentArgs by navArgs()
     lateinit var bundle: Bundle
+    @Inject
+    lateinit var relatedNewsAdapter: RelatedNewsAdapter
 
     override fun provideView(
         inflater: LayoutInflater,
@@ -69,6 +77,8 @@ class ArticleFragment: BaseFragment() {
                     translate?.setOnClickListener {v ->
                         translateArticle(it.data?.article_text)
                     }
+                    setupRecyclerView()
+                    setupObservers(view)
                     alert.dismiss()
                 }
 
@@ -143,5 +153,45 @@ class ArticleFragment: BaseFragment() {
             viewModel.upsertArticle(args.article)
             Snackbar.make(view, getString(R.string.articleSaved), Snackbar.LENGTH_SHORT).show()
         }
+    }
+
+    private fun setupRecyclerView() {
+        relatedNewsAdapter.setOnItemClickListener {
+            // do something
+        }
+        rvRelatedArticles.apply {
+            adapter = relatedNewsAdapter
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
+
+    private fun setupObservers(view: View) {
+        viewModel.getRelatedNews(args.article.title!!)
+        viewModel.relatedNews.observe(viewLifecycleOwner, Observer {it ->
+            when (it) {
+                is Resource.Success -> {
+                    alert.dismiss()
+                    it.data?.let {
+                        relatedNewsAdapter.differ.submitList(it.toList())
+                    }
+                }
+
+                is Resource.Error -> {
+                    alert.dismiss()
+                    it.message?.let {
+                        Snackbar.make(view, getString(R.string.errorOccured), Snackbar.LENGTH_LONG).apply {
+                            setAction(getString(R.string.retry)) {
+                                viewModel.getRelatedNews(args.article.title!!)
+                            }
+                            show()
+                        }
+                    }
+                }
+
+                is Resource.Loading -> {
+                    alert.show()
+                }
+            }
+        })
     }
 }

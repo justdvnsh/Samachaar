@@ -76,4 +76,11 @@ interface MLApi {
         @Header("accept") accept: String = "application/json",
         @Body request: RequestBody
     ) : Response<entityModel>
+
+    @GET
+    suspend fun getRelatedNews(
+        @Url url: String,
+        @Header("X-RapidAPI-Host") api: String = "google-search3.p.rapidapi.com",
+        @Header("X-RapidAPI-Key") apiKey: String = RAPID_API_KEY
+    ) : Response<relatedNews>
 }

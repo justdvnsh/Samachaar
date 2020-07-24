@@ -51,6 +51,8 @@ class newsViewModel @ViewModelInject constructor(
 
     var entities: MutableLiveData<Resource<List<EntitiesModels>>> = MutableLiveData()
 
+    var relatedNews: MutableLiveData<Resource<List<RelatedNews>>> = MutableLiveData()
+
     fun handleNewsReponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let {
@@ -221,5 +223,20 @@ class newsViewModel @ViewModelInject constructor(
             Log.i("Main", it.toString())
         }
         else entities.postValue(Resource.Error(response.message()))
+    }
+
+    fun getRelatedNews(text: String) = CoroutineScope(Dispatchers.IO + Job()).launch {
+        try {
+            relatedNews.postValue(Resource.Loading())
+            val response = newRepository.getRelatedNews(text)
+            Log.i("Main", response.raw().request.url.toString())
+            if (response.isSuccessful) response.body()?.let {
+                relatedNews.postValue(Resource.Success(it.entries))
+                Log.i("Main", it.toString())
+            }
+            else relatedNews.postValue(Resource.Error(response.message()))
+        } catch (e: SocketTimeoutException) {
+            relatedNews.postValue(Resource.Error("Timeout occured"))
+        }
     }
 }
