@@ -22,15 +22,12 @@ import com.google.android.exoplayer2.upstream.FileDataSource
 import com.google.android.exoplayer2.upstream.FileDataSource.FileDataSourceException
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.services.AudioService
+import divyansh.tech.kotnewreader.utils.Constants.Companion.ACTION_START_OR_RESTART_SERVICE
 import kotlinx.android.synthetic.main.activity_audio.*
 import java.io.File
 
 
 class AudioActivity : AppCompatActivity() {
-
-    lateinit var playerNotificationManager: PlayerNotificationManager
-    private var CHANNEL_ID: String = getString(R.string.chennelId)
-    private var NOTIFICATION_ID: Int = 12
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +37,7 @@ class AudioActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         initAudioPlayer()
+//        sendCommandToService(ACTION_START_OR_RESTART_SERVICE)
 //        setupPlayerNotificationManager()
     }
 

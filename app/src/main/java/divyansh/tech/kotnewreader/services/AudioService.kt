@@ -19,6 +19,7 @@ import divyansh.tech.kotnewreader.utils.Constants.Companion.ACTION_START_OR_REST
 import divyansh.tech.kotnewreader.utils.Constants.Companion.ACTION_STOP_SERVICE
 import divyansh.tech.kotnewreader.utils.Constants.Companion.NOTIFICATION_CHANNEL_ID
 import divyansh.tech.kotnewreader.utils.Constants.Companion.NOTIFICATION_CHANNEL_NAME
+import divyansh.tech.kotnewreader.utils.Constants.Companion.NOTIFICATION_ID
 
 class AudioService: LifecycleService() {
 
@@ -26,7 +27,7 @@ class AudioService: LifecycleService() {
         intent?.let {
             when(it.action) {
                 ACTION_START_OR_RESTART_SERVICE -> {
-                    Log.i("Service", "Started service")
+                    startForegroundService()
                 }
                 ACTION_STOP_SERVICE -> {
                     Log.i("Service", "Started service")
@@ -63,6 +64,8 @@ class AudioService: LifecycleService() {
             .setContentTitle("Samachaar")
             .setContentText("Samachaar")
             .setContentIntent(getAudioActivityPendingIntent())
+
+        startForeground(NOTIFICATION_ID, builder.build())
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

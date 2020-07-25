@@ -26,9 +26,12 @@ Features ->
 16. Get the communication analysis -> What kind of communication is the article trying to potray
 17. Get the emotional analysis -> What is the emotion of the article -> Sad, Anger, Joy, Happy etc.
 18. Get the bias analysis -> Is the news article biased towards any particular subject
-19. Best architecture practices -> Follows MVVM architecture
-20. Best Design guidelines -> Follows material guidelines
-21. Free and open source
+19. Get important points for the news article
+20. Get important entities mentioned in the news article
+21. Best architecture practices -> Follows MVVM
+architecture
+22. Best Design guidelines -> Follows material guidelines
+23. Free and open source
 
 This app is almost complete. This app is made for the users. Please feel free to use this app, find flaws and open issues. I have included the __Known Limitation__ and __Features to be Included__ sections at the bottom. Please go through them and read the __CONTRIBUTING.md__ file in case you want to contribute to the cause.
 
@@ -108,11 +111,11 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 * Audio activity and player do not leveage the use of viewModels
 
-* Socket timeout exception has not been handled
+* ~Socket timeout exception has not been handled~
 
 * No tests
 
-* Does not handle the case if the OCR cannot recognise text
+* ~Does not handle the case if the OCR cannot recognise text~
 
 * Does not handle pagination (infinite scroll)
 
@@ -120,7 +123,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 * Home Fragment uses simple recommendation system
 
-* There are places where still the view is doing more work, so have to use coroutines to reduce the effort on the view
+* ~There are places where still the view is doing more work, so have to use coroutines to reduce the effort on the view~
 
 * Ui of the audio player is not applealing
 
@@ -130,17 +133,17 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 * Leverage viewModels in the Audio activity and player
 
-* Handle Timeout exception
+* ~Handle Timeout exception~
 
-* Handle OCR TextNotRecognised exception
+* ~Handle OCR TextNotRecognised exception~
 
-* Handle alerts properly
+* ~Handle alerts properly~
 
 * Use cutting-edge recommendation system
 
 * Some more UI improvements
 
-* Use coroutines to reduce the efforts made by the view as much as possible
+* ~Use coroutines to reduce the efforts made by the view as much as possible~
 
 * Make the UI of the audio player more appealing
 
