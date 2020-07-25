@@ -1,5 +1,6 @@
 package divyansh.tech.kotnewreader.ui
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +21,7 @@ import com.google.android.exoplayer2.upstream.DataSpec
 import com.google.android.exoplayer2.upstream.FileDataSource
 import com.google.android.exoplayer2.upstream.FileDataSource.FileDataSourceException
 import divyansh.tech.kotnewreader.R
+import divyansh.tech.kotnewreader.services.AudioService
 import kotlinx.android.synthetic.main.activity_audio.*
 import java.io.File
 
@@ -87,5 +89,12 @@ class AudioActivity : AppCompatActivity() {
             fileDataSource.uri,
             factory, DefaultExtractorsFactory(), null, null
         )
+    }
+
+    private fun sendCommandToService(action: String) {
+        Intent(this, AudioService::class.java).also {
+            it.action = action
+            startService(it)
+        }
     }
 }

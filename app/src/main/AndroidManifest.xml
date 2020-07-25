@@ -22,7 +22,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.AudioActivity"></activity>
+        <activity android:name=".ui.AudioActivity"
+            android:launchMode="singleTop"
+            />
         <activity android:name=".ui.AudioPlayerActivity" />
         <activity android:name=".ui.AuthActivity" />
         <activity android:name=".ui.SplashActivity">
@@ -33,6 +35,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.NewsActivity" />
+
+        <service
+            android:name=".services.AudioService"
+            android:foregroundServiceType="mediaPlayback"
+            />
 
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
