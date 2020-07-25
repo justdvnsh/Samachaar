@@ -87,14 +87,14 @@ class newsViewModel @ViewModelInject constructor(
         return Resource.Error(response.message())
     }
 
-    fun getBreakingNews(countryCode: String, category: String) = viewModelScope.launch {
+    fun getBreakingNews(countryCode: String, category: String) = CoroutineScope(Dispatchers.IO + Job()).launch {
         breakingNews.postValue(Resource.Loading())
         val response = newRepository.getBreakingNews(countryCode, category.toLowerCase(), breakingNewsPage)
         Log.i("vIEWMoDEL", response.raw().request.url.toString() + "\n" + response.body().toString())
         breakingNews.postValue(handleNewsReponse(response))
     }
 
-    fun getSearchNews(searchQuery: String) = viewModelScope.launch {
+    fun getSearchNews(searchQuery: String) = CoroutineScope(Dispatchers.IO + Job()).launch {
         searchNews.postValue(Resource.Loading())
         val response = newRepository.searchNews(searchQuery)
         Log.i("SEARCH", response.raw().request.url.toString())
@@ -110,20 +110,20 @@ class newsViewModel @ViewModelInject constructor(
         return Resource.Error(response.message())
     }
 
-    fun getDailyReports() = viewModelScope.launch {
+    fun getDailyReports() = CoroutineScope(Dispatchers.IO + Job()).launch {
         coronaDetails.postValue(Resource.Loading())
         val response = newRepository.getDailyReport()
         Log.i("MainActivity", response.raw().request.url.toString())
         coronaDetails.postValue(handleCoronaResponse(response))
     }
 
-    fun upsertArticle(article: Article) = viewModelScope.launch {
+    fun upsertArticle(article: Article) = CoroutineScope(Dispatchers.IO + Job()).launch {
         newRepository.upsertArticle(article)
     }
 
     fun getAllArticles() = newRepository.getAllArticles()
 
-    fun deleteArticle(article: Article) = viewModelScope.launch {
+    fun deleteArticle(article: Article) = CoroutineScope(Dispatchers.IO + Job()).launch {
         newRepository.deleteArticle(article)
     }
 
@@ -144,7 +144,7 @@ class newsViewModel @ViewModelInject constructor(
         ).state
     }
 
-    fun changeToArticleView(url: String) = viewModelScope.launch {
+    fun changeToArticleView(url: String) = CoroutineScope(Dispatchers.IO + Job()).launch {
         articleText.postValue(Resource.Loading())
         try {
             val response = newRepository.changeToArticleView(url)
