@@ -4,13 +4,10 @@ import android.content.Context
 import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.work.WorkerInject
-import androidx.work.CoroutineWorker
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import divyansh.tech.kotnewreader.database.ArticleDao
-import divyansh.tech.kotnewreader.network.models.Article
 import divyansh.tech.kotnewreader.repositories.NewsRepository
-import javax.inject.Inject
 
 class SyncWorker @WorkerInject constructor(
     @Assisted appContext: Context,

@@ -1,6 +1,6 @@
 package divyansh.tech.kotnewreader.network.api
 
-import divyansh.tech.kotnewreader.network.models.NewsResponse
+import divyansh.tech.kotnewreader.models.NewsResponse
 import divyansh.tech.kotnewreader.utils.Constants.Companion.API_KEY
 import retrofit2.Response
 import retrofit2.http.GET

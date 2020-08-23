@@ -1,4 +1,4 @@
-package divyansh.tech.kotnewreader.ui
+package divyansh.tech.kotnewreader.ui.activities
 
 import android.content.Intent
 import android.net.Uri
@@ -15,14 +15,12 @@ import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DataSpec
 import com.google.android.exoplayer2.upstream.FileDataSource
 import com.google.android.exoplayer2.upstream.FileDataSource.FileDataSourceException
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.services.AudioService
-import divyansh.tech.kotnewreader.utils.Constants.Companion.ACTION_START_OR_RESTART_SERVICE
 import kotlinx.android.synthetic.main.activity_audio.*
 import java.io.File
 

@@ -6,8 +6,7 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import dagger.hilt.android.AndroidEntryPoint
-import divyansh.tech.kotnewreader.network.models.User
+import divyansh.tech.kotnewreader.models.User
 import divyansh.tech.kotnewreader.utils.Constants.Companion.USERS
 import javax.inject.Inject
 
@@ -43,6 +42,52 @@ class AuthRepository @Inject constructor(
         return authenticatedUserMutableLiveData
     }
 
+    fun firebaseSignUpWithEmailAndPassword(email: String, password: String): MutableLiveData<User> {
+        val authenticatedUserMutableLiveData: MutableLiveData<User> = MutableLiveData()
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { authResult ->
+                if (authResult.isSuccessful) {
+                    Log.i("Auth", "Registration succesful")
+                    val isNewUser = authResult.result?.additionalUserInfo?.isNewUser
+                    val firebaseUser = firebaseAuth.currentUser
+                    val uidRef: DocumentReference = usersRef.document(firebaseUser?.email!!)
+                    firebaseUser.let {
+                        val user = User(
+                            uid = it.uid,
+                            email = it.email.toString(),
+                            isCreated = true,
+                            isNew = isNewUser
+                        )
+                        authenticatedUserMutableLiveData.value = user
+                    }
+                } else {
+                    Log.i("AUTHREPO SETTING", authResult.exception?.message)
+                }
+            }
+        return authenticatedUserMutableLiveData
+    }
+
+    fun firebaseSignInWithEmailAndPassword(email: String, password: String): MutableLiveData<User> {
+        val authenticatedUserMutableLiveData: MutableLiveData<User> = MutableLiveData()
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {authResult ->
+            if (authResult.isSuccessful) {
+                val isNewUser = authResult.result?.additionalUserInfo?.isNewUser
+                val firebaseUser = firebaseAuth.currentUser
+                firebaseUser?.let {
+                    val user = User(
+                        it.uid, it.email.toString()
+                    )
+                    user.isNew = isNewUser
+                    authenticatedUserMutableLiveData.value = user
+                }
+            } else {
+                Log.i("AUTHREPO", "FAILED ${authResult.exception?.message}")
+            }
+        }
+
+        return authenticatedUserMutableLiveData
+    }
+
     fun createUserInFirestoreIfNotExists(user: User): MutableLiveData<User> {
         val newUserMutableLiveData: MutableLiveData<User> = MutableLiveData()
         val uidRef: DocumentReference = usersRef.document(user.email!!)
@@ -55,14 +100,14 @@ class AuthRepository @Inject constructor(
                             user.isCreated = true
                             newUserMutableLiveData.value = user
                         } else {
-                            Log.i("AUTHREPO", task.exception?.message)
+                            Log.i("AUTHREPO SETTING", task.exception?.message)
                         }
                     }
                 } else {
                     newUserMutableLiveData.value = user
                 }
             } else {
-                Log.i("AUTHREPO", "FAILED ${task.exception?.message}")
+                Log.i("AUTHREPO CREATING USER", "FAILED ${task.exception?.message}")
             }
         }
 

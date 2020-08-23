@@ -1,4 +1,4 @@
-package divyansh.tech.kotnewreader.network.models.MLModels
+package divyansh.tech.kotnewreader.models.MLModels
 
 import java.io.Serializable
 

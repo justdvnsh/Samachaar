@@ -1,8 +1,7 @@
-package divyansh.tech.kotnewreader.ui
+package divyansh.tech.kotnewreader.ui.activities
 
 import android.Manifest
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
@@ -20,7 +19,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
-import divyansh.tech.kotnewreader.network.models.User
+import divyansh.tech.kotnewreader.models.User
 import divyansh.tech.kotnewreader.ui.viewModels.newsViewModel
 import kotlinx.android.synthetic.main.activity_news.*
 import java.util.*

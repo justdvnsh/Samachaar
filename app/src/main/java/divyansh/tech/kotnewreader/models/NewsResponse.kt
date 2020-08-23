@@ -1,4 +1,4 @@
-package divyansh.tech.kotnewreader.network.models
+package divyansh.tech.kotnewreader.models
 
 data class NewsResponse(
     val articles: MutableList<Article>,

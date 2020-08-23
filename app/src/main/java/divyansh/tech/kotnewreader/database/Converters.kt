@@ -1,7 +1,7 @@
 package divyansh.tech.kotnewreader.database
 
 import androidx.room.TypeConverter
-import divyansh.tech.kotnewreader.network.models.Source
+import divyansh.tech.kotnewreader.models.Source
 
 class Converters {
 

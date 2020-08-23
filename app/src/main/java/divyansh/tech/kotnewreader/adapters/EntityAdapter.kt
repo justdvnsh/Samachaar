@@ -7,10 +7,8 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import divyansh.tech.kotnewreader.R
-import divyansh.tech.kotnewreader.network.models.MLModels.Entities
-import divyansh.tech.kotnewreader.network.models.MLModels.EntitiesModels
+import divyansh.tech.kotnewreader.models.MLModels.Entities
 import kotlinx.android.synthetic.main.entity_layout_preview.view.*
-import kotlinx.android.synthetic.main.key_phrases_preview.view.*
 
 class EntityAdapter: RecyclerView.Adapter<EntityAdapter.EntityViewHolder>() {
 

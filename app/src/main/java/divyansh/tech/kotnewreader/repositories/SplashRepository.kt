@@ -3,10 +3,9 @@ package divyansh.tech.kotnewreader.repositories
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import divyansh.tech.kotnewreader.network.models.User
+import divyansh.tech.kotnewreader.models.User
 import divyansh.tech.kotnewreader.utils.Constants.Companion.USERS
 import javax.inject.Inject
 

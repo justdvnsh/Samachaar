@@ -4,11 +4,8 @@ import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Bitmap
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.speech.tts.TextToSpeech
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,27 +13,20 @@ import android.widget.AbsListView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
-import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
-import divyansh.tech.kotnewreader.adapters.NewsAdapter
-import divyansh.tech.kotnewreader.network.models.User
-import divyansh.tech.kotnewreader.ui.AudioPlayerActivity
-import divyansh.tech.kotnewreader.ui.NewsActivity
+import divyansh.tech.kotnewreader.models.User
+import divyansh.tech.kotnewreader.ui.activities.AudioPlayerActivity
+import divyansh.tech.kotnewreader.ui.activities.NewsActivity
 import divyansh.tech.kotnewreader.ui.viewModels.newsViewModel
 import divyansh.tech.kotnewreader.utils.Alert
 import divyansh.tech.kotnewreader.utils.Constants
 import kotlinx.android.synthetic.main.common_toolbar.*
-import kotlinx.android.synthetic.main.fragment_general_news.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
-import javax.inject.Inject
 
 abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks{
 

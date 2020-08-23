@@ -1,6 +1,6 @@
 package divyansh.tech.kotnewreader.network.api
 
-import divyansh.tech.kotnewreader.network.models.MLModels.*
+import divyansh.tech.kotnewreader.models.MLModels.*
 import divyansh.tech.kotnewreader.utils.Constants.Companion.ARTICLE_API
 import divyansh.tech.kotnewreader.utils.Constants.Companion.RAPID_API_KEY
 import okhttp3.RequestBody

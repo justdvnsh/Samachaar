@@ -2,7 +2,7 @@ package divyansh.tech.kotnewreader.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import divyansh.tech.kotnewreader.network.models.Article
+import divyansh.tech.kotnewreader.models.Article
 
 @Dao
 interface ArticleDao {

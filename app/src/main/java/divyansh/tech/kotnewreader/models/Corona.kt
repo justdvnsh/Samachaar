@@ -1,4 +1,4 @@
-package divyansh.tech.kotnewreader.network.models
+package divyansh.tech.kotnewreader.models
 
 data class Corona(
     val activeCases: Int,

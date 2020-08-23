@@ -6,11 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import divyansh.tech.kotnewreader.R
-import divyansh.tech.kotnewreader.network.models.Article
-import divyansh.tech.kotnewreader.network.models.MLModels.RelatedNews
-import kotlinx.android.synthetic.main.item_article_preview.view.*
+import divyansh.tech.kotnewreader.models.MLModels.RelatedNews
 import kotlinx.android.synthetic.main.related_news_item_preview.view.*
 
 class RelatedNewsAdapter: RecyclerView.Adapter<RelatedNewsAdapter.RelatedNewsViewHolder>() {

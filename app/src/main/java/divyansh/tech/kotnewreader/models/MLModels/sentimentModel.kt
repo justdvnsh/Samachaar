@@ -1,4 +1,4 @@
-package divyansh.tech.kotnewreader.network.models.MLModels
+package divyansh.tech.kotnewreader.models.MLModels
 
 data class sentimentModel(
     val pos: Int,

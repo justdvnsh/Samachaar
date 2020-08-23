@@ -1,32 +1,15 @@
 package divyansh.tech.kotnewreader.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
-import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.adapters.FragmentsAdapter
-import divyansh.tech.kotnewreader.adapters.NewsAdapter
-import divyansh.tech.kotnewreader.ui.NewsActivity
-import divyansh.tech.kotnewreader.ui.fragments.tabbedFragments.*
-import divyansh.tech.kotnewreader.utils.Constants.Companion.QUERY_PAGE_SIZE
-import divyansh.tech.kotnewreader.utils.Resource
 import kotlinx.android.synthetic.main.common_toolbar.view.*
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
-import javax.inject.Inject
 
 class BreakingNewsFragment : BaseFragment() {
 

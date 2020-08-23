@@ -1,16 +1,13 @@
-package divyansh.tech.kotnewreader.ui
+package divyansh.tech.kotnewreader.ui.activities
 
 import android.Manifest
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.util.Log
-import android.view.View
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -19,7 +16,7 @@ import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.adapters.NewsAdapter
-import divyansh.tech.kotnewreader.network.models.Article
+import divyansh.tech.kotnewreader.models.Article
 import divyansh.tech.kotnewreader.ui.viewModels.newsViewModel
 import divyansh.tech.kotnewreader.utils.Alert
 import divyansh.tech.kotnewreader.utils.Constants
@@ -28,8 +25,6 @@ import kotlinx.android.synthetic.main.activity_audio_player.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap

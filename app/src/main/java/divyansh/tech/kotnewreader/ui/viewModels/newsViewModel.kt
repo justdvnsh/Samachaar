@@ -7,12 +7,11 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.work.*
-import divyansh.tech.kotnewreader.network.models.Article
-import divyansh.tech.kotnewreader.network.models.Corona
-import divyansh.tech.kotnewreader.network.models.MLModels.*
-import divyansh.tech.kotnewreader.network.models.NewsResponse
+import divyansh.tech.kotnewreader.models.Article
+import divyansh.tech.kotnewreader.models.Corona
+import divyansh.tech.kotnewreader.models.MLModels.*
+import divyansh.tech.kotnewreader.models.NewsResponse
 import divyansh.tech.kotnewreader.repositories.NewsRepository
 import divyansh.tech.kotnewreader.ui.fragments.BaseFragment
 import divyansh.tech.kotnewreader.utils.Resource

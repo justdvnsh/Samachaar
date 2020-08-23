@@ -1,6 +1,6 @@
 package divyansh.tech.kotnewreader.network.api
 
-import divyansh.tech.kotnewreader.network.models.Corona
+import divyansh.tech.kotnewreader.models.Corona
 import retrofit2.Response
 import retrofit2.http.*
 

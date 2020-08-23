@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import divyansh.tech.kotnewreader.R
-import divyansh.tech.kotnewreader.network.models.Article
-import divyansh.tech.kotnewreader.network.models.MLModels.KeyPhrases
 import kotlinx.android.synthetic.main.key_phrases_preview.view.*
 
 class KeyPhrasesAdapter: RecyclerView.Adapter<KeyPhrasesAdapter.KeyPhrasesViewHolder>() {

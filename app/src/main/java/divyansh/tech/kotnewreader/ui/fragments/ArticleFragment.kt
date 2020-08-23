@@ -18,13 +18,10 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.adapters.RelatedNewsAdapter
-import divyansh.tech.kotnewreader.network.models.Article
-import divyansh.tech.kotnewreader.utils.Alert.Companion.createAlertDialog
 import divyansh.tech.kotnewreader.utils.Resource
 import kotlinx.android.synthetic.main.common_toolbar.*
 import kotlinx.android.synthetic.main.common_toolbar.view.*
 import kotlinx.android.synthetic.main.fragment_article.*
-import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
 
 @AndroidEntryPoint

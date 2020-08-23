@@ -13,7 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import divyansh.tech.kotnewreader.R
-import divyansh.tech.kotnewreader.ui.AudioActivity
+import divyansh.tech.kotnewreader.ui.activities.AudioActivity
 import divyansh.tech.kotnewreader.utils.Constants.Companion.ACTION_PAUSE_SERVICE
 import divyansh.tech.kotnewreader.utils.Constants.Companion.ACTION_START_OR_RESTART_SERVICE
 import divyansh.tech.kotnewreader.utils.Constants.Companion.ACTION_STOP_SERVICE

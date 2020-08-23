@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.AudioActivity">
+    tools:context=".ui.activities.AudioActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -57,6 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:repeat_toggle_modes="all|one"
+        app:default_artwork="@drawable/bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

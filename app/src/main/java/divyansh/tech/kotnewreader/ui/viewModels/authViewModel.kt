@@ -4,7 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.AuthCredential
-import divyansh.tech.kotnewreader.network.models.User
+import divyansh.tech.kotnewreader.models.User
 import divyansh.tech.kotnewreader.repositories.AuthRepository
 
 class authViewModel @ViewModelInject constructor(
@@ -14,8 +14,12 @@ class authViewModel @ViewModelInject constructor(
     var authenticatedUserLiveData: LiveData<User>? = null
     var createdUserLiveData: LiveData<User>? = null
 
-    fun signInWithGoogle(authCredential: AuthCredential) {
-        authenticatedUserLiveData = authRepository.firebaseSignInWithGoogle(authCredential)
+    fun login(email: String, password: String) {
+        authenticatedUserLiveData = authRepository.firebaseSignInWithEmailAndPassword(email, password)
+    }
+
+    fun register(email: String, password: String) {
+        authenticatedUserLiveData = authRepository.firebaseSignUpWithEmailAndPassword(email, password)
     }
 
     fun createUser(user: User) {
