@@ -28,7 +28,7 @@ class SettingsFragment : BaseFragment() {
     }
 
     private fun setupView() {
-        displayName.text = user.name
+//        displayName.text = user.name
         displayEmail.text = user.email
     }
 }

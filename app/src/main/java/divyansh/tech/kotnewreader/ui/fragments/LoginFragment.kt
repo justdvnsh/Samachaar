@@ -13,10 +13,11 @@ import androidx.navigation.fragment.findNavController
 import divyansh.tech.kotnewreader.R
 import divyansh.tech.kotnewreader.ui.activities.AuthActivity
 import divyansh.tech.kotnewreader.ui.activities.NewsActivity
+import divyansh.tech.kotnewreader.ui.viewModels.authViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment: Fragment() {
-    lateinit var viewModel: AuthViewModel
+    lateinit var viewModel: authViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -111,7 +111,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom|center"
-                            android:fontFamily="@font/fira_sans_extra_condensed"
                             android:padding="10dp"
                             android:text="@string/business"
                             android:textAllCaps="true"

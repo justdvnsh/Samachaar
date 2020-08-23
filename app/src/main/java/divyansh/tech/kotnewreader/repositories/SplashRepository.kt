@@ -42,8 +42,7 @@ class SplashRepository @Inject constructor(
                 if (document?.exists()!!) {
                     val user: User = User(
                         uid = document.get("uid") as String,
-                        email = document.get("email") as String,
-                        name = document.get("name") as String
+                        email = document.get("email") as String
                     )
                     userMutableLiveData.value = user
                 }

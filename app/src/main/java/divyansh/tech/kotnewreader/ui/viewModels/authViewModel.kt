@@ -3,7 +3,6 @@ package divyansh.tech.kotnewreader.ui.viewModels
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.AuthCredential
 import divyansh.tech.kotnewreader.models.User
 import divyansh.tech.kotnewreader.repositories.AuthRepository
 

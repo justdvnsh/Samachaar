@@ -54,12 +54,12 @@
         android:id="@+id/articleFragment"
         android:name="divyansh.tech.kotnewreader.ui.fragments.ArticleFragment"
         android:label="ArticleFragment" >
-        <argument
-            android:name="article"
-            app:argType="divyansh.tech.kotnewreader.network.models.Article" />
         <action
             android:id="@+id/action_articleFragment_to_analyzeFragment"
             app:destination="@id/analyzeFragment" />
+        <argument
+            android:name="article"
+            app:argType="divyansh.tech.kotnewreader.models.Article" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
